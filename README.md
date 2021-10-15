@@ -2,6 +2,19 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Branches, tags, and deploys.
+Whenever a new issue is opened, it should be labeled whether it is a Patch, Minor, or Major upgrade. Please see the label descriptions for more info.
+To work on that issue, a branch should be created with the leading issue number like "1-user-view".
+
+When finalizing a branch, use:
+
+```sh
+npm version <label: {patch, minor, or major}>
+```
+
+and push your code. Then create a pull request, include "Fixes #{issue_number}" in the title and resolve any merge conflicts. When all tests are done, another contributor can review and merge the request.
+After the merge is complete, please delete the branch on the bottom of the pull request.
+
 ## Available Scripts
 
 In the project directory, you can run:
