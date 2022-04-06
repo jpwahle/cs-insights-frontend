@@ -1,24 +1,23 @@
+// @ts-nocheck
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Sidebar from './Sidebar';
+import Selection from './Selection';
+import Graphs from './Graphs';
+import Header from './Header';
+import { Stack } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to NLP-Land
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Stack direction="row">
+        <Sidebar />
+        <div>
+          <Selection />
+          <Graphs />
+        </div>
+      </Stack>
     </div>
   );
 }

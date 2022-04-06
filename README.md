@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+After you cloned the repository, you have to set some environment variables first.
+We recommend creating a file called `.env.development.local` and copy the empty values from `.env.development` ([docs](https://create-react-app.dev/docs/adding-custom-environment-variables/)).
+Here you have to set `REACT_APP_EMAIL` and `REACT_APP_PASSWORD` to your credentials, so you can query the backend.
+
+
 ## Branches, tags, and deploys.
 Whenever a new issue is opened, it should be labeled whether it is a Patch, Minor, or Major upgrade. Please see the label descriptions for more info.
 To work on that issue, a branch should be created with the leading issue number like "1-user-view".

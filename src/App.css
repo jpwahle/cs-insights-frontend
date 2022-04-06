@@ -1,27 +1,33 @@
+:root {
+  --header-height: 5vh
+}
+
 .App {
   text-align: center;
+  /*background-color: #282c34;*/
+  min-height: 100vh;
+  min-width: 100vh;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 5vmin;
   pointer-events: none;
+  color: white;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 5s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
+  min-height: var(--header-height);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -35,4 +41,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.sidebar {
+  height: auto;
+  width: 15vh;
+}
+
+.selection {
+  height: 5vh;
+  width: auto;
+}
+
+.graphs {
+  height: auto;
+  width: auto;
+}
+
+.main-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.setHeight {
+  height: 500px;
+  width: 1000px;
 }
