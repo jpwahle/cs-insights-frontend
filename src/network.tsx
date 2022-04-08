@@ -20,6 +20,7 @@ async function getData(route: string) {
     },
   });
   if (!response.ok || response.status !== 200) {
+    console.log(await response.json());
     throw new Error('Network response was not ok');
   }
   return response.json();

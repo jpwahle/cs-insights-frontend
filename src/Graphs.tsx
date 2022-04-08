@@ -11,7 +11,7 @@ function Graphs() {
   const [values, setValues] = useState<number[]>([]);
 
   function handleFetchClick() {
-    getData('papers/stats').then((data: PaperStats) => {
+    getData('fe/papers/stats').then((data: PaperStats) => {
       const mapping = data.timeData.reduce((res: any, obj: any) => {
         res[obj.year] = obj.cites;
         return res;

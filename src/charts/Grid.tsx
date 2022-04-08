@@ -19,7 +19,7 @@ export default function Grid(props: { view: string }) {
   const [rows, setRows] = React.useState<Paper[]>([]);
 
   React.useEffect(() => {
-    getData(`${props.view}/paged?page=${page}&pageSize=${pageSize}`).then((data) => {
+    getData(`fe/${props.view}/paged?page=${page}&pageSize=${pageSize}`).then((data) => {
       setRowCount(data.rowCount);
       setRows(data.rows);
     });

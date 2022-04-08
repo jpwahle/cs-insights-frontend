@@ -5,20 +5,20 @@ import Sidebar from './Sidebar';
 import Selection from './Selection';
 import Graphs from './Graphs';
 import Header from './Header';
-// import { Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 function App() {
   return (
-    <div className="App">
+    <Stack className="App">
       <Header />
-      <div direction="row" className="stack1">
+      <Stack direction="row" className="stack">
         <Sidebar />
-        <div className="stack2">
+        <Stack className="stack">
           <Selection />
           <Graphs />
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 }
 

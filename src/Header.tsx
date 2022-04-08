@@ -19,7 +19,7 @@ function Header() {
 
   return (
     <header className="header">
-      <Stack direction="row">
+      <Stack direction="row" className="header-stack">
         <img src={logo} className="App-logo" alt="logo" />
         <Box>Welcome to the DBLP Discovery Dataset Demo</Box>
       </Stack>
