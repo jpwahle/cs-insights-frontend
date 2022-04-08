@@ -1,12 +1,21 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 :root {
   --header-height: 5vh
 }
 
 .App {
   text-align: center;
+  /*display: flex;*/
+  /*flex-flow: column;*/
+  /*height: 100%;*/
   /*background-color: #282c34;*/
-  min-height: 100vh;
-  min-width: 100vh;
+  /*min-height: 100vh;*/
+  /*min-width: 100vh;*/
 }
 
 .App-logo {
@@ -28,6 +37,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
+  background: dodgerblue;
 }
 
 .App-link {
@@ -43,32 +53,31 @@
   }
 }
 
+.stack1 {
+  display: flex;
+  flex-flow: row;
+  /*flex: 1;*/
+}
+
+.stack2 {
+  /*display: flex;*/
+  /*flex-flow: column;*/
+  /*flex: 1;*/
+}
+
 .sidebar {
   height: auto;
-  width: 15vh;
+  background: grey;
+  /*flex: 1;*/
 }
 
 .selection {
-  height: 5vh;
-  width: auto;
+  background: green;
+  /*flex: 1;*/
 }
 
 .graphs {
   height: auto;
   width: auto;
-}
-
-.main-vertical {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-horizontal {
-  display: flex;
-  flex-direction: row;
-}
-
-.setHeight {
-  height: 500px;
-  width: 1000px;
+  /*flex: 1;*/
 }

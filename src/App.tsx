@@ -1,23 +1,23 @@
-// @ts-nocheck
+//@ts-nocheck
 import React from 'react';
 import './App.css';
 import Sidebar from './Sidebar';
 import Selection from './Selection';
 import Graphs from './Graphs';
 import Header from './Header';
-import { Stack } from '@mui/material';
+// import { Stack } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Stack direction="row">
+      <div direction="row" className="stack1">
         <Sidebar />
-        <div>
+        <div className="stack2">
           <Selection />
           <Graphs />
         </div>
-      </Stack>
+      </div>
     </div>
   );
 }

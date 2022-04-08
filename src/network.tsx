@@ -1,5 +1,4 @@
-//ts-nocheck
-async function postData(route = '', data = {}) {
+async function postData(route: string, data: Object) {
   const url = process.env.REACT_APP_BACKEND + route;
   const token = localStorage.getItem('token');
   const response = await fetch(url, {
@@ -12,9 +11,7 @@ async function postData(route = '', data = {}) {
   });
   return response.json();
 }
-
-async function getData(route = '') {
-  console.log('get');
+async function getData(route: string) {
   const url = process.env.REACT_APP_BACKEND + route;
   const token = localStorage.getItem('token');
   const response = await fetch(url, {
