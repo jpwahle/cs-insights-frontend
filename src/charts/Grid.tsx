@@ -9,7 +9,7 @@ export default function Grid(props: { view: string }) {
     { field: 'title', headerName: 'Title', width: 300 },
     { field: 'year', headerName: 'Year' },
     { field: 'authors', headerName: 'Authors', width: 200 },
-    { field: 'venue', headerName: 'Venue', width: 200 },
+    { field: 'venues', headerName: 'Venue', width: 200 },
     { field: 'cites', headerName: 'Citations' },
   ];
 

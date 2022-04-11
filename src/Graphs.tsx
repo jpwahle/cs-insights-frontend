@@ -12,12 +12,10 @@ function Graphs() {
 
   function handleFetchClick() {
     getData('fe/papers/stats').then((data: PaperStats) => {
-      const mapping = data.timeData.reduce((res: any, obj: any) => {
-        res[obj.year] = obj.cites;
-        return res;
-      }, {});
-      setLabels(Object.keys(mapping));
-      setValues(Object.values(mapping));
+      setLabels(data.timeData.years);
+      if ('cites' in data.timeData) {
+        setValues(data.timeData.cites);
+      }
     });
   }
 

@@ -1,11 +1,11 @@
 interface PaperOverTime {
-  year: string;
-  papers: number;
+  years: string[];
+  papers: number[];
 }
 
 interface CiteOverTime {
-  year: string;
-  cites: number;
+  years: string[];
+  cites: number[];
 }
 
 export type DatapointOverTime = PaperOverTime | CiteOverTime;
@@ -16,7 +16,7 @@ export interface ChartOverTimeProps {
 }
 
 export interface PaperStats {
-  timeData: DatapointOverTime[];
+  timeData: DatapointOverTime;
 }
 
 export interface Paper {
