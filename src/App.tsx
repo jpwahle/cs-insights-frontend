@@ -1,8 +1,7 @@
-//@ts-nocheck
 import React from 'react';
 import './App.css';
 import Sidebar from './Sidebar';
-import Selection from './Selection';
+import Categories from './Categories';
 import Graphs from './Graphs';
 import Header from './Header';
 import { Stack } from '@mui/material';
@@ -14,7 +13,7 @@ function App() {
       <Stack direction="row" className="stack">
         <Sidebar />
         <Stack className="stack">
-          <Selection />
+          <Categories />
           <Graphs />
         </Stack>
       </Stack>
