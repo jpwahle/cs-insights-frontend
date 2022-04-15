@@ -1,10 +1,9 @@
-//@ts-nocheck
-/*eslint-disable*/
 import React from 'react';
 import '../App.css';
 import { TextField } from '@mui/material';
+import { FilterYear } from '../types';
 
-export default function FilterTextfield(props) {
+export default function FilterTextfield(props: FilterYear) {
   return (
     <TextField
       label={props.label}

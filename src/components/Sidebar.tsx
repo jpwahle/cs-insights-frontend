@@ -1,26 +1,20 @@
-//@ts-nocheck
-/*eslint-disable*/
 import React from 'react';
 import '../App.css';
 import FilterCategorical from './FilterCategorical';
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  InputLabel,
-  Stack,
-  TextField,
-} from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import FilterTextfield from './FilterTextfield';
 import { getData } from '../network';
-import { PaperStats } from '../types';
+import { SidebarProps, PaperStats, VenueFilter, AuthorFilter } from '../types';
 
-export default function Sidebar(props) {
-  function handleApplyFiltersClick(yearStart, yearEnd, author, venue) {
-    console.log(yearStart, yearEnd, author, venue);
-    const route = `fe/papers/stats?yearStart=${yearStart}&yearEnd=${yearEnd}&author=${author._id}`; //&venue=${venue._id} FIXME
+export default function Sidebar(props: SidebarProps) {
+  function applyFilters() {
+    let route = `fe/papers/stats?yearStart=${props.yearStart}&yearEnd=${props.yearEnd}`;
+    if (props.author) {
+      route += `&author=${props.author._id}`;
+    }
+    if (props.venue) {
+      route += `&venue=${props.venue._id}`;
+    }
     console.log(route);
     getData(route).then((data: PaperStats) => {
       props.setLabels(data.timeData.years);
@@ -30,17 +24,18 @@ export default function Sidebar(props) {
     });
   }
 
+  function clearFilters() {
+    props.setYearStart('');
+    props.setYearEnd('');
+    props.setAuthor(null);
+    props.setVenue(null);
+  }
+
   return (
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
         <b>Filters</b>
-        <Button
-          onClick={() =>
-            handleApplyFiltersClick(props.yearStart, props.yearEnd, props.author, props.venue)
-          }
-        >
-          Apply Filters
-        </Button>
+        <Button onClick={() => applyFilters()}>Apply Filters</Button>
       </Stack>
 
       <div className="filter-label">Year of publication</div>
@@ -51,7 +46,7 @@ export default function Sidebar(props) {
       </Stack>
 
       <div className="filter-label">Author</div>
-      <FilterCategorical
+      <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
         value={props.author}
@@ -59,12 +54,13 @@ export default function Sidebar(props) {
       />
 
       <div className="filter-label">Venue</div>
-      <FilterCategorical
+      <FilterCategorical<VenueFilter>
         route="venues"
-        label="name"
+        label="names"
         value={props.venue}
         setValue={props.setVenue}
       />
+      <Button onClick={() => clearFilters()}>Clear Filters</Button>
       {/*No functionality (might break):*/}
       {/*<div className="filter-label">Affiliations</div>*/}
       {/*<FilterCategorical route="affiliations" />*/}
