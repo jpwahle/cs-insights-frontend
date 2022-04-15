@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import logo from './logo.svg';
-import { postData } from './network';
+import logo from '../logo.svg';
+import { postData } from '../network';
 
 function Header() {
   function handleLoginClick() {
@@ -9,6 +9,7 @@ function Header() {
       email: process.env.REACT_APP_EMAIL,
       password: process.env.REACT_APP_PASSWORD,
     };
+
     postData('login', login).then((data) => {
       if (typeof window.localStorage !== 'undefined') {
         localStorage.setItem('token', data.token);

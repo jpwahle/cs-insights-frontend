@@ -10,7 +10,7 @@
     ] }]
   },
   "parserOptions": {
-    "project": ["./tsconfig.json", "./tsconfig-test.json"]
+    "project": ["./tsconfig.json"]
   },
   "parser": "@typescript-eslint/parser"
 }

@@ -1,20 +1,20 @@
+//@ts-nocheck
+/* eslint-disable */
 import React, { useState } from 'react';
-import './App.css';
+import '../App.css';
 import { Button } from '@mui/material';
-import { getData } from './network';
-import BarChart from './charts/BarChart';
-import Grid from './charts/Grid';
-import { PaperStats } from './types';
+import { getData } from '../network';
+import BarChart from '../charts/BarChart';
 
-function Graphs() {
-  const [labels, setLabels] = useState<string[]>([]);
-  const [values, setValues] = useState<number[]>([]);
+import Grid from '../charts/Grid';
+import { PaperStats } from '../types';
 
+function Graphs(props) {
   function handleFetchClick() {
     getData('fe/papers/stats').then((data: PaperStats) => {
-      setLabels(data.timeData.years);
+      props.setLabels(data.timeData.years);
       if ('cites' in data.timeData) {
-        setValues(data.timeData.cites);
+        props.setValues(data.timeData.cites);
       }
     });
   }
@@ -25,7 +25,7 @@ function Graphs() {
         Fetch Data
       </Button>
 
-      <BarChart labels={labels} values={values} />
+      <BarChart labels={props.labels} values={props.values} />
       <Grid view={'papers'} />
     </div>
   );
