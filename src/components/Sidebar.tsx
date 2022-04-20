@@ -8,19 +8,34 @@ import { SidebarProps, PaperStats, VenueFilter, AuthorFilter } from '../types';
 
 export default function Sidebar(props: SidebarProps) {
   function applyFilters() {
-    let route = `fe/papers/stats?yearStart=${props.yearStart}&yearEnd=${props.yearEnd}`;
+    let filterParameter = '';
+    if (props.yearStart) {
+      filterParameter += `yearStart=${props.yearStart}&`;
+    }
+    if (props.yearEnd) {
+      filterParameter += `yearEnd=${props.yearEnd}&`;
+    }
     if (props.author) {
-      route += `&author=${props.author._id}`;
+      filterParameter += `author=${props.author._id}&`;
     }
     if (props.venue) {
-      route += `&venue=${props.venue._id}`;
+      filterParameter += `venue=${props.venue._id}&`;
     }
-    console.log(route);
-    getData(route).then((data: PaperStats) => {
+    getData('fe/papers/stats?' + filterParameter).then((data: PaperStats) => {
       props.setLabels(data.timeData.years);
       if ('cites' in data.timeData) {
         props.setValues(data.timeData.cites);
       }
+    });
+    //todo flexible page/pageSize
+    getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter).then((data) => {
+      props.setRows(data.rows);
+      props.setRowCount(data.rowCount);
+
+      // props.setLabels(data.timeData.years);
+      // if ('cites' in data.timeData) {
+      //   props.setValues(data.timeData.cites);
+      // }
     });
   }
 

@@ -12,9 +12,8 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
-    if (newInputValue.length >= 2) {
-      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}`);
-      //fixme pos1 not working
+    if (newInputValue.length >= 3) {
+      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}&`);
       setOptions(data);
       setLoading(false);
     }

@@ -9,11 +9,21 @@ import { GraphsProps, PaperStats } from '../types';
 
 function Graphs(props: GraphsProps) {
   function handleFetchClick() {
+    // TODO parallelize
     getData('fe/papers/stats').then((data: PaperStats) => {
       props.setLabels(data.timeData.years);
       if ('cites' in data.timeData) {
         props.setValues(data.timeData.cites);
       }
+    });
+    getData('fe/papers/paged?page=0&pageSize=100').then((data) => {
+      props.setRows(data.rows);
+      props.setRowCount(data.rowCount);
+
+      // props.setLabels(data.timeData.years);
+      // if ('cites' in data.timeData) {
+      //   props.setValues(data.timeData.cites);
+      // }
     });
   }
 
@@ -24,7 +34,13 @@ function Graphs(props: GraphsProps) {
       </Button>
 
       <BarChart labels={props.labels} values={props.values} />
-      <Grid view={'papers'} />
+      <Grid
+        view={'papers'}
+        rowCount={props.rowCount}
+        setRowCount={props.setRowCount}
+        rows={props.rows}
+        setRows={props.setRows}
+      />
     </div>
   );
 }

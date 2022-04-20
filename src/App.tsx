@@ -5,7 +5,7 @@ import Categories from './components/Categories';
 import Graphs from './components/Graphs';
 import Header from './components/Header';
 import { Stack } from '@mui/material';
-import { AuthorFilter, VenueFilter } from './types';
+import { AuthorFilter, Paper, VenueFilter } from './types';
 
 function App() {
   const [yearStart, setYearStart] = useState<string>('');
@@ -15,6 +15,9 @@ function App() {
 
   const [labels, setLabels] = useState<string[]>([]);
   const [values, setValues] = useState<number[]>([]);
+
+  const [rowCount, setRowCount] = React.useState<number>(0);
+  const [rows, setRows] = React.useState<Paper[]>([]);
 
   return (
     <Stack className="App">
@@ -33,10 +36,23 @@ function App() {
           setLabels={setLabels}
           values={values}
           setValues={setValues}
+          rowCount={rowCount}
+          setRowCount={setRowCount}
+          rows={rows}
+          setRows={setRows}
         />
         <Stack className="stack">
           <Categories />
-          <Graphs labels={labels} setLabels={setLabels} values={values} setValues={setValues} />
+          <Graphs
+            labels={labels}
+            setLabels={setLabels}
+            values={values}
+            setValues={setValues}
+            rowCount={rowCount}
+            setRowCount={setRowCount}
+            rows={rows}
+            setRows={setRows}
+          />
         </Stack>
       </Stack>
     </Stack>

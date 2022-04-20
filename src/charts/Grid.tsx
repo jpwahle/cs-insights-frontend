@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { getData } from '../network';
-import { Paper } from '../types';
+import { GridProps } from '../types';
 
-export default function Grid(props: { view: string }) {
+export default function Grid(props: GridProps) {
   const columns = [
     { field: '_id' },
     { field: 'title', headerName: 'Title', width: 300 },
@@ -15,21 +15,35 @@ export default function Grid(props: { view: string }) {
 
   const [page, setPage] = React.useState<number>(0);
   const [pageSize, setPageSize] = React.useState<number>(100);
-  const [rowCount, setRowCount] = React.useState<number>(0);
-  const [rows, setRows] = React.useState<Paper[]>([]);
 
-  React.useEffect(() => {
-    getData(`fe/${props.view}/paged?page=${page}&pageSize=${pageSize}`).then((data) => {
-      setRowCount(data.rowCount);
-      setRows(data.rows);
-    });
-  }, [page, pageSize]);
+  function test(newPage: number | null, newPageSize: number | null) {
+    if (newPage) {
+      setPage(newPage);
+      getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`).then((data) => {
+        props.setRowCount(data.rowCount);
+        props.setRows(data.rows);
+      });
+    }
+    if (newPageSize) {
+      setPageSize(newPageSize);
+      getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`).then((data) => {
+        props.setRowCount(data.rowCount);
+        props.setRows(data.rows);
+      });
+    }
+  }
+  // React.useEffect(() => {
+  //   getData(`fe/${props.view}/paged?page=${page}&pageSize=${pageSize}`).then((data) => {
+  //     props.setRowCount(data.rowCount);
+  //     props.setRows(data.rows);
+  //   });
+  // }, [page, pageSize]);
 
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid
-        rows={rows}
-        rowCount={rowCount}
+        rows={props.rows}
+        rowCount={props.rowCount}
         columns={columns}
         disableSelectionOnClick
         getRowId={(row) => row._id}
@@ -42,8 +56,8 @@ export default function Grid(props: { view: string }) {
         page={page}
         pageSize={pageSize}
         paginationMode="server"
-        onPageChange={(newPage) => setPage(newPage)}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        onPageChange={(newPage) => test(newPage, null)}
+        onPageSizeChange={(newPageSize) => test(null, newPageSize)}
       />
     </div>
   );

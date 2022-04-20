@@ -50,6 +50,10 @@ export interface SidebarProps {
   setLabels(labels: string[]): void;
   values: number[];
   setValues(values: number[]): void;
+  rowCount: number;
+  setRowCount(rowCount: number): void;
+  rows: Paper[];
+  setRows(rows: Paper[]): void;
 }
 
 export interface GraphsProps {
@@ -57,6 +61,10 @@ export interface GraphsProps {
   setLabels(labels: string[]): void;
   values: number[];
   setValues(values: number[]): void;
+  rowCount: number;
+  setRowCount(rowCount: number): void;
+  rows: Paper[];
+  setRows(rows: Paper[]): void;
 }
 
 export type FilterCategoricalProps<T> = {
@@ -70,4 +78,12 @@ export interface FilterYear {
   label: string;
   value: string;
   setValue(value: string): void;
+}
+
+export interface GridProps {
+  view: string;
+  rowCount: number;
+  setRowCount(rowCount: number): void;
+  rows: Paper[];
+  setRows(rows: Paper[]): void;
 }
