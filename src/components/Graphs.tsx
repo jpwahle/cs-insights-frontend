@@ -9,7 +9,6 @@ import { GraphsProps, PaperStats } from '../types';
 
 function Graphs(props: GraphsProps) {
   function handleFetchClick() {
-    // TODO parallelize
     getData('fe/papers/stats').then((data: PaperStats) => {
       props.setLabels(data.timeData.years);
       if ('cites' in data.timeData) {
@@ -19,11 +18,6 @@ function Graphs(props: GraphsProps) {
     getData('fe/papers/paged?page=0&pageSize=100').then((data) => {
       props.setRows(data.rows);
       props.setRowCount(data.rowCount);
-
-      // props.setLabels(data.timeData.years);
-      // if ('cites' in data.timeData) {
-      //   props.setValues(data.timeData.cites);
-      // }
     });
   }
 

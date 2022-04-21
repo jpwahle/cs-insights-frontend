@@ -32,12 +32,6 @@ export default function Grid(props: GridProps) {
       });
     }
   }
-  // React.useEffect(() => {
-  //   getData(`fe/${props.view}/paged?page=${page}&pageSize=${pageSize}`).then((data) => {
-  //     props.setRowCount(data.rowCount);
-  //     props.setRows(data.rows);
-  //   });
-  // }, [page, pageSize]);
 
   return (
     <div style={{ height: 300, width: '100%' }}>

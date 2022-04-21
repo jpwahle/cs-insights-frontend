@@ -27,15 +27,9 @@ export default function Sidebar(props: SidebarProps) {
         props.setValues(data.timeData.cites);
       }
     });
-    //todo flexible page/pageSize
     getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter).then((data) => {
       props.setRows(data.rows);
       props.setRowCount(data.rowCount);
-
-      // props.setLabels(data.timeData.years);
-      // if ('cites' in data.timeData) {
-      //   props.setValues(data.timeData.cites);
-      // }
     });
   }
 
@@ -76,14 +70,6 @@ export default function Sidebar(props: SidebarProps) {
         setValue={props.setVenue}
       />
       <Button onClick={() => clearFilters()}>Clear Filters</Button>
-      {/*No functionality (might break):*/}
-      {/*<div className="filter-label">Affiliations</div>*/}
-      {/*<FilterCategorical route="affiliations" />*/}
-      {/*<div className="filter-label">Access type</div>*/}
-      {/*<FormGroup>*/}
-      {/*  <FormControlLabel control={<Checkbox />} label="open" />*/}
-      {/*  <FormControlLabel control={<Checkbox />} label="other" />*/}
-      {/*</FormGroup>*/}
     </Stack>
   );
 }
