@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../App.css';
 import FilterCategorical from './FilterCategorical';
 import { Button, Stack } from '@mui/material';
 import FilterTextfield from './FilterTextfield';
 import { getData } from '../network';
-import { SidebarProps, PaperStats, VenueFilter, AuthorFilter } from '../types';
+import { AuthorFilter, PaperStats, SidebarProps, VenueFilter } from '../types';
+import { SnackbarContext } from '../context/SnackbarContextProvider';
 
 export default function Sidebar(props: SidebarProps) {
+  const setSnack = useContext(SnackbarContext);
+
   function applyFilters() {
     let filterParameter = '';
     if (props.yearStart) {
@@ -21,21 +24,24 @@ export default function Sidebar(props: SidebarProps) {
     if (props.venue) {
       filterParameter += `venue=${props.venue._id}&`;
     }
-    getData('fe/papers/stats?' + filterParameter).then((data: PaperStats) => {
-      props.setLabels(data.timeData.years);
-      if ('cites' in data.timeData) {
-        props.setValues(data.timeData.cites);
+    getData('fe/papers/stats?' + filterParameter).then((data: PaperStats | string) => {
+      if (typeof data === 'string') {
+        setSnack(data);
+      } else {
+        props.setLabels(data.timeData.years);
+        if ('cites' in data.timeData) {
+          props.setValues(data.timeData.cites);
+        }
       }
     });
     //todo flexible page/pageSize
     getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter).then((data) => {
-      props.setRows(data.rows);
-      props.setRowCount(data.rowCount);
-
-      // props.setLabels(data.timeData.years);
-      // if ('cites' in data.timeData) {
-      //   props.setValues(data.timeData.cites);
-      // }
+      if (typeof data === 'string') {
+        setSnack(data);
+      } else {
+        props.setRows(data.rows);
+        props.setRowCount(data.rowCount);
+      }
     });
   }
 

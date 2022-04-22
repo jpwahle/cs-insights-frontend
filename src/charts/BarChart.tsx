@@ -2,7 +2,7 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ChartOverTimeProps } from '../types';
 
-function BarChart(props: ChartOverTimeProps) {
+export default function BarChart(props: ChartOverTimeProps) {
   const series = [
     {
       name: 'citations',
@@ -35,5 +35,3 @@ function BarChart(props: ChartOverTimeProps) {
 
   return <ReactApexChart options={options} series={series} type="bar" height={300} width={1200} />;
 }
-
-export default BarChart;

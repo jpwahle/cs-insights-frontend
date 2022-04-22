@@ -2,33 +2,36 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { getData } from '../network';
 import { GridProps } from '../types';
+import { useContext } from 'react';
+import { SnackbarContext } from '../context/SnackbarContextProvider';
 
 export default function Grid(props: GridProps) {
-  const columns = [
-    { field: '_id' },
-    { field: 'title', headerName: 'Title', width: 300 },
-    { field: 'year', headerName: 'Year' },
-    { field: 'authors', headerName: 'Authors', width: 200 },
-    { field: 'venues', headerName: 'Venue', width: 200 },
-    { field: 'cites', headerName: 'Citations' },
-  ];
-
   const [page, setPage] = React.useState<number>(0);
   const [pageSize, setPageSize] = React.useState<number>(100);
+
+  const setSnack = useContext(SnackbarContext);
 
   function test(newPage: number | null, newPageSize: number | null) {
     if (newPage) {
       setPage(newPage);
       getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`).then((data) => {
-        props.setRowCount(data.rowCount);
-        props.setRows(data.rows);
+        if (typeof data === 'string') {
+          setSnack(data);
+        } else {
+          props.setRowCount(data.rowCount);
+          props.setRows(data.rows);
+        }
       });
     }
     if (newPageSize) {
       setPageSize(newPageSize);
       getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`).then((data) => {
-        props.setRowCount(data.rowCount);
-        props.setRows(data.rows);
+        if (typeof data === 'string') {
+          setSnack(data);
+        } else {
+          props.setRowCount(data.rowCount);
+          props.setRows(data.rows);
+        }
       });
     }
   }
@@ -44,7 +47,7 @@ export default function Grid(props: GridProps) {
       <DataGrid
         rows={props.rows}
         rowCount={props.rowCount}
-        columns={columns}
+        columns={props.columns}
         disableSelectionOnClick
         getRowId={(row) => row._id}
         columnVisibilityModel={{

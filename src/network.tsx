@@ -1,4 +1,15 @@
-async function postData(route: string, data: Object) {
+async function promise(response: Response): Promise<any> {
+  if (!response.ok || response.status !== 200) {
+    // const error = (await response.json()).message;
+    // return `${response.status} ${error.name}: ${error.message}`;
+    //TODO remove comment
+    return `${response.status} ${response.statusText}: ${(await response.json()).message}`;
+  } else {
+    return response.json();
+  }
+}
+
+export async function postData(route: string, data: Object) {
   const url = process.env.REACT_APP_BACKEND + route;
   const token = localStorage.getItem('token');
   const response = await fetch(url, {
@@ -9,21 +20,19 @@ async function postData(route: string, data: Object) {
     },
     body: JSON.stringify(data),
   });
-  return response.json();
+
+  return promise(response);
 }
-async function getData(route: string) {
+
+export async function getData(route: string): Promise<any> {
   const url = process.env.REACT_APP_BACKEND + route;
   const token = localStorage.getItem('token');
-  const response = await fetch(url, {
+  let response;
+  response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok || response.status !== 200) {
-    console.log(await response.json());
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-}
 
-export { postData, getData };
+  return promise(response);
+}

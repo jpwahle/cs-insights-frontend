@@ -1,3 +1,5 @@
+import { GridColumns } from '@mui/x-data-grid';
+
 interface PaperOverTime {
   years: string[];
   papers: number[];
@@ -65,6 +67,7 @@ export interface GraphsProps {
   setRowCount(rowCount: number): void;
   rows: Paper[];
   setRows(rows: Paper[]): void;
+  columns: GridColumns;
 }
 
 export type FilterCategoricalProps<T> = {
@@ -82,6 +85,7 @@ export interface FilterYear {
 
 export interface GridProps {
   view: string;
+  columns: GridColumns;
   rowCount: number;
   setRowCount(rowCount: number): void;
   rows: Paper[];

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../App.css';
 import { Button } from '@mui/material';
 import { getData } from '../network';
@@ -6,20 +6,30 @@ import BarChart from '../charts/BarChart';
 
 import Grid from '../charts/Grid';
 import { GraphsProps, PaperStats } from '../types';
+import { SnackbarContext } from '../context/SnackbarContextProvider';
 
-function Graphs(props: GraphsProps) {
+export default function Graphs(props: GraphsProps) {
+  const setSnack = useContext(SnackbarContext);
+
   function handleFetchClick() {
     // TODO parallelize
-    getData('fe/papers/stats').then((data: PaperStats) => {
-      props.setLabels(data.timeData.years);
-      if ('cites' in data.timeData) {
-        props.setValues(data.timeData.cites);
+    getData('fe/papers/stats').then((data: PaperStats | string) => {
+      if (typeof data === 'string') {
+        setSnack(data);
+      } else {
+        props.setLabels(data.timeData.years);
+        if ('cites' in data.timeData) {
+          props.setValues(data.timeData.cites);
+        }
       }
     });
     getData('fe/papers/paged?page=0&pageSize=100').then((data) => {
-      props.setRows(data.rows);
-      props.setRowCount(data.rowCount);
-
+      if (typeof data === 'string') {
+        setSnack(data);
+      } else {
+        props.setRows(data.rows);
+        props.setRowCount(data.rowCount);
+      }
       // props.setLabels(data.timeData.years);
       // if ('cites' in data.timeData) {
       //   props.setValues(data.timeData.cites);
@@ -35,6 +45,7 @@ function Graphs(props: GraphsProps) {
 
       <BarChart labels={props.labels} values={props.values} />
       <Grid
+        columns={props.columns}
         view={'papers'}
         rowCount={props.rowCount}
         setRowCount={props.setRowCount}
@@ -44,5 +55,3 @@ function Graphs(props: GraphsProps) {
     </div>
   );
 }
-
-export default Graphs;
