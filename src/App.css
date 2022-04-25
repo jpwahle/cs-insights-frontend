@@ -54,14 +54,44 @@
 .sidebar {
   background: lightgrey;
   padding: var(--padding-small);
-
+  /*align-items: flex-start;*/
+  /*margin-left: auto;*/
+  text-align: start;
 }
 
-.selection {
+.sidebar > * {
+  padding: var(--padding-large);
+}
+
+.filter-header {
+  /*display: flex;*/
+  align-items: center;
+  justify-content: space-between;
+  /*width: auto;*/
+}
+
+.filter-label {
+  padding-bottom: 0;
+}
+
+.filter-textfield {
+  flex: 1;
+}
+
+.filter-year {
+  align-items: center;
+}
+
+.filter-year-minus {
+  margin: var(--padding-large);
+}
+
+.categories {
   background: darkgrey;
   padding: var(--padding-small);
 }
 
 .graphs {
-  padding: var(--padding-large);
+  margin: var(--padding-large);
 }
+
