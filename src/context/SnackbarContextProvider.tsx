@@ -1,9 +1,9 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 
 export const SnackbarContext = createContext({} as any); // TODO
 
-export function SnackbarContextProvider({ children }: any) {
+export function SnackbarContextProvider({ children }: { children: React.ReactElement }) {
   const [snack, setSnack] = useState('');
 
   const handleClose = () => {

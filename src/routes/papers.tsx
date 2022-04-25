@@ -1,10 +1,10 @@
-import Header from '../components/Header';
 import { Stack } from '@mui/material';
 import Sidebar from '../components/Sidebar';
 import Categories from '../components/Categories';
 import Graphs from '../components/Graphs';
 import React, { useState } from 'react';
 import { AuthorFilter, Paper, VenueFilter } from '../types';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
 
 export default function Papers() {
   const [yearStart, setYearStart] = useState<string>('');
@@ -29,7 +29,8 @@ export default function Papers() {
 
   return (
     <Stack className="Main">
-      <Header />
+      {/*<Header />*/}
+      <ResponsiveAppBar />
       <Stack direction="row" className="stack">
         <Sidebar
           yearStart={yearStart}

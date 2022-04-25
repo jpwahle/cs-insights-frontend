@@ -13,27 +13,19 @@ export default function Graphs(props: GraphsProps) {
 
   function handleFetchClick() {
     // TODO parallelize
-    getData('fe/papers/stats').then((data: PaperStats | string) => {
-      if (typeof data === 'string') {
-        setSnack(data);
-      } else {
+    getData('fe/papers/stats', setSnack).then((data: PaperStats) => {
+      if (data) {
         props.setLabels(data.timeData.years);
         if ('cites' in data.timeData) {
           props.setValues(data.timeData.cites);
         }
       }
     });
-    getData('fe/papers/paged?page=0&pageSize=100').then((data) => {
-      if (typeof data === 'string') {
-        setSnack(data);
-      } else {
+    getData('fe/papers/paged?page=0&pageSize=100', setSnack).then((data) => {
+      if (data) {
         props.setRows(data.rows);
         props.setRowCount(data.rowCount);
       }
-      // props.setLabels(data.timeData.years);
-      // if ('cites' in data.timeData) {
-      //   props.setValues(data.timeData.cites);
-      // }
     });
   }
 

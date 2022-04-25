@@ -3,35 +3,17 @@
   --padding-large: 8px;
 }
 
-.Main {
-  text-align: center;
-  height: 100vh;
-  width: 100vw;
-}
-
+/* home */
 .App-logo {
-  height: 5vmin;
   pointer-events: none;
-  color: white;
+  color: #61DBFB;
+  font-size: calc(50px + 10vmin);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 5s linear;
   }
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: calc(10px + 2vmin);
-  background: dodgerblue;
-  padding: var(--padding-small);
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
@@ -43,19 +25,40 @@
   }
 }
 
+.home {
+  padding-top: 64px;
+  background-color: #eeeeee;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  text-align: center;
+}
+
+/* general structure */
+.Main {
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+}
+
 .stack {
   flex: 1;
 }
 
-.header-stack {
-  align-items: center;
+.categories {
+  background: darkgrey;
+  padding: var(--padding-small);
 }
 
+.graphs {
+  margin: var(--padding-large);
+}
+
+/* filter */
 .sidebar {
   background: lightgrey;
   padding: var(--padding-small);
-  /*align-items: flex-start;*/
-  /*margin-left: auto;*/
   text-align: start;
 }
 
@@ -64,10 +67,8 @@
 }
 
 .filter-header {
-  /*display: flex;*/
   align-items: center;
   justify-content: space-between;
-  /*width: auto;*/
 }
 
 .filter-label {
@@ -83,15 +84,6 @@
 }
 
 .filter-year-minus {
-  margin: var(--padding-large);
-}
-
-.categories {
-  background: darkgrey;
-  padding: var(--padding-small);
-}
-
-.graphs {
   margin: var(--padding-large);
 }
 

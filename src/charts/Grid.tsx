@@ -11,28 +11,28 @@ export default function Grid(props: GridProps) {
 
   const setSnack = useContext(SnackbarContext);
 
-  function test(newPage: number | null, newPageSize: number | null) {
+  function updateGrid(newPage: number | null, newPageSize: number | null) {
     if (newPage) {
       setPage(newPage);
-      getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`).then((data) => {
-        if (typeof data === 'string') {
-          setSnack(data);
-        } else {
-          props.setRowCount(data.rowCount);
-          props.setRows(data.rows);
+      getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`, setSnack).then(
+        (data) => {
+          if (data) {
+            props.setRowCount(data.rowCount);
+            props.setRows(data.rows);
+          }
         }
-      });
+      );
     }
     if (newPageSize) {
       setPageSize(newPageSize);
-      getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`).then((data) => {
-        if (typeof data === 'string') {
-          setSnack(data);
-        } else {
-          props.setRowCount(data.rowCount);
-          props.setRows(data.rows);
+      getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`, setSnack).then(
+        (data) => {
+          if (data) {
+            props.setRowCount(data.rowCount);
+            props.setRows(data.rows);
+          }
         }
-      });
+      );
     }
   }
   // React.useEffect(() => {
@@ -59,8 +59,8 @@ export default function Grid(props: GridProps) {
         page={page}
         pageSize={pageSize}
         paginationMode="server"
-        onPageChange={(newPage) => test(newPage, null)}
-        onPageSizeChange={(newPageSize) => test(null, newPageSize)}
+        onPageChange={(newPage) => updateGrid(newPage, null)}
+        onPageSizeChange={(newPageSize) => updateGrid(null, newPageSize)}
       />
     </div>
   );

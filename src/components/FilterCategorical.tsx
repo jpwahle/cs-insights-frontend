@@ -16,10 +16,8 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
 
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
     if (newInputValue.length >= 3) {
-      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}&`);
-      if (typeof data === 'string') {
-        setSnack(data);
-      } else {
+      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}&`, setSnack);
+      if (data) {
         setOptions(data);
         setLoading(false);
       }

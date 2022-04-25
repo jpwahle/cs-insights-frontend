@@ -1,15 +1,17 @@
-async function promise(response: Response): Promise<any> {
+async function promise(response: Response, setSnack: (message: string) => void): Promise<any> {
   if (!response.ok || response.status !== 200) {
     // const error = (await response.json()).message;
     // return `${response.status} ${error.name}: ${error.message}`;
     //TODO remove comment
-    return `${response.status} ${response.statusText}: ${(await response.json()).message}`;
+    console.log('error');
+    setSnack(`${response.status} ${response.statusText}: ${(await response.json()).message}`);
+    return new Promise((resolve) => resolve(''));
   } else {
     return response.json();
   }
 }
 
-export async function postData(route: string, data: Object) {
+export async function postData(route: string, data: Object, setSnack: (message: string) => void) {
   const url = process.env.REACT_APP_BACKEND + route;
   const token = localStorage.getItem('token');
   const response = await fetch(url, {
@@ -21,10 +23,10 @@ export async function postData(route: string, data: Object) {
     body: JSON.stringify(data),
   });
 
-  return promise(response);
+  return promise(response, setSnack);
 }
 
-export async function getData(route: string): Promise<any> {
+export async function getData(route: string, setSnack: (message: string) => void): Promise<any> {
   const url = process.env.REACT_APP_BACKEND + route;
   const token = localStorage.getItem('token');
   let response;
@@ -34,5 +36,5 @@ export async function getData(route: string): Promise<any> {
     },
   });
 
-  return promise(response);
+  return promise(response, setSnack);
 }

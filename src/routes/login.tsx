@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { postData } from '../network';
+import { useContext } from 'react';
+import { SnackbarContext } from '../context/SnackbarContextProvider';
 
 function Copyright(props: any) {
   return (
@@ -30,6 +32,8 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function Login() {
+  const setSnack = useContext(SnackbarContext);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const input = new FormData(event.currentTarget);
@@ -37,12 +41,13 @@ export default function Login() {
       email: input.get('email') || process.env.REACT_APP_EMAIL, // TODO do no use in prod
       password: input.get('password') || process.env.REACT_APP_PASSWORD,
     };
-    postData('login', login).then((data) => {
+    postData('login', login, setSnack).then((data) => {
       //TODO check for remember me
       console.log(data);
       if (typeof window.localStorage !== 'undefined') {
         localStorage.setItem('token', data.token);
         console.log('token:', localStorage.getItem('token'));
+        // TODO check data and forward user
       }
     });
   };

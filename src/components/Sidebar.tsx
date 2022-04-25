@@ -6,6 +6,7 @@ import FilterTextfield from './FilterTextfield';
 import { getData } from '../network';
 import { AuthorFilter, PaperStats, SidebarProps, VenueFilter } from '../types';
 import { SnackbarContext } from '../context/SnackbarContextProvider';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Sidebar(props: SidebarProps) {
   const setSnack = useContext(SnackbarContext);
@@ -24,10 +25,8 @@ export default function Sidebar(props: SidebarProps) {
     if (props.venue) {
       filterParameter += `venue=${props.venue._id}&`;
     }
-    getData('fe/papers/stats?' + filterParameter).then((data: PaperStats | string) => {
-      if (typeof data === 'string') {
-        setSnack(data);
-      } else {
+    getData('fe/papers/stats?' + filterParameter, setSnack).then((data: PaperStats) => {
+      if (data) {
         props.setLabels(data.timeData.years);
         if ('cites' in data.timeData) {
           props.setValues(data.timeData.cites);
@@ -35,10 +34,8 @@ export default function Sidebar(props: SidebarProps) {
       }
     });
     //todo flexible page/pageSize
-    getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter).then((data) => {
-      if (typeof data === 'string') {
-        setSnack(data);
-      } else {
+    getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter, setSnack).then((data) => {
+      if (data) {
         props.setRows(data.rows);
         props.setRowCount(data.rowCount);
       }
@@ -56,7 +53,9 @@ export default function Sidebar(props: SidebarProps) {
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
         <b>Filters</b>
-        <Button onClick={() => applyFilters()}>Apply Filters</Button>
+        <Button startIcon={<DeleteIcon />} onClick={() => clearFilters()}>
+          Clear Filters
+        </Button>
       </Stack>
 
       <div className="filter-label">Year of publication</div>
@@ -81,8 +80,9 @@ export default function Sidebar(props: SidebarProps) {
         value={props.venue}
         setValue={props.setVenue}
       />
-      <Button onClick={() => clearFilters()}>Clear Filters</Button>
-      {/*No functionality (might break):*/}
+      <Button onClick={() => applyFilters()}>Apply Filters</Button>
+
+      {/*No functionality (might break): TODO*/}
       {/*<div className="filter-label">Affiliations</div>*/}
       {/*<FilterCategorical route="affiliations" />*/}
       {/*<div className="filter-label">Access type</div>*/}
