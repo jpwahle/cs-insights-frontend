@@ -1,4 +1,5 @@
 import { GridColumns } from '@mui/x-data-grid';
+import { SvgIconComponent } from '@mui/icons-material';
 
 interface PaperOverTime {
   years: string[];
@@ -39,36 +40,16 @@ export type VenueFilter = {
   name: string;
 };
 
-export interface SidebarProps {
-  yearStart: string;
-  setYearStart(yearStart: string): void;
-  yearEnd: string;
-  setYearEnd(yearEnd: string): void;
-  author: AuthorFilter | null;
-  setAuthor(author: AuthorFilter | null): void;
-  venue: VenueFilter | null;
-  setVenue(venue: VenueFilter | null): void;
-  labels: string[];
-  setLabels(labels: string[]): void;
-  values: number[];
-  setValues(values: number[]): void;
-  rowCount: number;
-  setRowCount(rowCount: number): void;
-  rows: Paper[];
-  setRows(rows: Paper[]): void;
-}
-
 export interface GraphsProps {
-  labels: string[];
-  setLabels(labels: string[]): void;
-  values: number[];
-  setValues(values: number[]): void;
-  rowCount: number;
-  setRowCount(rowCount: number): void;
-  rows: Paper[];
-  setRows(rows: Paper[]): void;
   columns: GridColumns;
 }
+
+export type Filter = {
+  yearStart: string;
+  yearEnd: string;
+  author: AuthorFilter | null;
+  venue: VenueFilter | null;
+};
 
 export type FilterCategoricalProps<T> = {
   label: string;
@@ -90,4 +71,14 @@ export interface GridProps {
   setRowCount(rowCount: number): void;
   rows: Paper[];
   setRows(rows: Paper[]): void;
+}
+
+export interface CategoriesProps {
+  fetchData(): void;
+}
+
+//TODO check if SvgIconComponent can be substituted
+export interface IconLabelProps {
+  label: string;
+  icon: SvgIconComponent;
 }

@@ -1,22 +1,20 @@
-import { Stack } from '@mui/material';
-import Sidebar from '../components/Sidebar';
 import Categories from '../components/Categories';
-import Graphs from '../components/Graphs';
 import React, { useState } from 'react';
-import { AuthorFilter, Paper, VenueFilter } from '../types';
-import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import { Paper, PaperStats } from '../types';
+import { useSnack } from '../context/SnackbarContext';
+import { useFilter } from '../context/FilterContext';
+import { getData } from '../network';
+import BarChart from '../charts/BarChart';
+import Grid from '../charts/Grid';
+import Frame from '../components/Frame';
 
 export default function Papers() {
-  const [yearStart, setYearStart] = useState<string>('');
-  const [yearEnd, setYearEnd] = useState<string>('');
-  const [author, setAuthor] = useState<AuthorFilter | null>(null);
-  const [venue, setVenue] = useState<VenueFilter | null>(null);
-
   const [labels, setLabels] = useState<string[]>([]);
   const [values, setValues] = useState<number[]>([]);
-
   const [rowCount, setRowCount] = React.useState<number>(0);
   const [rows, setRows] = React.useState<Paper[]>([]);
+  const setSnack = useSnack();
+  const filter = useFilter();
 
   const columns = [
     { field: '_id' },
@@ -27,44 +25,52 @@ export default function Papers() {
     { field: 'cites', headerName: 'Citations' },
   ];
 
+  function handleFetchClick() {
+    // TODO parallelize
+    let filterParameter = '';
+    if (filter.filter.yearStart) {
+      filterParameter += `yearStart=${filter.filter.yearStart}&`;
+    }
+    if (filter.filter.yearEnd) {
+      filterParameter += `yearEnd=${filter.filter.yearEnd}&`;
+    }
+    if (filter.filter.author) {
+      filterParameter += `author=${filter.filter.author._id}&`;
+    }
+    if (filter.filter.venue) {
+      filterParameter += `venue=${filter.filter.venue._id}&`;
+    }
+    getData('fe/papers/stats?' + filterParameter, setSnack).then((data: PaperStats) => {
+      if (data) {
+        setLabels(data.timeData.years);
+        if ('cites' in data.timeData) {
+          setValues(data.timeData.cites);
+        }
+      }
+    });
+    //todo flexible page/pageSize
+    getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter, setSnack).then((data) => {
+      if (data) {
+        setRows(data.rows);
+        setRowCount(data.rowCount);
+      }
+    });
+  }
+
   return (
-    <Stack className="Main">
-      {/*<Header />*/}
-      <ResponsiveAppBar />
-      <Stack direction="row" className="stack">
-        <Sidebar
-          yearStart={yearStart}
-          setYearStart={setYearStart}
-          yearEnd={yearEnd}
-          setYearEnd={setYearEnd}
-          author={author}
-          setAuthor={setAuthor}
-          venue={venue}
-          setVenue={setVenue}
-          labels={labels}
-          setLabels={setLabels}
-          values={values}
-          setValues={setValues}
+    <Frame>
+      <Categories fetchData={handleFetchClick} />
+      <div className="graphs">
+        <BarChart labels={labels} values={values} />
+        <Grid
+          columns={columns}
+          view={'papers'}
           rowCount={rowCount}
           setRowCount={setRowCount}
           rows={rows}
           setRows={setRows}
         />
-        <Stack className="stack">
-          <Categories />
-          <Graphs
-            labels={labels}
-            setLabels={setLabels}
-            values={values}
-            setValues={setValues}
-            rowCount={rowCount}
-            setRowCount={setRowCount}
-            rows={rows}
-            setRows={setRows}
-            columns={columns}
-          />
-        </Stack>
-      </Stack>
-    </Stack>
+      </div>
+    </Frame>
   );
 }

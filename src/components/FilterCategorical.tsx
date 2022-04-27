@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import '../App.css';
 import { Autocomplete, CircularProgress, debounce, TextField } from '@mui/material';
 import { getData } from '../network';
 import { FilterCategoricalProps } from '../types';
-import { SnackbarContext } from '../context/SnackbarContextProvider';
+import { useSnack } from '../context/SnackbarContext';
 
 export default function FilterCategorical<T extends { _id: string; [key: string]: string }>(
   props: FilterCategoricalProps<T>
@@ -12,7 +12,7 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   const [options, setOptions] = React.useState<T[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const setSnack = useContext(SnackbarContext);
+  const setSnack = useSnack();
 
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
     if (newInputValue.length >= 3) {

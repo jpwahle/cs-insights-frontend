@@ -51,7 +51,6 @@ const ResponsiveAppBar = () => {
             <Button
               href={page.route}
               key={page.route}
-              // onClick={() => handleCloseNavMenu(page.route)}
               sx={{ my: 2, color: 'white', display: 'block' }}
             >
               {page.label}

@@ -13,8 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { postData } from '../network';
-import { useContext } from 'react';
-import { SnackbarContext } from '../context/SnackbarContextProvider';
+import { useSnack } from '../context/SnackbarContext';
 
 function Copyright(props: any) {
   return (
@@ -32,7 +31,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function Login() {
-  const setSnack = useContext(SnackbarContext);
+  const setSnack = useSnack();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

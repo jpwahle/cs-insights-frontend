@@ -6,9 +6,8 @@ import { Container } from '@mui/material';
 export default function Home() {
   return (
     <Container className="home">
-      {/*<img src={logo} className="App-logo" alt="logo" />*/}
       <div className="App-logo">D4</div>
-      <p>Welcome to the DBLP Discovery Dataset Demo</p>
+      <p>Welcome to the DBLP Discovery Dataset Demo (D4)</p>
       <nav
         style={{
           paddingBottom: '1rem',

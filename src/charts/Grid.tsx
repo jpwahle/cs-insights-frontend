@@ -2,14 +2,13 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { getData } from '../network';
 import { GridProps } from '../types';
-import { useContext } from 'react';
-import { SnackbarContext } from '../context/SnackbarContextProvider';
+import { useSnack } from '../context/SnackbarContext';
 
 export default function Grid(props: GridProps) {
   const [page, setPage] = React.useState<number>(0);
   const [pageSize, setPageSize] = React.useState<number>(100);
 
-  const setSnack = useContext(SnackbarContext);
+  const setSnack = useSnack();
 
   function updateGrid(newPage: number | null, newPageSize: number | null) {
     if (newPage) {

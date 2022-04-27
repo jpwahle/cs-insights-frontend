@@ -8,6 +8,7 @@
   pointer-events: none;
   color: #61DBFB;
   font-size: calc(50px + 10vmin);
+  font-weight: bold;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -36,8 +37,8 @@
 }
 
 /* general structure */
-.Main {
-  text-align: center;
+.frame {
+  /*text-align: center;*/
   height: 100vh;
   width: 100vw;
 }
@@ -48,7 +49,12 @@
 
 .categories {
   background: darkgrey;
-  padding: var(--padding-small);
+  padding: var(--padding-large);
+  align-items: center;
+}
+
+.categories > * {
+  padding: var(--padding-large);
 }
 
 .graphs {

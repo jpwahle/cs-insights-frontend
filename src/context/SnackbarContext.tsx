@@ -1,10 +1,18 @@
 import React, { createContext, useState } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 
-export const SnackbarContext = createContext({} as any); // TODO
+const SnackbarContext = createContext<((message: string) => void) | undefined>(undefined);
 
-export function SnackbarContextProvider({ children }: { children: React.ReactElement }) {
-  const [snack, setSnack] = useState('');
+export function useSnack() {
+  const context = React.useContext(SnackbarContext);
+  if (context === undefined) {
+    throw new Error('useSnack must be used within a SnackbarProvider');
+  }
+  return context;
+}
+
+export function SnackbarProvider({ children }: { children: React.ReactElement }) {
+  const [snack, setSnack] = useState<string>('');
 
   const handleClose = () => {
     setSnack('');
