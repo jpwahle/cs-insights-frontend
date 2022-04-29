@@ -16,6 +16,7 @@ export type DatapointOverTime = PaperOverTime | CiteOverTime;
 export interface ChartOverTimeProps {
   labels: string[];
   values: number[];
+  yLabel: string;
 }
 
 export interface PaperStats {
@@ -77,8 +78,12 @@ export interface CategoriesProps {
   fetchData(): void;
 }
 
-//TODO check if SvgIconComponent can be substituted
 export interface IconLabelProps {
   label: string;
   icon: SvgIconComponent;
 }
+
+export type Network = {
+  token: string;
+  setSnack: (message: string) => void;
+};

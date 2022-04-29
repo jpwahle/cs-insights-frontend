@@ -8,22 +8,35 @@ import Authors from './routes/authors';
 import Home from './routes/home';
 import Venues from './routes/venues';
 import { FilterProvider } from './context/FilterContext';
+import { AuthProvider } from './context/AuthContext';
+import {
+  ROUTE_ACCOUNT,
+  ROUTE_AUTHORS,
+  ROUTE_LOGIN,
+  ROUTE_PAPERS,
+  ROUTE_REGISTER,
+  ROUTE_VENUES,
+} from './consts';
+import Account from './routes/account';
 
 export default function App() {
   return (
     <SnackbarProvider>
-      <FilterProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="papers" element={<Papers />} />
-            <Route path="authors" element={<Authors />} />
-            <Route path="venues" element={<Venues />} />
-          </Routes>
-        </BrowserRouter>
-      </FilterProvider>
+      <AuthProvider>
+        <FilterProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path={ROUTE_LOGIN} element={<Login />} />
+              <Route path={ROUTE_REGISTER} element={<Register />} />
+              <Route path={ROUTE_ACCOUNT} element={<Account />} />
+              <Route path={ROUTE_PAPERS} element={<Papers />} />
+              <Route path={ROUTE_AUTHORS} element={<Authors />} />
+              <Route path={ROUTE_VENUES} element={<Venues />} />
+            </Routes>
+          </BrowserRouter>
+        </FilterProvider>
+      </AuthProvider>
     </SnackbarProvider>
   );
 }

@@ -1,7 +1,9 @@
+import Frame from '../components/Frame';
+
 export default function Authors() {
   return (
-    <main style={{ padding: '1rem 0' }}>
+    <Frame>
       <h2>Authors (WIP)</h2>
-    </main>
+    </Frame>
   );
 }

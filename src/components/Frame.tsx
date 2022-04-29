@@ -1,20 +1,31 @@
 import ResponsiveAppBar from './ResponsiveAppBar';
 import Sidebar from './Sidebar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
+import { Navigate } from 'react-router-dom';
+import { useRequestHelper } from '../context/NetworkHook';
+import { ROUTE_LOGIN } from '../consts';
 
 export default function Frame({
   children,
 }: {
   children: React.ReactElement | React.ReactElement[];
 }) {
-  return (
-    <Stack className="frame">
-      <ResponsiveAppBar />
-      <Stack direction="row" className="stack">
-        <Sidebar />
-        <Stack className="stack">{children}</Stack>
+  const requestHelper = useRequestHelper();
+  if (requestHelper.token) {
+    return (
+      <Stack className="frame">
+        <ResponsiveAppBar />
+        <Stack direction="row" className="stack">
+          <Sidebar />
+          <Stack className="stack">{children}</Stack>
+        </Stack>
       </Stack>
-    </Stack>
-  );
+    );
+  } else {
+    useEffect(() => {
+      requestHelper.setSnack('You need to login to access this page.');
+    });
+    return <Navigate to={ROUTE_LOGIN} />;
+  }
 }

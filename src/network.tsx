@@ -1,9 +1,8 @@
+import { Network } from './types';
+
+//TODO rework network calls
 async function promise(response: Response, setSnack: (message: string) => void): Promise<any> {
-  if (!response.ok || response.status !== 200) {
-    // const error = (await response.json()).message;
-    // return `${response.status} ${error.name}: ${error.message}`;
-    //TODO remove comment
-    console.log('error');
+  if (!response.ok || response.status >= 400) {
     setSnack(`${response.status} ${response.statusText}: ${(await response.json()).message}`);
     return new Promise((resolve) => resolve(''));
   } else {
@@ -11,30 +10,28 @@ async function promise(response: Response, setSnack: (message: string) => void):
   }
 }
 
-export async function postData(route: string, data: Object, setSnack: (message: string) => void) {
+export async function postData(route: string, data: Object, network: Network) {
   const url = process.env.REACT_APP_BACKEND + route;
-  const token = localStorage.getItem('token');
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${network.token}`,
     },
     body: JSON.stringify(data),
   });
 
-  return promise(response, setSnack);
+  return promise(response, network.setSnack);
 }
 
-export async function getData(route: string, setSnack: (message: string) => void): Promise<any> {
+export async function getData(route: string, network: Network): Promise<any> {
   const url = process.env.REACT_APP_BACKEND + route;
-  const token = localStorage.getItem('token');
   let response;
   response = await fetch(url, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${network.token}`,
     },
   });
 
-  return promise(response, setSnack);
+  return promise(response, network.setSnack);
 }

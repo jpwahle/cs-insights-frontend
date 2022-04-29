@@ -27,7 +27,16 @@ export default function BarChart(props: ChartOverTimeProps) {
     },
     xaxis: {
       categories: props.labels,
+      title: {
+        text: 'Year of publication',
+      },
     },
+    yaxis: {
+      title: {
+        text: 'Number of Citations',
+      },
+    },
+
     fill: {
       opacity: 1,
     },

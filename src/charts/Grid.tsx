@@ -2,18 +2,20 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { getData } from '../network';
 import { GridProps } from '../types';
-import { useSnack } from '../context/SnackbarContext';
+import { useRequestHelper } from '../context/NetworkHook';
+import { PAGE_SIZE } from '../consts';
 
 export default function Grid(props: GridProps) {
   const [page, setPage] = React.useState<number>(0);
-  const [pageSize, setPageSize] = React.useState<number>(100);
+  const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
 
-  const setSnack = useSnack();
+  const requestHelper = useRequestHelper();
 
+  //TODO rework together with network calls
   function updateGrid(newPage: number | null, newPageSize: number | null) {
     if (newPage) {
       setPage(newPage);
-      getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`, setSnack).then(
+      getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`, requestHelper).then(
         (data) => {
           if (data) {
             props.setRowCount(data.rowCount);
@@ -24,7 +26,7 @@ export default function Grid(props: GridProps) {
     }
     if (newPageSize) {
       setPageSize(newPageSize);
-      getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`, setSnack).then(
+      getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`, requestHelper).then(
         (data) => {
           if (data) {
             props.setRowCount(data.rowCount);

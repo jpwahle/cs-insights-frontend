@@ -1,19 +1,20 @@
-import Categories from '../components/Categories';
+import Tools from '../components/Tools';
 import React, { useState } from 'react';
 import { Paper, PaperStats } from '../types';
-import { useSnack } from '../context/SnackbarContext';
 import { useFilter } from '../context/FilterContext';
 import { getData } from '../network';
 import BarChart from '../charts/BarChart';
 import Grid from '../charts/Grid';
 import Frame from '../components/Frame';
+import { useRequestHelper } from '../context/NetworkHook';
+import { PAGE_SIZE } from '../consts';
 
 export default function Papers() {
   const [labels, setLabels] = useState<string[]>([]);
   const [values, setValues] = useState<number[]>([]);
   const [rowCount, setRowCount] = React.useState<number>(0);
   const [rows, setRows] = React.useState<Paper[]>([]);
-  const setSnack = useSnack();
+  const requestHelper = useRequestHelper();
   const filter = useFilter();
 
   const columns = [
@@ -25,8 +26,9 @@ export default function Papers() {
     { field: 'cites', headerName: 'Citations' },
   ];
 
-  function handleFetchClick() {
-    // TODO parallelize
+  function getChartData() {
+    console.log('fetch');
+    // TODO parallelize with network call rework
     let filterParameter = '';
     if (filter.filter.yearStart) {
       filterParameter += `yearStart=${filter.filter.yearStart}&`;
@@ -40,7 +42,7 @@ export default function Papers() {
     if (filter.filter.venue) {
       filterParameter += `venue=${filter.filter.venue._id}&`;
     }
-    getData('fe/papers/stats?' + filterParameter, setSnack).then((data: PaperStats) => {
+    getData('fe/papers/stats?' + filterParameter, requestHelper).then((data: PaperStats) => {
       if (data) {
         setLabels(data.timeData.years);
         if ('cites' in data.timeData) {
@@ -48,20 +50,21 @@ export default function Papers() {
         }
       }
     });
-    //todo flexible page/pageSize
-    getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter, setSnack).then((data) => {
-      if (data) {
-        setRows(data.rows);
-        setRowCount(data.rowCount);
+    getData(`fe/papers/paged?page=0&pageSize=${PAGE_SIZE}&${filterParameter}`, requestHelper).then(
+      (data) => {
+        if (data) {
+          setRows(data.rows);
+          setRowCount(data.rowCount);
+        }
       }
-    });
+    );
   }
 
   return (
     <Frame>
-      <Categories fetchData={handleFetchClick} />
+      <Tools fetchData={getChartData} />
       <div className="graphs">
-        <BarChart labels={labels} values={values} />
+        <BarChart labels={labels} values={values} yLabel="papers" />
         <Grid
           columns={columns}
           view={'papers'}

@@ -3,7 +3,8 @@ import '../App.css';
 import { Autocomplete, CircularProgress, debounce, TextField } from '@mui/material';
 import { getData } from '../network';
 import { FilterCategoricalProps } from '../types';
-import { useSnack } from '../context/SnackbarContext';
+import { useRequestHelper } from '../context/NetworkHook';
+import { DEBOUNCE_DELAY } from '../consts';
 
 export default function FilterCategorical<T extends { _id: string; [key: string]: string }>(
   props: FilterCategoricalProps<T>
@@ -12,17 +13,17 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   const [options, setOptions] = React.useState<T[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const setSnack = useSnack();
+  const requestHelper = useRequestHelper();
 
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
     if (newInputValue.length >= 3) {
-      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}&`, setSnack);
+      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}&`, requestHelper);
       if (data) {
         setOptions(data);
         setLoading(false);
       }
     }
-  }, 1000);
+  }, DEBOUNCE_DELAY);
 
   function handleInputChange(newInputValue: string) {
     setLoading(true);

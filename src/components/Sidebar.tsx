@@ -54,15 +54,6 @@ export default function Sidebar() {
         value={filter.filter.venue}
         setValue={(value) => filter.setFilter({ ...filter.filter, venue: value })}
       />
-
-      {/*No functionality (might break): TODO*/}
-      {/*<div className="filter-label">Affiliations</div>*/}
-      {/*<FilterCategorical route="affiliations" />*/}
-      {/*<div className="filter-label">Access type</div>*/}
-      {/*<FormGroup>*/}
-      {/*  <FormControlLabel control={<Checkbox />} label="open" />*/}
-      {/*  <FormControlLabel control={<Checkbox />} label="other" />*/}
-      {/*</FormGroup>*/}
     </Stack>
   );
 }
