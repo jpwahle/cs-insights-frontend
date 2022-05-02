@@ -19,24 +19,28 @@ import {
 } from './consts';
 import Account from './routes/account';
 
+import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
+
 export default function App() {
   return (
     <SnackbarProvider>
-      <AuthProvider>
-        <FilterProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path={ROUTE_LOGIN} element={<Login />} />
-              <Route path={ROUTE_REGISTER} element={<Register />} />
-              <Route path={ROUTE_ACCOUNT} element={<Account />} />
-              <Route path={ROUTE_PAPERS} element={<Papers />} />
-              <Route path={ROUTE_AUTHORS} element={<Authors />} />
-              <Route path={ROUTE_VENUES} element={<Venues />} />
-            </Routes>
-          </BrowserRouter>
-        </FilterProvider>
-      </AuthProvider>
+      <ErrorBoundaryWrapper>
+        <AuthProvider>
+          <FilterProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path={ROUTE_LOGIN} element={<Login />} />
+                <Route path={ROUTE_REGISTER} element={<Register />} />
+                <Route path={ROUTE_ACCOUNT} element={<Account />} />
+                <Route path={ROUTE_PAPERS} element={<Papers />} />
+                <Route path={ROUTE_AUTHORS} element={<Authors />} />
+                <Route path={ROUTE_VENUES} element={<Venues />} />
+              </Routes>
+            </BrowserRouter>
+          </FilterProvider>
+        </AuthProvider>
+      </ErrorBoundaryWrapper>
     </SnackbarProvider>
   );
 }

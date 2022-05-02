@@ -9,7 +9,7 @@ export default function Tools(props: CategoriesProps) {
   return (
     <Stack direction="row" className="categories">
       <IconLabel label="Tools" icon={ConstructionIcon} />
-      <Button variant="contained" onClick={() => props.fetchData}>
+      <Button variant="contained" onClick={() => props.fetchData()}>
         Fetch Data/Apply Filters
       </Button>
     </Stack>

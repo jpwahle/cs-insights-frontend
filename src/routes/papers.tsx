@@ -27,7 +27,6 @@ export default function Papers() {
   ];
 
   function getChartData() {
-    console.log('fetch');
     // TODO parallelize with network call rework
     let filterParameter = '';
     if (filter.filter.yearStart) {
