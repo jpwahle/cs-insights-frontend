@@ -41,10 +41,6 @@ export type VenueFilter = {
   name: string;
 };
 
-export interface GraphsProps {
-  columns: GridColumns;
-}
-
 export type Filter = {
   yearStart: string;
   yearEnd: string;
@@ -69,9 +65,12 @@ export interface GridProps {
   view: string;
   columns: GridColumns;
   rowCount: number;
-  setRowCount(rowCount: number): void;
   rows: Paper[];
-  setRows(rows: Paper[]): void;
+  page: number;
+  setPage(page: number): void;
+  pageSize: number;
+  setPageSize(pageSize: number): void;
+  refetchGrid(): void;
 }
 
 export interface CategoriesProps {
@@ -87,3 +86,6 @@ export type Network = {
   token: string;
   setSnack: (message: string) => void;
 };
+
+export type StatsData = { years: string[]; cites: number[] };
+export type PagedData = { rowCount: number; rows: Paper[] };

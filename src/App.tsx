@@ -20,26 +20,32 @@ import {
 import Account from './routes/account';
 
 import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 export default function App() {
+  const queryClient = new QueryClient();
   return (
     <SnackbarProvider>
       <ErrorBoundaryWrapper>
-        <AuthProvider>
-          <FilterProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path={ROUTE_LOGIN} element={<Login />} />
-                <Route path={ROUTE_REGISTER} element={<Register />} />
-                <Route path={ROUTE_ACCOUNT} element={<Account />} />
-                <Route path={ROUTE_PAPERS} element={<Papers />} />
-                <Route path={ROUTE_AUTHORS} element={<Authors />} />
-                <Route path={ROUTE_VENUES} element={<Venues />} />
-              </Routes>
-            </BrowserRouter>
-          </FilterProvider>
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <AuthProvider>
+            <FilterProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path={ROUTE_LOGIN} element={<Login />} />
+                  <Route path={ROUTE_REGISTER} element={<Register />} />
+                  <Route path={ROUTE_ACCOUNT} element={<Account />} />
+                  <Route path={ROUTE_PAPERS} element={<Papers />} />
+                  <Route path={ROUTE_AUTHORS} element={<Authors />} />
+                  <Route path={ROUTE_VENUES} element={<Venues />} />
+                </Routes>
+              </BrowserRouter>
+            </FilterProvider>
+          </AuthProvider>
+        </QueryClientProvider>
       </ErrorBoundaryWrapper>
     </SnackbarProvider>
   );

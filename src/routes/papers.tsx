@@ -1,21 +1,18 @@
 import Tools from '../components/Tools';
 import React, { useState } from 'react';
-import { Paper, PaperStats } from '../types';
-import { useFilter } from '../context/FilterContext';
-import { getData } from '../network';
+import { PagedData, StatsData } from '../types';
+import { useNetworkGet } from '../network';
 import BarChart from '../charts/BarChart';
 import Grid from '../charts/Grid';
 import Frame from '../components/Frame';
-import { useRequestHelper } from '../context/NetworkHook';
 import { PAGE_SIZE } from '../consts';
 
 export default function Papers() {
-  const [labels, setLabels] = useState<string[]>([]);
-  const [values, setValues] = useState<number[]>([]);
-  const [rowCount, setRowCount] = React.useState<number>(0);
-  const [rows, setRows] = React.useState<Paper[]>([]);
-  const requestHelper = useRequestHelper();
-  const filter = useFilter();
+  console.log('papers');
+  const [stats, setStats] = useState<StatsData>({ years: [], cites: [] });
+  const [paged, setPaged] = useState<PagedData>({ rowCount: 0, rows: [] });
+  const [page, setPage] = React.useState<number>(0);
+  const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
 
   const columns = [
     { field: '_id' },
@@ -26,51 +23,41 @@ export default function Papers() {
     { field: 'cites', headerName: 'Citations' },
   ];
 
+  const refetchStats = useNetworkGet('fe/papers/stats', 'stats', (data: any) => {
+    if ('cites' in data.timeData) {
+      setStats(data.timeData);
+    }
+  });
+
+  const refetchGrid = useNetworkGet(
+    `fe/papers/paged?page=0&pageSize=${PAGE_SIZE}`,
+    'paged',
+    (data: any) => {
+      console.log('setPaged');
+      setPaged(data);
+    }
+  );
+
   function getChartData() {
-    // TODO parallelize with network call rework
-    let filterParameter = '';
-    if (filter.filter.yearStart) {
-      filterParameter += `yearStart=${filter.filter.yearStart}&`;
-    }
-    if (filter.filter.yearEnd) {
-      filterParameter += `yearEnd=${filter.filter.yearEnd}&`;
-    }
-    if (filter.filter.author) {
-      filterParameter += `author=${filter.filter.author._id}&`;
-    }
-    if (filter.filter.venue) {
-      filterParameter += `venue=${filter.filter.venue._id}&`;
-    }
-    getData('fe/papers/stats?' + filterParameter, requestHelper).then((data: PaperStats) => {
-      if (data) {
-        setLabels(data.timeData.years);
-        if ('cites' in data.timeData) {
-          setValues(data.timeData.cites);
-        }
-      }
-    });
-    getData(`fe/papers/paged?page=0&pageSize=${PAGE_SIZE}&${filterParameter}`, requestHelper).then(
-      (data) => {
-        if (data) {
-          setRows(data.rows);
-          setRowCount(data.rowCount);
-        }
-      }
-    );
+    refetchStats();
+    refetchGrid();
   }
 
   return (
     <Frame>
       <Tools fetchData={getChartData} />
       <div className="graphs">
-        <BarChart labels={labels} values={values} yLabel="papers" />
+        <BarChart labels={stats.years} values={stats.cites} yLabel="papers" />
         <Grid
           columns={columns}
           view={'papers'}
-          rowCount={rowCount}
-          setRowCount={setRowCount}
-          rows={rows}
-          setRows={setRows}
+          rowCount={paged.rowCount}
+          rows={paged.rows}
+          page={page}
+          setPage={setPage}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          refetchGrid={refetchGrid}
         />
       </div>
     </Frame>
