@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { postData } from '../network';
+import { useNetworkPost } from '../network';
 import { useSnack } from '../context/SnackbarContext';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_LOGIN } from '../consts';
@@ -33,6 +33,10 @@ export default function Register() {
   const setSnack = useSnack();
   const navigate = useNavigate();
 
+  const mutation = useNetworkPost('register', () => {
+    navigate(ROUTE_LOGIN);
+  });
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const input = new FormData(event.currentTarget);
@@ -42,11 +46,12 @@ export default function Register() {
       password: input.get('password'),
     };
     if (input.get('agree')) {
-      postData('register', login, { token: '', setSnack }).then((data) => {
-        if (data) {
-          navigate(ROUTE_LOGIN);
-        }
-      });
+      mutation.mutate(login);
+      // postData('register', login, { token: '', setSnack }).then((data) => {
+      // if (data) {
+      //   navigate(ROUTE_LOGIN);
+      // }
+      //  });
     } else {
       setSnack('You need to agree to the <terms and conditions>.');
     }

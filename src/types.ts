@@ -13,10 +13,10 @@ interface CiteOverTime {
 
 export type DatapointOverTime = PaperOverTime | CiteOverTime;
 
-export interface ChartOverTimeProps {
-  labels: string[];
-  values: number[];
+export interface BarChartProps {
   yLabel: string;
+  route: string;
+  refetch: number;
 }
 
 export interface PaperStats {
@@ -62,20 +62,14 @@ export interface FilterYear {
 }
 
 export interface GridProps {
-  view: string;
+  route: string;
   columns: GridColumns;
-  rowCount: number;
-  rows: Paper[];
-  page: number;
-  setPage(page: number): void;
-  pageSize: number;
-  setPageSize(pageSize: number): void;
-  refetchGrid(): void;
+  // refresh: number;
 }
 
-export interface CategoriesProps {
-  fetchData(): void;
-}
+// export interface CategoriesProps {
+//   fetchData(): void;
+// }
 
 export interface IconLabelProps {
   label: string;
@@ -88,4 +82,13 @@ export type Network = {
 };
 
 export type StatsData = { years: string[]; cites: number[] };
-export type PagedData = { rowCount: number; rows: Paper[] };
+export type GridData<T> = { rowCount: number; rows: T[] };
+
+export type QueryParameters = {
+  page?: number;
+  pageSize?: number;
+  yearStart?: string;
+  yearEnd?: string;
+  author?: AuthorFilter | null;
+  venue?: VenueFilter | null;
+};

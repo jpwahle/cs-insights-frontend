@@ -13,9 +13,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { postData } from '../network';
 import { useAuth } from '../context/AuthContext';
-import { useSnack } from '../context/SnackbarContext';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PAPERS, ROUTE_REGISTER } from '../consts';
+import { useRequestHelper } from '../context/NetworkHook';
+import { useMutation } from 'react-query';
 
 function Copyright(props: any) {
   return (
@@ -32,8 +33,12 @@ function Copyright(props: any) {
 
 export default function Login() {
   const auth = useAuth();
-  const setSnack = useSnack();
+  // const setSnack = useSnack();
   const navigate = useNavigate();
+  const requestHelper = useRequestHelper();
+  const mutation = useMutation((dataForPost: Object) =>
+    postData('login', dataForPost, requestHelper)
+  );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,15 +47,28 @@ export default function Login() {
       email: input.get('email'),
       password: input.get('password'),
     };
-    postData('login', login, { token: '', setSnack }).then((data) => {
-      if (data) {
-        auth.setToken(data.token);
-        if (input.get('remember')) {
-          localStorage.setItem('token', data.token);
+
+    //TODO clean up, combine with useNetworkPost()
+    mutation.mutate(login, {
+      onSuccess: (data: any) => {
+        if (data) {
+          auth.setToken(data.token);
+          if (data.remember) {
+            localStorage.setItem('token', data.token);
+          }
+          navigate(ROUTE_PAPERS);
         }
-        navigate(ROUTE_PAPERS);
-      }
+      },
     });
+
+    // postData('login', login2, { token: '', setSnack }).then((data) => {
+    //   if (data) {
+    // auth.setToken(data.token);
+    // if (input.get('remember')) {
+    //   localStorage.setItem('token', data.token);
+    // }
+    // navigate(ROUTE_PAPERS);
+    // }
   };
 
   return (

@@ -21,7 +21,6 @@ import Account from './routes/account';
 
 import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -29,7 +28,6 @@ export default function App() {
     <SnackbarProvider>
       <ErrorBoundaryWrapper>
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
           <AuthProvider>
             <FilterProvider>
               <BrowserRouter>

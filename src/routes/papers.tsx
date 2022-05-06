@@ -1,19 +1,14 @@
 import Tools from '../components/Tools';
-import React, { useState } from 'react';
-import { PagedData, StatsData } from '../types';
-import { useNetworkGet } from '../network';
-import BarChart from '../charts/BarChart';
+import React from 'react';
+import { Paper } from '../types';
 import Grid from '../charts/Grid';
 import Frame from '../components/Frame';
-import { PAGE_SIZE } from '../consts';
+// import BarChart from '../charts/BarChart';
 
 export default function Papers() {
   console.log('papers');
-  const [stats, setStats] = useState<StatsData>({ years: [], cites: [] });
-  const [paged, setPaged] = useState<PagedData>({ rowCount: 0, rows: [] });
-  const [page, setPage] = React.useState<number>(0);
-  const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
-
+  // const [refresh, setRefresh] = useState<number>(0);
+  // const refresh = useRefresh();
   const columns = [
     { field: '_id' },
     { field: 'title', headerName: 'Title', width: 300 },
@@ -23,42 +18,16 @@ export default function Papers() {
     { field: 'cites', headerName: 'Citations' },
   ];
 
-  const refetchStats = useNetworkGet('fe/papers/stats', 'stats', (data: any) => {
-    if ('cites' in data.timeData) {
-      setStats(data.timeData);
-    }
-  });
-
-  const refetchGrid = useNetworkGet(
-    `fe/papers/paged?page=0&pageSize=${PAGE_SIZE}`,
-    'paged',
-    (data: any) => {
-      console.log('setPaged');
-      setPaged(data);
-    }
-  );
-
-  function getChartData() {
-    refetchStats();
-    refetchGrid();
-  }
+  // function getChartData() {
+  //   refresh.refresh();
+  // }
 
   return (
     <Frame>
-      <Tools fetchData={getChartData} />
+      <Tools /*fetchData={getChartData}*/ />
       <div className="graphs">
-        <BarChart labels={stats.years} values={stats.cites} yLabel="papers" />
-        <Grid
-          columns={columns}
-          view={'papers'}
-          rowCount={paged.rowCount}
-          rows={paged.rows}
-          page={page}
-          setPage={setPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-          refetchGrid={refetchGrid}
-        />
+        {/*<BarChart route="papers" yLabel="citations" refetch={refetch} />*/}
+        <Grid<Paper> columns={columns} route={'papers'} /* refresh={refresh.refreshCounter}*/ />
       </div>
     </Frame>
   );

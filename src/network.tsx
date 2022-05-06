@@ -1,10 +1,11 @@
-import { Network } from './types';
+import { Network, QueryParameters } from './types';
+
 import { useRequestHelper } from './context/NetworkHook';
 import { useFilter } from './context/FilterContext';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useEffect } from 'react';
 
-//TODO rework network calls
+//TODO combine 3 functions to one
 async function promise(response: Response, setSnack: (message: string) => void): Promise<any> {
   if (!response.ok || response.status >= 400) {
     setSnack(`${response.status} ${response.statusText}: ${(await response.json()).message}`);
@@ -30,6 +31,7 @@ export async function postData(route: string, data: Object, network: Network) {
 
 export async function getData(route: string, network: Network): Promise<any> {
   const url = process.env.REACT_APP_BACKEND + route;
+  console.log(url);
   let response;
   response = await fetch(url, {
     headers: {
@@ -40,40 +42,95 @@ export async function getData(route: string, network: Network): Promise<any> {
   return promise(response, network.setSnack);
 }
 
-export function useNetworkGet(route: string, queryKey: string, fn: (data: Object) => void) {
-  console.log('useNetwork');
+function buildRoute(route: string, queryParameters: QueryParameters): string {
+  if (queryParameters) {
+    route += '?';
+
+    const keys = ['page', 'pageSize', 'yearStart', 'yearEnd'];
+    for (const key of keys) {
+      const value = queryParameters[key as keyof QueryParameters];
+      if (value || (key === 'page' && value === 0)) {
+        route += `${key}=${value}&`;
+      }
+    }
+    if (queryParameters.author) {
+      route += `author=${queryParameters.author._id}&`;
+    }
+    if (queryParameters.venue) {
+      route += `venue=${queryParameters.venue._id}&`;
+    }
+  }
+
+  return route;
+}
+
+export function useNetwork(
+  route: string,
+  queryKey: string,
+  process: (data: any) => void,
+  // dependencies: Array<any>, // refresh should be at position 0
+  queryParameters: Object = {} // except filter
+  // dataForPost: Object | null = null
+) {
   const requestHelper = useRequestHelper();
   const filter = useFilter();
 
-  if (route.includes('?')) {
-    route += '&';
-  } else {
-    route += '?';
-  }
-  if (filter.filter.yearStart) {
-    route += `yearStart=${filter.filter.yearStart}&`;
-  }
-  if (filter.filter.yearEnd) {
-    route += `yearEnd=${filter.filter.yearEnd}&`;
-  }
-  if (filter.filter.author) {
-    route += `author=${filter.filter.author._id}&`;
-  }
-  if (filter.filter.venue) {
-    route += `venue=${filter.filter.venue._id}&`;
-  }
+  route = buildRoute(route, { ...filter.filter, ...queryParameters });
   console.log(route);
-  const { data, refetch } = useQuery(queryKey, () => getData(route, requestHelper), {
-    refetchOnWindowFocus: false,
-    enabled: false, // turned off by default, manual refetch is needed
-  });
+
+  // let { data, refetch }: { data: any; refetch: (() => Promise<any>) | undefined } = {
+  //   data: undefined,
+  //   refetch: undefined,
+  // };
+
+  const { data, refetch } = useQuery(
+    queryKey,
+    () => {
+      return getData(route, requestHelper); //TODO order
+    },
+    {
+      refetchOnWindowFocus: false,
+      enabled: false, // turned off by default, manual refetch is needed
+    }
+  );
 
   useEffect(() => {
-    console.log('useEffect');
+    console.log('useNetwork useEffect');
     if (data) {
-      fn(data);
+      process(data);
     }
   }, [data]);
 
+  // useEffect(() => {
+  //   if (dependencies[0] !== 0) {
+  //     refetch();
+  //   }
+  // }, dependencies);
   return refetch;
+}
+
+export function useNetworkPost(
+  route: string,
+  process: (data: any) => void
+  // dependencies: Array<any>, // refresh should be at position 0
+  // queryParameters: Object = {}, // except filter
+  // dataForPost: Object
+) {
+  const requestHelper = useRequestHelper();
+
+  // route = buildRoute(route, { ...filter.filter, ...queryParameters });
+  console.log(route);
+  const mutation = useMutation(
+    (dataForPost: Object) => {
+      return postData(route, dataForPost, requestHelper); //TODO order
+    },
+    {
+      onSuccess: (data) => {
+        if (data) {
+          process(data);
+        }
+      },
+    }
+  );
+  return mutation;
 }

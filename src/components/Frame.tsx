@@ -5,6 +5,7 @@ import { Stack } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import { useRequestHelper } from '../context/NetworkHook';
 import { ROUTE_LOGIN } from '../consts';
+import { RefreshProvider } from '../context/RefreshContext';
 
 export default function Frame({
   children,
@@ -18,7 +19,9 @@ export default function Frame({
         <ResponsiveAppBar />
         <Stack direction="row" className="stack">
           <Sidebar />
-          <Stack className="stack">{children}</Stack>
+          <Stack className="stack">
+            <RefreshProvider>{children}</RefreshProvider>
+          </Stack>
         </Stack>
       </Stack>
     );
