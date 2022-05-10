@@ -16,11 +16,6 @@ export type DatapointOverTime = PaperOverTime | CiteOverTime;
 export interface BarChartProps {
   yLabel: string;
   route: string;
-  refetch: number;
-}
-
-export interface PaperStats {
-  timeData: DatapointOverTime;
 }
 
 export interface Paper {
@@ -64,12 +59,7 @@ export interface FilterYear {
 export interface GridProps {
   route: string;
   columns: GridColumns;
-  // refresh: number;
 }
-
-// export interface CategoriesProps {
-//   fetchData(): void;
-// }
 
 export interface IconLabelProps {
   label: string;

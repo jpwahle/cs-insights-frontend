@@ -47,11 +47,6 @@ export default function Register() {
     };
     if (input.get('agree')) {
       mutation.mutate(login);
-      // postData('register', login, { token: '', setSnack }).then((data) => {
-      // if (data) {
-      //   navigate(ROUTE_LOGIN);
-      // }
-      //  });
     } else {
       setSnack('You need to agree to the <terms and conditions>.');
     }

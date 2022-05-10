@@ -1,45 +1,45 @@
-import { Network, QueryParameters } from './types';
-
-import { useRequestHelper } from './context/NetworkHook';
-import { useFilter } from './context/FilterContext';
+import { QueryParameters } from './types';
 import { useMutation, useQuery } from 'react-query';
 import { useEffect } from 'react';
+import { useAuth } from './context/AuthContext';
+import { useSnack } from './context/SnackbarContext';
+import { useFilter } from './context/FilterContext';
 
-//TODO combine 3 functions to one
-async function promise(response: Response, setSnack: (message: string) => void): Promise<any> {
+async function sendRequest(
+  route: string,
+  token: string,
+  setSnack: (message: string) => void,
+  data: Object | null = null
+) {
+  const url = process.env.REACT_APP_BACKEND + route;
+  console.debug(url);
+  let init: RequestInit;
+  if (data) {
+    // POST
+    init = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    };
+  } else {
+    // GET
+    init = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  }
+  const response = await fetch(url, init);
+
   if (!response.ok || response.status >= 400) {
     setSnack(`${response.status} ${response.statusText}: ${(await response.json()).message}`);
     return new Promise((resolve) => resolve(''));
   } else {
     return response.json();
   }
-}
-
-export async function postData(route: string, data: Object, network: Network) {
-  const url = process.env.REACT_APP_BACKEND + route;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${network.token}`,
-    },
-    body: JSON.stringify(data),
-  });
-
-  return promise(response, network.setSnack);
-}
-
-export async function getData(route: string, network: Network): Promise<any> {
-  const url = process.env.REACT_APP_BACKEND + route;
-  console.log(url);
-  let response;
-  response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${network.token}`,
-    },
-  });
-
-  return promise(response, network.setSnack);
 }
 
 function buildRoute(route: string, queryParameters: QueryParameters): string {
@@ -64,29 +64,23 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
   return route;
 }
 
-export function useNetwork(
+// Automatically applies filters to all GET queries
+export function useNetworkGet(
   route: string,
   queryKey: string,
   process: (data: any) => void,
-  // dependencies: Array<any>, // refresh should be at position 0
   queryParameters: Object = {} // except filter
-  // dataForPost: Object | null = null
 ) {
-  const requestHelper = useRequestHelper();
+  const auth = useAuth();
+  const setSnack = useSnack();
   const filter = useFilter();
 
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
-  console.log(route);
-
-  // let { data, refetch }: { data: any; refetch: (() => Promise<any>) | undefined } = {
-  //   data: undefined,
-  //   refetch: undefined,
-  // };
 
   const { data, refetch } = useQuery(
     queryKey,
     () => {
-      return getData(route, requestHelper); //TODO order
+      return sendRequest(route, auth.token, setSnack);
     },
     {
       refetchOnWindowFocus: false,
@@ -95,34 +89,24 @@ export function useNetwork(
   );
 
   useEffect(() => {
-    console.log('useNetwork useEffect');
     if (data) {
       process(data);
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   if (dependencies[0] !== 0) {
-  //     refetch();
-  //   }
-  // }, dependencies);
   return refetch;
 }
 
 export function useNetworkPost(
   route: string,
-  process: (data: any) => void
-  // dependencies: Array<any>, // refresh should be at position 0
-  // queryParameters: Object = {}, // except filter
-  // dataForPost: Object
+  process: (data: any) => void = () => {} // can be passed here or manually later on in .mutate() via the onSuccess option
 ) {
-  const requestHelper = useRequestHelper();
+  const auth = useAuth();
+  const setSnack = useSnack();
 
-  // route = buildRoute(route, { ...filter.filter, ...queryParameters });
-  console.log(route);
-  const mutation = useMutation(
-    (dataForPost: Object) => {
-      return postData(route, dataForPost, requestHelper); //TODO order
+  return useMutation(
+    (data: Object) => {
+      return sendRequest(route, auth.token, setSnack, data);
     },
     {
       onSuccess: (data) => {
@@ -132,5 +116,4 @@ export function useNetworkPost(
       },
     }
   );
-  return mutation;
 }

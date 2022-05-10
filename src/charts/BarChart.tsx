@@ -1,29 +1,19 @@
-//@ts-nocheck
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { BarChartProps, StatsData } from '../types';
-import { useNetwork } from '../network';
+import { useNetworkGet } from '../network';
+import { useRefresh } from '../context/RefreshContext';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<StatsData>({ years: [], cites: [] });
+  const refresh = useRefresh();
 
-  // const refetch = useNetworkFilterGet(
-  //   `fe/${props.route}/stats`,
-  //   'stats',
-  //   (data: { timeData: StatsData }) => {
-  //     // if ('cites' in data.timeData) {
-  //     setChartData(data.timeData);
-  //     // }
-  //   },
-  //   props.refetch
-  // );
-  //
-  // useEffect(() => {
-  //   if (props.refetch !== 0) {
-  //     refetch();
-  //   }
-  // }, [props.refetch]);
+  const refetch = useNetworkGet(`fe/${props.route}/stats`, 'statsData', (data: StatsData) => {
+    setChartData(data);
+  });
+  useEffect(() => {
+    refresh.addRefetch(refetch);
+  }, []);
 
   const series = [
     {

@@ -3,17 +3,20 @@ import Sidebar from './Sidebar';
 import React, { useEffect } from 'react';
 import { Stack } from '@mui/material';
 import { Navigate } from 'react-router-dom';
-import { useRequestHelper } from '../context/NetworkHook';
 import { ROUTE_LOGIN } from '../consts';
 import { RefreshProvider } from '../context/RefreshContext';
+import { useAuth } from '../context/AuthContext';
+import { useSnack } from '../context/SnackbarContext';
 
 export default function Frame({
   children,
 }: {
   children: React.ReactElement | React.ReactElement[];
 }) {
-  const requestHelper = useRequestHelper();
-  if (requestHelper.token) {
+  const auth = useAuth();
+  const setSnack = useSnack();
+
+  if (auth.token) {
     return (
       <Stack className="frame">
         <ResponsiveAppBar />
@@ -27,7 +30,7 @@ export default function Frame({
     );
   } else {
     useEffect(() => {
-      requestHelper.setSnack('You need to login to access this page.');
+      setSnack('You need to login to access this page.');
     });
     return <Navigate to={ROUTE_LOGIN} />;
   }

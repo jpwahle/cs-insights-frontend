@@ -50,7 +50,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
   render() {
     if (this.state.error) {
       console.error('render', this.state.error);
-      return <div>An error has occurred during rendering</div>;
+      return <div>An error has occurred during rendering (or maybe an event)</div>;
     }
     return this.props.children;
   }
