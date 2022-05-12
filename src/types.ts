@@ -76,10 +76,12 @@ export type StatsData = { years: string[]; cites: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 
 export type QueryParameters = {
-  page?: number;
-  pageSize?: number;
   yearStart?: string;
   yearEnd?: string;
   author?: AuthorFilter | null;
   venue?: VenueFilter | null;
+  page?: number;
+  pageSize?: number;
+  sortField?: string;
+  sortDirection?: string;
 };
