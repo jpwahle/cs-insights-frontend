@@ -46,6 +46,7 @@ export type Filter = {
 export type FilterCategoricalProps<T> = {
   label: string;
   route: string;
+  tooltip: string;
   value: T | null;
   setValue(value: T | null): void;
 };
