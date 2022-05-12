@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ChartOverTimeProps } from '../types';
+import { BarChartProps, StatsData } from '../types';
+import { useNetworkGet } from '../network';
+import { useRefresh } from '../context/RefreshContext';
 
-function BarChart(props: ChartOverTimeProps) {
+export default function BarChart(props: BarChartProps) {
+  const [chartData, setChartData] = useState<StatsData>({ years: [], cites: [] });
+  const refresh = useRefresh();
+
+  const refetch = useNetworkGet(`fe/${props.route}/stats`, 'statsData', (data: StatsData) => {
+    setChartData(data);
+  });
+  useEffect(() => {
+    refresh.addRefetch(refetch);
+  }, []);
+
   const series = [
     {
       name: 'citations',
-      data: props.values,
+      data: chartData.cites,
     },
   ];
 
@@ -26,8 +38,17 @@ function BarChart(props: ChartOverTimeProps) {
       colors: ['transparent'],
     },
     xaxis: {
-      categories: props.labels,
+      categories: chartData.years,
+      title: {
+        text: 'Year of publication',
+      },
     },
+    yaxis: {
+      title: {
+        text: 'Number of Citations',
+      },
+    },
+
     fill: {
       opacity: 1,
     },
@@ -35,5 +56,3 @@ function BarChart(props: ChartOverTimeProps) {
 
   return <ReactApexChart options={options} series={series} type="bar" height={300} width={1200} />;
 }
-
-export default BarChart;

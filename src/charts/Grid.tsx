@@ -1,44 +1,41 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { getData } from '../network';
-import { GridProps } from '../types';
+import { GridData, GridProps } from '../types';
+import { useNetworkGet } from '../network';
+import { PAGE_SIZE } from '../consts';
+import { useRefresh } from '../context/RefreshContext';
 
-export default function Grid(props: GridProps) {
-  const columns = [
-    { field: '_id' },
-    { field: 'title', headerName: 'Title', width: 300 },
-    { field: 'year', headerName: 'Year' },
-    { field: 'authors', headerName: 'Authors', width: 200 },
-    { field: 'venues', headerName: 'Venue', width: 200 },
-    { field: 'cites', headerName: 'Citations' },
-  ];
-
+export default function Grid<T>(props: GridProps) {
+  const [gridData, setGridData] = useState<GridData<T>>({ rowCount: 0, rows: [] });
   const [page, setPage] = React.useState<number>(0);
-  const [pageSize, setPageSize] = React.useState<number>(100);
+  const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
+  const refresh = useRefresh();
 
-  function test(newPage: number | null, newPageSize: number | null) {
-    if (newPage) {
-      setPage(newPage);
-      getData(`fe/${props.view}/paged?page=${newPage}&pageSize=${pageSize}`).then((data) => {
-        props.setRowCount(data.rowCount);
-        props.setRows(data.rows);
-      });
+  const refetch = useNetworkGet(
+    `fe/${props.route}/paged`,
+    'gridData',
+    (data: GridData<T>) => {
+      setGridData(data);
+    },
+    { page: page, pageSize: pageSize }
+  );
+  useEffect(() => {
+    refresh.addRefetch(refetch);
+  }, []);
+
+  useEffect(() => {
+    if (gridData.rowCount > 0) {
+      refetch();
     }
-    if (newPageSize) {
-      setPageSize(newPageSize);
-      getData(`fe/${props.view}/paged?page=${page}&pageSize=${newPageSize}`).then((data) => {
-        props.setRowCount(data.rowCount);
-        props.setRows(data.rows);
-      });
-    }
-  }
+  }, [page, pageSize]);
 
   return (
     <div style={{ height: 300, width: '100%' }}>
       <DataGrid
-        rows={props.rows}
-        rowCount={props.rowCount}
-        columns={columns}
+        rows={gridData.rows}
+        rowCount={gridData.rowCount}
+        columns={props.columns}
         disableSelectionOnClick
         getRowId={(row) => row._id}
         columnVisibilityModel={{
@@ -50,8 +47,8 @@ export default function Grid(props: GridProps) {
         page={page}
         pageSize={pageSize}
         paginationMode="server"
-        onPageChange={(newPage) => test(newPage, null)}
-        onPageSizeChange={(newPageSize) => test(null, newPageSize)}
+        onPageChange={(newPage) => setPage(newPage)}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
       />
     </div>
   );

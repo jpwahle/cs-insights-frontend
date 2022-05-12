@@ -2,74 +2,58 @@ import React from 'react';
 import '../App.css';
 import FilterCategorical from './FilterCategorical';
 import { Button, Stack } from '@mui/material';
-import FilterTextfield from './FilterTextfield';
-import { getData } from '../network';
-import { SidebarProps, PaperStats, VenueFilter, AuthorFilter } from '../types';
+import FilterTextField from './FilterTextfield';
+import { AuthorFilter, VenueFilter } from '../types';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useFilter } from '../context/FilterContext';
+import IconLabel from './IconLabel';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
-export default function Sidebar(props: SidebarProps) {
-  function applyFilters() {
-    let filterParameter = '';
-    if (props.yearStart) {
-      filterParameter += `yearStart=${props.yearStart}&`;
-    }
-    if (props.yearEnd) {
-      filterParameter += `yearEnd=${props.yearEnd}&`;
-    }
-    if (props.author) {
-      filterParameter += `author=${props.author._id}&`;
-    }
-    if (props.venue) {
-      filterParameter += `venue=${props.venue._id}&`;
-    }
-    getData('fe/papers/stats?' + filterParameter).then((data: PaperStats) => {
-      props.setLabels(data.timeData.years);
-      if ('cites' in data.timeData) {
-        props.setValues(data.timeData.cites);
-      }
-    });
-    getData('fe/papers/paged?page=0&pageSize=100&' + filterParameter).then((data) => {
-      props.setRows(data.rows);
-      props.setRowCount(data.rowCount);
-    });
-  }
+export default function Sidebar() {
+  const filter = useFilter();
 
   function clearFilters() {
-    props.setYearStart('');
-    props.setYearEnd('');
-    props.setAuthor(null);
-    props.setVenue(null);
+    filter.setFilter({ yearStart: '', yearEnd: '', author: null, venue: null });
   }
 
   return (
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
-        <b>Filters</b>
-        <Button onClick={() => applyFilters()}>Apply Filters</Button>
+        <IconLabel label="Filters" icon={FilterAltIcon} />
+        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => clearFilters()}>
+          Clear Filters
+        </Button>
       </Stack>
-
       <div className="filter-label">Year of publication</div>
       <Stack direction="row" className="filter-year">
-        <FilterTextfield label="From" value={props.yearStart} setValue={props.setYearStart} />
+        <FilterTextField
+          label="From"
+          value={filter.filter.yearStart}
+          setValue={(value) => filter.setFilter({ ...filter.filter, yearStart: value })}
+        />
         <div className="filter-year-minus">-</div>
-        <FilterTextfield label="To" value={props.yearEnd} setValue={props.setYearEnd} />
+        <FilterTextField
+          label="To"
+          value={filter.filter.yearEnd}
+          setValue={(value) => filter.setFilter({ ...filter.filter, yearEnd: value })}
+        />
       </Stack>
 
       <div className="filter-label">Author</div>
       <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
-        value={props.author}
-        setValue={props.setAuthor}
+        value={filter.filter.author}
+        setValue={(value) => filter.setFilter({ ...filter.filter, author: value })}
       />
 
       <div className="filter-label">Venue</div>
       <FilterCategorical<VenueFilter>
         route="venues"
         label="names"
-        value={props.venue}
-        setValue={props.setVenue}
+        value={filter.filter.venue}
+        setValue={(value) => filter.setFilter({ ...filter.filter, venue: value })}
       />
-      <Button onClick={() => clearFilters()}>Clear Filters</Button>
     </Stack>
   );
 }

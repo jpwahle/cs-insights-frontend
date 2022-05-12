@@ -1,62 +1,50 @@
-import React, { useState } from 'react';
-import './App.css';
-import Sidebar from './components/Sidebar';
-import Categories from './components/Categories';
-import Graphs from './components/Graphs';
-import Header from './components/Header';
-import { Stack } from '@mui/material';
-import { AuthorFilter, Paper, VenueFilter } from './types';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { SnackbarProvider } from './context/SnackbarContext';
+import Login from './routes/login';
+import Register from './routes/register';
+import Papers from './routes/papers';
+import Authors from './routes/authors';
+import Home from './routes/home';
+import Venues from './routes/venues';
+import { FilterProvider } from './context/FilterContext';
+import { AuthProvider } from './context/AuthContext';
+import {
+  ROUTE_ACCOUNT,
+  ROUTE_AUTHORS,
+  ROUTE_LOGIN,
+  ROUTE_PAPERS,
+  ROUTE_REGISTER,
+  ROUTE_VENUES,
+} from './consts';
+import Account from './routes/account';
 
-function App() {
-  const [yearStart, setYearStart] = useState<string>('');
-  const [yearEnd, setYearEnd] = useState<string>('');
-  const [author, setAuthor] = useState<AuthorFilter | null>(null);
-  const [venue, setVenue] = useState<VenueFilter | null>(null);
+import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-  const [labels, setLabels] = useState<string[]>([]);
-  const [values, setValues] = useState<number[]>([]);
-
-  const [rowCount, setRowCount] = React.useState<number>(0);
-  const [rows, setRows] = React.useState<Paper[]>([]);
-
+export default function App() {
+  const queryClient = new QueryClient();
   return (
-    <Stack className="App">
-      <Header />
-      <Stack direction="row" className="stack">
-        <Sidebar
-          yearStart={yearStart}
-          setYearStart={setYearStart}
-          yearEnd={yearEnd}
-          setYearEnd={setYearEnd}
-          author={author}
-          setAuthor={setAuthor}
-          venue={venue}
-          setVenue={setVenue}
-          labels={labels}
-          setLabels={setLabels}
-          values={values}
-          setValues={setValues}
-          rowCount={rowCount}
-          setRowCount={setRowCount}
-          rows={rows}
-          setRows={setRows}
-        />
-        <Stack className="stack">
-          <Categories />
-          <Graphs
-            labels={labels}
-            setLabels={setLabels}
-            values={values}
-            setValues={setValues}
-            rowCount={rowCount}
-            setRowCount={setRowCount}
-            rows={rows}
-            setRows={setRows}
-          />
-        </Stack>
-      </Stack>
-    </Stack>
+    <SnackbarProvider>
+      <ErrorBoundaryWrapper>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <FilterProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path={ROUTE_LOGIN} element={<Login />} />
+                  <Route path={ROUTE_REGISTER} element={<Register />} />
+                  <Route path={ROUTE_ACCOUNT} element={<Account />} />
+                  <Route path={ROUTE_PAPERS} element={<Papers />} />
+                  <Route path={ROUTE_AUTHORS} element={<Authors />} />
+                  <Route path={ROUTE_VENUES} element={<Venues />} />
+                </Routes>
+              </BrowserRouter>
+            </FilterProvider>
+          </AuthProvider>
+        </QueryClientProvider>
+      </ErrorBoundaryWrapper>
+    </SnackbarProvider>
   );
 }
-
-export default App;

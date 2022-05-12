@@ -1,3 +1,6 @@
+import { GridColumns } from '@mui/x-data-grid';
+import { SvgIconComponent } from '@mui/icons-material';
+
 interface PaperOverTime {
   years: string[];
   papers: number[];
@@ -10,13 +13,9 @@ interface CiteOverTime {
 
 export type DatapointOverTime = PaperOverTime | CiteOverTime;
 
-export interface ChartOverTimeProps {
-  labels: string[];
-  values: number[];
-}
-
-export interface PaperStats {
-  timeData: DatapointOverTime;
+export interface BarChartProps {
+  yLabel: string;
+  route: string;
 }
 
 export interface Paper {
@@ -37,35 +36,12 @@ export type VenueFilter = {
   name: string;
 };
 
-export interface SidebarProps {
+export type Filter = {
   yearStart: string;
-  setYearStart(yearStart: string): void;
   yearEnd: string;
-  setYearEnd(yearEnd: string): void;
   author: AuthorFilter | null;
-  setAuthor(author: AuthorFilter | null): void;
   venue: VenueFilter | null;
-  setVenue(venue: VenueFilter | null): void;
-  labels: string[];
-  setLabels(labels: string[]): void;
-  values: number[];
-  setValues(values: number[]): void;
-  rowCount: number;
-  setRowCount(rowCount: number): void;
-  rows: Paper[];
-  setRows(rows: Paper[]): void;
-}
-
-export interface GraphsProps {
-  labels: string[];
-  setLabels(labels: string[]): void;
-  values: number[];
-  setValues(values: number[]): void;
-  rowCount: number;
-  setRowCount(rowCount: number): void;
-  rows: Paper[];
-  setRows(rows: Paper[]): void;
-}
+};
 
 export type FilterCategoricalProps<T> = {
   label: string;
@@ -81,9 +57,28 @@ export interface FilterYear {
 }
 
 export interface GridProps {
-  view: string;
-  rowCount: number;
-  setRowCount(rowCount: number): void;
-  rows: Paper[];
-  setRows(rows: Paper[]): void;
+  route: string;
+  columns: GridColumns;
 }
+
+export interface IconLabelProps {
+  label: string;
+  icon: SvgIconComponent;
+}
+
+export type Network = {
+  token: string;
+  setSnack: (message: string) => void;
+};
+
+export type StatsData = { years: string[]; cites: number[] };
+export type GridData<T> = { rowCount: number; rows: T[] };
+
+export type QueryParameters = {
+  page?: number;
+  pageSize?: number;
+  yearStart?: string;
+  yearEnd?: string;
+  author?: AuthorFilter | null;
+  venue?: VenueFilter | null;
+};

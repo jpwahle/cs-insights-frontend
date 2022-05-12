@@ -3,38 +3,23 @@
   --padding-large: 8px;
 }
 
-.App {
-  text-align: center;
-  height: 100vh;
-  width: 100vw;
-}
-
-.App-logo {
-  height: 5vmin;
+/* home */
+.app-logo {
+  margin-top: 48px;
+  margin-bottom: 48px;
   pointer-events: none;
-  color: white;
+  color: #61DBFB;
+  font-size: calc(50px + 10vmin);
+  font-weight: bold;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 5s linear;
+  .app-logo {
+    animation: app-logo-spin infinite 5s linear;
   }
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: calc(10px + 2vmin);
-  background: dodgerblue;
-  padding: var(--padding-small);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes app-logo-spin {
   from {
     transform: rotate(0deg);
   }
@@ -43,19 +28,54 @@
   }
 }
 
+.background {
+  background-color: #eeeeee;
+  height: 100vh;
+  width: 100vw;
+}
+
+.home {
+  background-color: white;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  /*font-size: calc(10px + 2vmin);*/
+  text-align: center;
+}
+
+.home-button {
+  width: 50%;
+}
+
+/* general structure */
+.frame {
+  /*text-align: center;*/
+  height: 100vh;
+  width: 100vw;
+}
+
 .stack {
   flex: 1;
 }
 
-.header-stack {
+.categories {
+  background: darkgrey;
+  padding: var(--padding-large);
   align-items: center;
 }
 
+.categories > * {
+  padding: var(--padding-large);
+}
+
+.graphs {
+  margin: var(--padding-large);
+}
+
+/* filter */
 .sidebar {
   background: lightgrey;
   padding: var(--padding-small);
-  /*align-items: flex-start;*/
-  /*margin-left: auto;*/
   text-align: start;
 }
 
@@ -64,10 +84,8 @@
 }
 
 .filter-header {
-  /*display: flex;*/
   align-items: center;
   justify-content: space-between;
-  /*width: auto;*/
 }
 
 .filter-label {
@@ -85,13 +103,3 @@
 .filter-year-minus {
   margin: var(--padding-large);
 }
-
-.categories {
-  background: darkgrey;
-  padding: var(--padding-small);
-}
-
-.graphs {
-  margin: var(--padding-large);
-}
-

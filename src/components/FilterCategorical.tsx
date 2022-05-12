@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../App.css';
 import { Autocomplete, CircularProgress, debounce, TextField } from '@mui/material';
-import { getData } from '../network';
+import { useNetworkGet } from '../network';
 import { FilterCategoricalProps } from '../types';
+import { DEBOUNCE_DELAY } from '../consts';
 
 export default function FilterCategorical<T extends { _id: string; [key: string]: string }>(
   props: FilterCategoricalProps<T>
@@ -10,14 +11,25 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   const [open, setOpen] = React.useState<boolean>(false);
   const [options, setOptions] = React.useState<T[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [inputValue, setInputValue] = React.useState<string>('');
 
+  const refetch = useNetworkGet(`fe/${props.route}/list?pattern=${inputValue}&`, 'list', (data) => {
+    setOptions(data);
+    setLoading(false);
+  });
+
+  useEffect(() => {
+    if (inputValue) {
+      refetch();
+    }
+  }, [inputValue]);
+
+  // 2 functions, so reference does not get lost
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
     if (newInputValue.length >= 3) {
-      const data = await getData(`fe/${props.route}/list?pattern=${newInputValue}&`);
-      setOptions(data);
-      setLoading(false);
+      setInputValue(() => newInputValue);
     }
-  }, 1000);
+  }, DEBOUNCE_DELAY);
 
   function handleInputChange(newInputValue: string) {
     setLoading(true);
