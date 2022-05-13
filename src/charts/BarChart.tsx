@@ -5,7 +5,7 @@ import { useNetworkGet } from '../network';
 import { useRefresh } from '../context/RefreshContext';
 
 export default function BarChart(props: BarChartProps) {
-  const [chartData, setChartData] = useState<StatsData>({ years: [], cites: [] });
+  const [chartData, setChartData] = useState<StatsData>({ years: [], counts: [] });
   const refresh = useRefresh();
 
   const refetch = useNetworkGet(`fe/${props.route}/stats`, 'statsData', (data: StatsData) => {
@@ -17,8 +17,8 @@ export default function BarChart(props: BarChartProps) {
 
   const series = [
     {
-      name: 'citations',
-      data: chartData.cites,
+      name: '#' + props.yDimension,
+      data: chartData.counts,
     },
   ];
 
@@ -45,7 +45,7 @@ export default function BarChart(props: BarChartProps) {
     },
     yaxis: {
       title: {
-        text: 'Number of Citations',
+        text: 'Number of ' + props.yDimension,
       },
     },
 

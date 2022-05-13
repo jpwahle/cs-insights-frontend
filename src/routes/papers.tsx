@@ -19,7 +19,7 @@ export default function Papers() {
     <Frame>
       <Tools />
       <div className="graphs">
-        <BarChart route="papers" yLabel="citations" />
+        <BarChart route="papers" yDimension="citations" />
         <Grid<Paper> columns={columns} route={'papers'} />
       </div>
     </Frame>

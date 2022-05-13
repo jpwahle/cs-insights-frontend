@@ -1,20 +1,8 @@
 import { GridColumns } from '@mui/x-data-grid';
 import { SvgIconComponent } from '@mui/icons-material';
 
-interface PaperOverTime {
-  years: string[];
-  papers: number[];
-}
-
-interface CiteOverTime {
-  years: string[];
-  cites: number[];
-}
-
-export type DatapointOverTime = PaperOverTime | CiteOverTime;
-
 export interface BarChartProps {
-  yLabel: string;
+  yDimension: string;
   route: string;
 }
 
@@ -39,15 +27,15 @@ export type VenueFilter = {
 export type Filter = {
   yearStart: string;
   yearEnd: string;
-  author: AuthorFilter | null;
-  venue: VenueFilter | null;
+  authors: AuthorFilter[];
+  venues: VenueFilter[];
 };
 
 export type FilterCategoricalProps<T> = {
   label: string;
   route: string;
-  value: T | null;
-  setValue(value: T | null): void;
+  value: T[];
+  setValue(value: T[]): void;
 };
 
 export interface FilterYear {
@@ -66,19 +54,19 @@ export interface IconLabelProps {
   icon: SvgIconComponent;
 }
 
-export type Network = {
-  token: string;
-  setSnack: (message: string) => void;
-};
-
-export type StatsData = { years: string[]; cites: number[] };
+export type StatsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 
-export type QueryParameters = {
+export type PagedParameters = {
   page?: number;
   pageSize?: number;
+  sortField?: string;
+  sortDirection?: string;
+};
+
+export type QueryParameters = {
   yearStart?: string;
   yearEnd?: string;
-  author?: AuthorFilter | null;
-  venue?: VenueFilter | null;
-};
+  authors?: AuthorFilter[];
+  venues?: VenueFilter[];
+} & PagedParameters;

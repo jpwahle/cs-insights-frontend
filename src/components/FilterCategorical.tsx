@@ -24,7 +24,7 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
     }
   }, [inputValue]);
 
-  // 2 functions, so reference does not get lost
+  // 2 functions, so debounce reference does not get lost
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
     if (newInputValue.length >= 3) {
       setInputValue(() => newInputValue);
@@ -39,7 +39,7 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   return (
     <div className="categoricalFilter">
       <Autocomplete
-        id="categorical-filter"
+        multiple
         sx={{ width: 300 }}
         size="small"
         open={open}
