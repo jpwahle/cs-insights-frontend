@@ -43,14 +43,15 @@ export default function Sidebar() {
       <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
+        tooltip="Only matches the beginning of names; case-insensitive"
         value={filter.filter.authors}
         setValue={(value) => filter.setFilter({ ...filter.filter, authors: value })}
       />
-
       <div className="filter-label">Venues</div>
       <FilterCategorical<VenueFilter>
         route="venues"
         label="names"
+        tooltip="Matches any position in the name; case-sensitive"
         value={filter.filter.venues}
         setValue={(value) => filter.setFilter({ ...filter.filter, venues: value })}
       />
