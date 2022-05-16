@@ -28,7 +28,7 @@ export default function Grid<T>(props: GridProps) {
       page: page,
       pageSize: pageSize,
       sortField: sortModel[0] ? sortModel[0].field : '',
-      sortDirection: sortModel[0] ? sortModel[0].sort : '',
+      sortDirection: sortModel[0] && sortModel[0].sort ? sortModel[0].sort : '',
     }
   );
   useEffect(() => {

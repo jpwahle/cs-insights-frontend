@@ -76,41 +76,6 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
           )}
         />
       </Tooltip>
-      <Autocomplete
-        multiple
-        sx={{ width: 300 }}
-        size="small"
-        open={open}
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-        }}
-        value={props.value}
-        onChange={(event, value) => props.setValue(value)}
-        onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
-        isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
-        getOptionLabel={(option: T) => option[props.label]}
-        options={options}
-        loading={loading}
-        filterOptions={(x) => x}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label={'Search'}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {loading && open ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
-            }}
-          />
-        )}
-      />
     </div>
   );
 }
