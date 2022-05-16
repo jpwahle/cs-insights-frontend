@@ -40,17 +40,19 @@ export default function Sidebar() {
       </Stack>
 
       <div className="filter-label">Author</div>
+
       <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
+        tooltip="Only matches the beginning of names; case-insensitive"
         value={filter.filter.author}
         setValue={(value) => filter.setFilter({ ...filter.filter, author: value })}
       />
-
       <div className="filter-label">Venue</div>
       <FilterCategorical<VenueFilter>
         route="venues"
         label="names"
+        tooltip="Matches any position in the name; case-sensitive"
         value={filter.filter.venue}
         setValue={(value) => filter.setFilter({ ...filter.filter, venue: value })}
       />

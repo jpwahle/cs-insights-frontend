@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridSortModel } from '@mui/x-data-grid';
 import { GridData, GridProps } from '../types';
 import { useNetworkGet } from '../network';
 import { PAGE_SIZE } from '../consts';
@@ -10,6 +10,12 @@ export default function Grid<T>(props: GridProps) {
   const [gridData, setGridData] = useState<GridData<T>>({ rowCount: 0, rows: [] });
   const [page, setPage] = React.useState<number>(0);
   const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
+  const [sortModel, setSortModel] = React.useState<GridSortModel>([
+    {
+      field: 'cites',
+      sort: 'desc',
+    },
+  ]);
   const refresh = useRefresh();
 
   const refetch = useNetworkGet(
@@ -18,7 +24,12 @@ export default function Grid<T>(props: GridProps) {
     (data: GridData<T>) => {
       setGridData(data);
     },
-    { page: page, pageSize: pageSize }
+    {
+      page: page,
+      pageSize: pageSize,
+      sortField: sortModel[0] ? sortModel[0].field : '',
+      sortDirection: sortModel[0] ? sortModel[0].sort : '',
+    }
   );
   useEffect(() => {
     refresh.addRefetch(refetch);
@@ -28,7 +39,7 @@ export default function Grid<T>(props: GridProps) {
     if (gridData.rowCount > 0) {
       refetch();
     }
-  }, [page, pageSize]);
+  }, [page, pageSize, sortModel]);
 
   return (
     <div style={{ height: 300, width: '100%' }}>
@@ -49,6 +60,9 @@ export default function Grid<T>(props: GridProps) {
         paginationMode="server"
         onPageChange={(newPage) => setPage(newPage)}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        sortingMode="server"
+        sortModel={sortModel}
+        onSortModelChange={(newSortModel) => setSortModel(newSortModel)}
       />
     </div>
   );

@@ -46,18 +46,17 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
   if (queryParameters) {
     route += '?';
 
-    const keys = ['page', 'pageSize', 'yearStart', 'yearEnd'];
-    for (const key of keys) {
-      const value = queryParameters[key as keyof QueryParameters];
-      if (value || (key === 'page' && value === 0)) {
-        route += `${key}=${value}&`;
+    for (const key of Object.keys(queryParameters)) {
+      if (key === 'author' && queryParameters.author) {
+        route += `author=${queryParameters.author._id}&`;
+      } else if (key === 'venue' && queryParameters.venue) {
+        route += `venue=${queryParameters.venue._id}&`;
+      } else {
+        const value = queryParameters[key as keyof QueryParameters];
+        if (value || (key === 'page' && value === 0)) {
+          route += `${key}=${value}&`;
+        }
       }
-    }
-    if (queryParameters.author) {
-      route += `author=${queryParameters.author._id}&`;
-    }
-    if (queryParameters.venue) {
-      route += `venue=${queryParameters.venue._id}&`;
     }
   }
 
