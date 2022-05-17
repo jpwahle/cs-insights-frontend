@@ -9,30 +9,36 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   props: FilterCategoricalProps<T>
 ) {
   const [open, setOpen] = React.useState<boolean>(false);
-  const [options, setOptions] = React.useState<T[]>([]);
+  const [options, setOptions] = React.useState<readonly T[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [inputValue, setInputValue] = React.useState<string>('');
+  const [pattern, setPattern] = React.useState<string>('');
 
-  const refetch = useNetworkGet(`fe/${props.route}/list?pattern=${inputValue}&`, 'list', (data) => {
-    setOptions(data);
-    setLoading(false);
-  });
+  const refetch = useNetworkGet(
+    `fe/${props.route}/list?pattern=${inputValue}&`,
+    'list-' + props.route,
+    (data) => {
+      setOptions(data);
+      setLoading(false);
+    }
+  );
 
   useEffect(() => {
     if (inputValue) {
       refetch();
     }
-  }, [inputValue]);
+  }, [pattern]);
 
   // 2 functions, so debounce reference does not get lost
   const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
     if (newInputValue.length >= 3) {
-      setInputValue(() => newInputValue);
+      setPattern(() => newInputValue);
     }
   }, DEBOUNCE_DELAY);
 
   function handleInputChange(newInputValue: string) {
     setLoading(true);
+    setInputValue(newInputValue);
     return handleInputChangeDebounce(newInputValue);
   }
 
@@ -41,33 +47,37 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
       <Tooltip placement="top-end" title={props.tooltip}>
         <Autocomplete
           multiple
-          id="categorical-filter"
+          id={'autocomplete-' + props.route}
           sx={{ width: 300 }}
           size="small"
           open={open}
-          onOpen={() => {
-            setOpen(true);
-          }}
-          onClose={() => {
-            setOpen(false);
-          }}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
           value={props.value}
           onChange={(event, value) => props.setValue(value)}
+          inputValue={inputValue}
           onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
           isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
           getOptionLabel={(option: T) => option[props.label]}
           options={options}
           loading={loading}
           filterOptions={(x) => x}
+          renderOption={(renderProps, option) => (
+            <li {...renderProps} key={option._id}>
+              {option[props.label]}
+            </li>
+          )}
           renderInput={(params) => (
             <TextField
               {...params}
-              label={'Search'}
+              label={'Search '}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
                   <React.Fragment>
-                    {loading && open ? <CircularProgress color="inherit" size={20} /> : null}
+                    {loading && open ? (
+                      <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
+                    ) : null}
                     {params.InputProps.endAdornment}
                   </React.Fragment>
                 ),

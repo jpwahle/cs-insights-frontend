@@ -43,7 +43,7 @@ export default function Sidebar() {
       <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
-        tooltip="Only matches the beginning of names; case-insensitive"
+        tooltip="Only matches the beginning of names; min. 3 characters; case-insensitive"
         value={filter.filter.authors}
         setValue={(value) => filter.setFilter({ ...filter.filter, authors: value })}
       />
