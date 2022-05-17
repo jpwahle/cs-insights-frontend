@@ -8,9 +8,12 @@ export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<StatsData>({ years: [], counts: [] });
   const refresh = useRefresh();
 
+  const labelColors = chartData.counts.map((value) => (value > 0 ? 'rgb(55, 61, 63)' : '#b6b6b6'));
+
   const refetch = useNetworkGet(`fe/${props.route}/stats`, 'statsData', (data: StatsData) => {
     setChartData(data);
   });
+
   useEffect(() => {
     refresh.addRefetch(refetch);
   }, []);
@@ -41,6 +44,11 @@ export default function BarChart(props: BarChartProps) {
       categories: chartData.years,
       title: {
         text: 'Year of publication',
+      },
+      labels: {
+        style: {
+          colors: labelColors,
+        },
       },
     },
     yaxis: {

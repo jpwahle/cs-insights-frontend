@@ -2,6 +2,7 @@ import React from 'react';
 import '../App.css';
 import { Button, Container, Stack, Typography, useTheme } from '@mui/material';
 import { ROUTE_LOGIN, ROUTE_PAPERS, ROUTE_REGISTER } from '../consts';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   const theme = useTheme();
@@ -15,7 +16,8 @@ export default function Home() {
           <Button
             variant="contained"
             className="home-button"
-            href={ROUTE_REGISTER}
+            component={Link}
+            to={ROUTE_REGISTER}
             sx={{ background: theme.palette.primary.light }}
           >
             Register
@@ -23,12 +25,13 @@ export default function Home() {
           <Button
             variant="contained"
             className="home-button"
-            href={ROUTE_LOGIN}
+            component={Link}
+            to={ROUTE_LOGIN}
             sx={{ background: theme.palette.primary.light }}
           >
             Login
           </Button>
-          <Button variant="contained" className="home-button" href={ROUTE_PAPERS}>
+          <Button variant="contained" className="home-button" component={Link} to={ROUTE_PAPERS}>
             To the app
           </Button>
           <footer

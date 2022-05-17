@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useAuth } from '../context/AuthContext';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { ROUTE_ACCOUNT, ROUTE_AUTHORS, ROUTE_PAPERS, ROUTE_VENUES, STORAGE_TOKEN } from '../consts';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ArticleIcon from '@mui/icons-material/Article';
 import GroupIcon from '@mui/icons-material/Group';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -65,7 +65,8 @@ const ResponsiveAppBar = () => {
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (
             <Button
-              href={page.route}
+              component={Link}
+              to={page.route}
               key={page.route}
               startIcon={<page.icon />}
               sx={{
