@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import '../App.css';
 import { Autocomplete, CircularProgress, debounce, TextField, Tooltip } from '@mui/material';
 import { useNetworkGet } from '../network';
@@ -24,22 +24,31 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   );
 
   useEffect(() => {
-    if (inputValue) {
+    if (pattern && inputValue) {
       refetch();
     }
   }, [pattern]);
 
   // 2 functions, so debounce reference does not get lost
-  const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
-    if (newInputValue.length >= 3) {
-      setPattern(() => newInputValue);
-    }
-  }, DEBOUNCE_DELAY);
+  const handleInputChangeDebounce = useCallback(
+    debounce(async (newInputValue: string) => {
+      if (newInputValue.length >= 3) {
+        setPattern(() => newInputValue);
+      }
+    }, DEBOUNCE_DELAY),
+    []
+  );
 
-  function handleInputChange(newInputValue: string) {
+  function handleInputChange(newInputValue: string, event: React.SyntheticEvent, reason: string) {
     setLoading(true);
-    setInputValue(newInputValue);
-    return handleInputChangeDebounce(newInputValue);
+    if (event && event.type !== 'blur' && reason === 'reset') {
+      setInputValue('');
+      setOptions([]);
+      setPattern('');
+    } else if (reason !== 'reset') {
+      setInputValue(newInputValue);
+      handleInputChangeDebounce(newInputValue);
+    }
   }
 
   return (
@@ -56,7 +65,9 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
           value={props.value}
           onChange={(event, value) => props.setValue(value)}
           inputValue={inputValue}
-          onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
+          onInputChange={(event, newInputValue, reason) =>
+            handleInputChange(newInputValue, event, reason)
+          }
           isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
           getOptionLabel={(option: T) => option[props.label]}
           options={options}

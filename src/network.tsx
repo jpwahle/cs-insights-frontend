@@ -74,7 +74,7 @@ export function useNetworkGet(
 
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
 
-  const { data, refetch } = useQuery(
+  const { data, dataUpdatedAt, refetch } = useQuery(
     queryKey,
     () => {
       return sendRequest(route, auth.token, setSnack);
@@ -89,7 +89,7 @@ export function useNetworkGet(
     if (data) {
       process(data);
     }
-  }, [data]);
+  }, [data, dataUpdatedAt]);
 
   return refetch;
 }
