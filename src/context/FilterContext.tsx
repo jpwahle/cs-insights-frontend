@@ -17,8 +17,8 @@ export function FilterProvider({ children }: { children: React.ReactElement }) {
   const [filter, setFilter] = useState<Filter>({
     yearStart: '1960',
     yearEnd: '',
-    author: null,
-    venue: null,
+    authors: [],
+    venues: [],
   });
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import '../App.css';
 import { Autocomplete, CircularProgress, debounce, TextField, Tooltip } from '@mui/material';
 import { useNetworkGet } from '../network';
@@ -9,64 +9,86 @@ export default function FilterCategorical<T extends { _id: string; [key: string]
   props: FilterCategoricalProps<T>
 ) {
   const [open, setOpen] = React.useState<boolean>(false);
-  const [options, setOptions] = React.useState<T[]>([]);
+  const [options, setOptions] = React.useState<readonly T[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [inputValue, setInputValue] = React.useState<string>('');
+  const [pattern, setPattern] = React.useState<string>('');
 
-  const refetch = useNetworkGet(`fe/${props.route}/list?pattern=${inputValue}&`, 'list', (data) => {
-    setOptions(data);
-    setLoading(false);
-  });
+  const refetch = useNetworkGet(
+    `fe/${props.route}/list?pattern=${inputValue}&`,
+    'list-' + props.route,
+    (data) => {
+      setOptions(data);
+      setLoading(false);
+    }
+  );
 
   useEffect(() => {
-    if (inputValue) {
+    if (pattern && inputValue) {
       refetch();
     }
-  }, [inputValue]);
+  }, [pattern]);
 
-  // 2 functions, so reference does not get lost
-  const handleInputChangeDebounce = debounce(async (newInputValue: string) => {
-    if (newInputValue.length >= 3) {
-      setInputValue(() => newInputValue);
-    }
-  }, DEBOUNCE_DELAY);
+  // 2 functions, so debounce reference does not get lost
+  const handleInputChangeDebounce = useCallback(
+    debounce(async (newInputValue: string) => {
+      if (newInputValue.length >= 3) {
+        setPattern(() => newInputValue);
+      }
+    }, DEBOUNCE_DELAY),
+    []
+  );
 
-  function handleInputChange(newInputValue: string) {
+  function handleInputChange(newInputValue: string, event: React.SyntheticEvent, reason: string) {
     setLoading(true);
-    return handleInputChangeDebounce(newInputValue);
+    if (event && event.type !== 'blur' && reason === 'reset') {
+      setInputValue('');
+      setOptions([]);
+      setPattern('');
+    } else if (reason !== 'reset') {
+      setInputValue(newInputValue);
+      handleInputChangeDebounce(newInputValue);
+    }
   }
 
   return (
     <div className="categoricalFilter">
       <Tooltip placement="top-end" title={props.tooltip}>
         <Autocomplete
-          id="categorical-filter"
+          multiple
+          id={'autocomplete-' + props.route}
           sx={{ width: 300 }}
           size="small"
           open={open}
-          onOpen={() => {
-            setOpen(true);
-          }}
-          onClose={() => {
-            setOpen(false);
-          }}
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
           value={props.value}
           onChange={(event, value) => props.setValue(value)}
-          onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
+          inputValue={inputValue}
+          onInputChange={(event, newInputValue, reason) =>
+            handleInputChange(newInputValue, event, reason)
+          }
           isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
           getOptionLabel={(option: T) => option[props.label]}
           options={options}
           loading={loading}
           filterOptions={(x) => x}
+          renderOption={(renderProps, option) => (
+            <li {...renderProps} key={option._id}>
+              {option[props.label]}
+            </li>
+          )}
           renderInput={(params) => (
             <TextField
               {...params}
-              label={'Search'}
+              label={'Search '}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
                   <React.Fragment>
-                    {loading && open ? <CircularProgress color="inherit" size={20} /> : null}
+                    {loading && open ? (
+                      <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
+                    ) : null}
                     {params.InputProps.endAdornment}
                   </React.Fragment>
                 ),

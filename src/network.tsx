@@ -1,4 +1,4 @@
-import { QueryParameters } from './types';
+import { PagedParameters, QueryParameters } from './types';
 import { useMutation, useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
@@ -45,12 +45,11 @@ async function sendRequest(
 function buildRoute(route: string, queryParameters: QueryParameters): string {
   if (queryParameters) {
     route += '?';
-
     for (const key of Object.keys(queryParameters)) {
-      if (key === 'author' && queryParameters.author) {
-        route += `author=${queryParameters.author._id}&`;
-      } else if (key === 'venue' && queryParameters.venue) {
-        route += `venue=${queryParameters.venue._id}&`;
+      if (key === 'authors' && queryParameters.authors && queryParameters.authors.length > 0) {
+        route += `authors=${JSON.stringify(queryParameters.authors.map((author) => author._id))}&`;
+      } else if (key === 'venues' && queryParameters.venues && queryParameters.venues.length > 0) {
+        route += `venues=${JSON.stringify(queryParameters.venues.map((venue) => venue._id))}&`;
       } else {
         const value = queryParameters[key as keyof QueryParameters];
         if (value || (key === 'page' && value === 0)) {
@@ -59,7 +58,6 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
       }
     }
   }
-
   return route;
 }
 
@@ -68,7 +66,7 @@ export function useNetworkGet(
   route: string,
   queryKey: string,
   process: (data: any) => void,
-  queryParameters: Object = {} // except filter
+  queryParameters: PagedParameters = {} // except filter
 ) {
   const auth = useAuth();
   const setSnack = useSnack();
@@ -76,7 +74,7 @@ export function useNetworkGet(
 
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
 
-  const { data, refetch } = useQuery(
+  const { data, dataUpdatedAt, refetch } = useQuery(
     queryKey,
     () => {
       return sendRequest(route, auth.token, setSnack);
@@ -91,7 +89,7 @@ export function useNetworkGet(
     if (data) {
       process(data);
     }
-  }, [data]);
+  }, [data, dataUpdatedAt]);
 
   return refetch;
 }

@@ -1,6 +1,7 @@
 export const ROUTE_LOGIN = '/login';
 export const ROUTE_REGISTER = '/register';
 export const ROUTE_ACCOUNT = '/account';
+export const ROUTE_PASSWORD = '/forgotpassword';
 export const ROUTE_PAPERS = '/papers';
 export const ROUTE_AUTHORS = '/authors';
 export const ROUTE_VENUES = '/venues';

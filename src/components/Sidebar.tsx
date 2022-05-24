@@ -13,7 +13,7 @@ export default function Sidebar() {
   const filter = useFilter();
 
   function clearFilters() {
-    filter.setFilter({ yearStart: '', yearEnd: '', author: null, venue: null });
+    filter.setFilter({ yearStart: '', yearEnd: '', authors: [], venues: [] });
   }
 
   return (
@@ -39,22 +39,21 @@ export default function Sidebar() {
         />
       </Stack>
 
-      <div className="filter-label">Author</div>
-
+      <div className="filter-label">Authors</div>
       <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
-        tooltip="Only matches the beginning of names; case-insensitive"
-        value={filter.filter.author}
-        setValue={(value) => filter.setFilter({ ...filter.filter, author: value })}
+        tooltip="Only matches the beginning of names; min. 3 characters; case-insensitive"
+        value={filter.filter.authors}
+        setValue={(value) => filter.setFilter({ ...filter.filter, authors: value })}
       />
-      <div className="filter-label">Venue</div>
+      <div className="filter-label">Venues</div>
       <FilterCategorical<VenueFilter>
         route="venues"
         label="names"
         tooltip="Matches any position in the name; case-sensitive"
-        value={filter.filter.venue}
-        setValue={(value) => filter.setFilter({ ...filter.filter, venue: value })}
+        value={filter.filter.venues}
+        setValue={(value) => filter.setFilter({ ...filter.filter, venues: value })}
       />
     </Stack>
   );

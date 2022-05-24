@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { default as MuiLink } from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,16 +13,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNetworkPost } from '../network';
 import { useSnack } from '../context/SnackbarContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTE_LOGIN } from '../consts';
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <MuiLink color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </MuiLink>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -113,9 +113,9 @@ export default function Register() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href={ROUTE_LOGIN} variant="body2">
+              <MuiLink component={Link} to={ROUTE_LOGIN} variant="body2">
                 Already have an account? Sign in
-              </Link>
+              </MuiLink>
             </Grid>
           </Grid>
         </Box>
