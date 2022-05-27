@@ -10,7 +10,14 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAuth } from '../context/AuthContext';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { ROUTE_ACCOUNT, ROUTE_AUTHORS, ROUTE_PAPERS, ROUTE_VENUES, STORAGE_TOKEN } from '../consts';
+import {
+  ROUTE_ACCOUNT,
+  ROUTE_AUTHORS,
+  ROUTE_HOME,
+  ROUTE_PAPERS,
+  ROUTE_VENUES,
+  STORAGE_TOKEN,
+} from '../consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ArticleIcon from '@mui/icons-material/Article';
 import GroupIcon from '@mui/icons-material/Group';
@@ -57,8 +64,14 @@ const ResponsiveAppBar = () => {
         <Typography
           variant="h4"
           noWrap
-          component="div"
-          sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          component={Link}
+          to={ROUTE_HOME}
+          sx={{
+            mr: 2,
+            display: { xs: 'none', md: 'flex' },
+            textDecoration: 'none',
+            color: 'white',
+          }}
         >
           <b>D4</b>
         </Typography>

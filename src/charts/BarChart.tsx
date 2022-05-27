@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { BarChartProps, StatsData } from '../types';
+import { BarChartProps, YearsData } from '../types';
 import { useNetworkGet } from '../network';
 import { useRefresh } from '../context/RefreshContext';
 
 export default function BarChart(props: BarChartProps) {
-  const [chartData, setChartData] = useState<StatsData>({ years: [], counts: [] });
+  const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
   const refresh = useRefresh();
   const labelColors = chartData.counts.map((value) => (value > 0 ? 'rgb(55, 61, 63)' : '#b6b6b6'));
 
-  const refetch = useNetworkGet(`fe/${props.route}/stats`, 'statsData', (data: StatsData) => {
+  const refetch = useNetworkGet(`fe/${props.route}/years`, 'yearsData', (data: YearsData) => {
     setChartData(data);
   });
 

@@ -7,10 +7,10 @@ export interface BarChartProps {
 }
 
 export interface Paper {
-  year: number;
-  cites: number;
+  yearPublished: number;
+  inCitationsCount: number;
   title: string;
-  venues: string;
+  venue: string;
   authors: string[];
 }
 
@@ -55,7 +55,7 @@ export interface IconLabelProps {
   icon: SvgIconComponent;
 }
 
-export type StatsData = { years: string[]; counts: number[] };
+export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 
 export type PagedParameters = {

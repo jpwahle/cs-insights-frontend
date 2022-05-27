@@ -9,10 +9,10 @@ export default function Papers() {
   const columns = [
     { field: '_id' },
     { field: 'title', headerName: 'Title', width: 300 },
-    { field: 'year', headerName: 'Year' },
+    { field: 'yearPublished', headerName: 'Year' },
     { field: 'authors', headerName: 'Authors', width: 200 },
-    { field: 'venues', headerName: 'Venue', width: 200 },
-    { field: 'cites', headerName: 'Citations' },
+    { field: 'venue', headerName: 'Venue', width: 200 },
+    { field: 'inCitationsCount', headerName: 'Citations' },
   ];
 
   return (
