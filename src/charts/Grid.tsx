@@ -12,7 +12,7 @@ export default function Grid<T>(props: GridProps) {
   const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
   const [sortModel, setSortModel] = React.useState<GridSortModel>([
     {
-      field: 'cites',
+      field: 'inCitationsCount',
       sort: 'desc',
     },
   ]);
