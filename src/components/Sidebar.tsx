@@ -13,7 +13,14 @@ export default function Sidebar() {
   const filter = useFilter();
 
   function clearFilters() {
-    filter.setFilter({ yearStart: '', yearEnd: '', authors: [], venues: [] });
+    filter.setFilter({
+      yearStart: '',
+      yearEnd: '',
+      authors: [],
+      venues: [],
+      accessType: null,
+      fieldsOfStudy: [],
+    });
   }
 
   return (
@@ -43,7 +50,7 @@ export default function Sidebar() {
       <FilterCategorical<AuthorFilter>
         route="authors"
         label="fullname"
-        tooltip="Only matches the beginning of names; min. 3 characters; case-insensitive"
+        tooltip="Only matches the beginning or after whitespaces; min. 3 characters; case-insensitive; special characters (ä, é, ì, ...) need to be removed without replacement"
         value={filter.filter.authors}
         setValue={(value) => filter.setFilter({ ...filter.filter, authors: value })}
       />

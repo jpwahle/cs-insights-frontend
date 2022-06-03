@@ -8,10 +8,10 @@ import BarChart from '../charts/BarChart';
 export default function Papers() {
   const columns = [
     { field: '_id' },
-    { field: 'title', headerName: 'Title', width: 400 },
+    { field: 'title', headerName: 'Title', width: 400, tooltip: true },
     { field: 'yearPublished', headerName: 'Year', width: 80 },
-    { field: 'authors', headerName: 'Authors', width: 300 },
-    { field: 'venue', headerName: 'Venue', width: 200 },
+    { field: 'authors', headerName: 'Authors', width: 300, tooltip: true },
+    { field: 'venue', headerName: 'Venue', width: 200, tooltip: true },
     { field: 'inCitationsCount', headerName: 'Citations' },
   ];
 

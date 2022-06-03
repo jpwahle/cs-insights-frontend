@@ -29,6 +29,8 @@ export type Filter = {
   yearEnd: string;
   authors: AuthorFilter[];
   venues: VenueFilter[];
+  accessType: string | null;
+  fieldsOfStudy: string[];
 };
 
 export type FilterCategoricalProps<T> = {
@@ -47,7 +49,7 @@ export interface FilterYear {
 
 export interface GridProps {
   route: string;
-  columns: GridColumns;
+  columns: GridColumns & { tooltip?: string };
 }
 
 export interface IconLabelProps {

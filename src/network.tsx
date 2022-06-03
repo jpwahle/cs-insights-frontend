@@ -48,7 +48,6 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
     for (const key of Object.keys(queryParameters)) {
       if (key === 'authors') {
         if (queryParameters.authors && queryParameters.authors.length > 0) {
-          console.log(queryParameters.authors);
           route += `authors=${JSON.stringify(
             queryParameters.authors.map((author) => author._id)
           )}&`;
@@ -81,7 +80,7 @@ export function useNetworkGet(
 
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
 
-  const { data, dataUpdatedAt, refetch } = useQuery(
+  const { data, dataUpdatedAt, refetch, isLoading, isFetching } = useQuery(
     queryKey,
     () => {
       return sendRequest(route, auth.token, setSnack);
@@ -98,7 +97,7 @@ export function useNetworkGet(
     }
   }, [data, dataUpdatedAt]);
 
-  return refetch;
+  return { refetch, isLoading, isFetching };
 }
 
 export function useNetworkPost(

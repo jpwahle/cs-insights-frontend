@@ -7,6 +7,31 @@ export const ROUTE_PAPERS = '/papers';
 export const ROUTE_AUTHORS = '/authors';
 export const ROUTE_VENUES = '/venues';
 
+export const ACCESS_TYPE_OPEN = 'open';
+export const ACCESS_TYPE_OTHER = 'other';
+
+export const FIELDS_OF_STUDY = [
+  'Art',
+  'Biology',
+  'Business',
+  'Chemistry',
+  'Computer Science',
+  'Economics',
+  'Engineering',
+  'Environmental Science',
+  'Geography',
+  'Geology',
+  'History',
+  'Materials Science',
+  'Mathematics',
+  'Medicine',
+  'Philosophy',
+  'Physics',
+  'Political Science',
+  'Psychology',
+  'Sociology',
+];
+
 export const STORAGE_TOKEN = 'token';
 export const DEBOUNCE_DELAY = 1000;
 export const PAGE_SIZE = 100;
