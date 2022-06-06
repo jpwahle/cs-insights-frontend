@@ -30,15 +30,17 @@ export type Filter = {
   authors: AuthorFilter[];
   venues: VenueFilter[];
   accessType: string | null;
+  typesOfPaper: string[];
   fieldsOfStudy: string[];
+  publishers: string[];
 };
 
 export type FilterCategoricalProps<T> = {
   label: string;
   route: string;
   tooltip: string;
-  value: T[];
-  setValue(value: T[]): void;
+  value: T;
+  setValue(value: T): void;
 };
 
 export interface FilterYear {
@@ -60,11 +62,19 @@ export interface IconLabelProps {
 export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 
-export type PagedParameters = {
+export type NonFilterParameters = {
   page?: number;
   pageSize?: number;
   sortField?: string;
   sortDirection?: string;
+  column?: string;
+  pattern?: string;
+};
+
+export type StringArrayParameters = {
+  typesOfPaper?: string[];
+  fieldsOfStudy?: string[];
+  publishers?: string[];
 };
 
 export type QueryParameters = {
@@ -72,4 +82,6 @@ export type QueryParameters = {
   yearEnd?: string;
   authors?: AuthorFilter[];
   venues?: VenueFilter[];
-} & PagedParameters;
+  accessType?: string | null;
+} & StringArrayParameters &
+  NonFilterParameters;

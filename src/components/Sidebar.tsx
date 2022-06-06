@@ -1,6 +1,11 @@
 import React from 'react';
 import '../App.css';
-import FilterCategorical from './FilterCategorical';
+import {
+  FilterMultipleObjectFetch,
+  FilterMultipleStringFetch,
+  FilterMultipleStringLocal,
+  FilterSingleStringLocal,
+} from './FilterCategorical';
 import { Button, Stack } from '@mui/material';
 import FilterTextField from './FilterTextfield';
 import { AuthorFilter, VenueFilter } from '../types';
@@ -19,7 +24,9 @@ export default function Sidebar() {
       authors: [],
       venues: [],
       accessType: null,
+      typesOfPaper: [],
       fieldsOfStudy: [],
+      publishers: [],
     });
   }
 
@@ -47,7 +54,7 @@ export default function Sidebar() {
       </Stack>
 
       <div className="filter-label">Authors</div>
-      <FilterCategorical<AuthorFilter>
+      <FilterMultipleObjectFetch<AuthorFilter>
         route="authors"
         label="fullname"
         tooltip="Only matches the beginning or after whitespaces; min. 3 characters; case-insensitive; special characters (ä, é, ì, ...) need to be removed without replacement"
@@ -55,12 +62,44 @@ export default function Sidebar() {
         setValue={(value) => filter.setFilter({ ...filter.filter, authors: value })}
       />
       <div className="filter-label">Venues</div>
-      <FilterCategorical<VenueFilter>
+      <FilterMultipleObjectFetch<VenueFilter>
         route="venues"
         label="names"
-        tooltip="Matches any position in the name; case-sensitive"
+        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
         value={filter.filter.venues}
         setValue={(value) => filter.setFilter({ ...filter.filter, venues: value })}
+      />
+      <div className="filter-label">Types of paper</div>
+      <FilterMultipleStringLocal
+        route="papers"
+        label="typesOfPaper"
+        tooltip="Matches any position in the name; case-insensitive"
+        value={filter.filter.typesOfPaper}
+        setValue={(value) => filter.setFilter({ ...filter.filter, typesOfPaper: value })}
+      />
+      <div className="filter-label">Fields of study</div>
+      <FilterMultipleStringLocal
+        route="papers"
+        label="fieldsOfStudy"
+        tooltip="Matches any position in the name; case-insensitive"
+        value={filter.filter.fieldsOfStudy}
+        setValue={(value) => filter.setFilter({ ...filter.filter, fieldsOfStudy: value })}
+      />
+      <div className="filter-label">Publishers</div>
+      <FilterMultipleStringFetch
+        route="papers"
+        label="publisher"
+        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
+        value={filter.filter.publishers}
+        setValue={(value) => filter.setFilter({ ...filter.filter, publishers: value })}
+      />
+      <div className="filter-label">Access type</div>
+      <FilterSingleStringLocal
+        route="papers"
+        label="accessType"
+        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
+        value={filter.filter.accessType}
+        setValue={(value) => filter.setFilter({ ...filter.filter, accessType: value })}
       />
     </Stack>
   );
