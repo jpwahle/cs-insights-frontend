@@ -1,6 +1,6 @@
 :root {
-  --padding-small: 4px;
-  --padding-large: 8px;
+  --size-small: 4px;
+  --size-large: 8px;
 }
 
 /* home */
@@ -60,27 +60,27 @@
 
 .categories {
   background: darkgrey;
-  padding: var(--padding-large);
+  padding: var(--size-large);
   align-items: center;
 }
 
 .categories > * {
-  padding: var(--padding-large);
+  padding: var(--size-large);
 }
 
 .graphs {
-  margin: var(--padding-large);
+  margin: var(--size-large);
 }
 
 /* filter */
 .sidebar {
   background: lightgrey;
-  padding: var(--padding-small);
+  padding: var(--size-small);
   text-align: start;
 }
 
 .sidebar > * {
-  padding: var(--padding-large);
+  padding: var(--size-large);
 }
 
 .filter-header {
@@ -101,5 +101,5 @@
 }
 
 .filter-year-minus {
-  margin: var(--padding-large);
+  margin: var(--size-large);
 }

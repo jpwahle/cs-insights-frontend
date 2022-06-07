@@ -1,9 +1,10 @@
-import { PagedParameters, QueryParameters } from './types';
+import { StringArrayParameters, NonFilterParameters, QueryParameters } from './types';
 import { useMutation, useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import { useSnack } from './context/SnackbarContext';
 import { useFilter } from './context/FilterContext';
+import { ACCESS_TYPE_OPEN, ACCESS_TYPE_OTHER } from './consts';
 
 async function sendRequest(
   route: string,
@@ -56,6 +57,19 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
         if (queryParameters.venues && queryParameters.venues.length > 0) {
           route += `venues=${JSON.stringify(queryParameters.venues.map((venue) => venue._id))}&`;
         }
+      } else if (['publishers', 'typesOfPaper', 'fieldsOfStudy'].includes(key)) {
+        const value: String[] | undefined = queryParameters[key as keyof StringArrayParameters];
+        if (value && value.length > 0) {
+          route += `${key}=${JSON.stringify(value)}&`;
+        }
+      } else if (key === 'accessType') {
+        if (queryParameters.accessType) {
+          if (queryParameters.accessType === ACCESS_TYPE_OPEN) {
+            route += `openAccess=true&`;
+          } else if (queryParameters.accessType === ACCESS_TYPE_OTHER) {
+            route += `openAccess=false&`;
+          }
+        }
       } else {
         const value = queryParameters[key as keyof QueryParameters];
         if (value || (key === 'page' && value === 0)) {
@@ -72,7 +86,7 @@ export function useNetworkGet(
   route: string,
   queryKey: string,
   process: (data: any) => void,
-  queryParameters: PagedParameters = {} // except filter
+  queryParameters: NonFilterParameters = {}
 ) {
   const auth = useAuth();
   const setSnack = useSnack();

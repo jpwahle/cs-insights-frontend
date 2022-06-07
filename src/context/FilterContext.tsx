@@ -20,7 +20,9 @@ export function FilterProvider({ children }: { children: React.ReactElement }) {
     authors: [],
     venues: [],
     accessType: null,
+    typesOfPaper: [],
     fieldsOfStudy: [],
+    publishers: [],
   });
 
   return (

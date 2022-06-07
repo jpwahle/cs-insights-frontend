@@ -7,8 +7,15 @@ export const ROUTE_PAPERS = '/papers';
 export const ROUTE_AUTHORS = '/authors';
 export const ROUTE_VENUES = '/venues';
 
-export const ACCESS_TYPE_OPEN = 'open';
-export const ACCESS_TYPE_OTHER = 'other';
+export const TYPES_OF_PAPER = [
+  'article',
+  'inproceedings',
+  'book',
+  'incollection',
+  'proceedings',
+  'phdthesis',
+  'mastersthesis',
+];
 
 export const FIELDS_OF_STUDY = [
   'Art',
@@ -31,6 +38,9 @@ export const FIELDS_OF_STUDY = [
   'Psychology',
   'Sociology',
 ];
+
+export const ACCESS_TYPE_OPEN = 'open';
+export const ACCESS_TYPE_OTHER = 'other';
 
 export const STORAGE_TOKEN = 'token';
 export const DEBOUNCE_DELAY = 1000;
