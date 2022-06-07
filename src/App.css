@@ -28,12 +28,6 @@
   }
 }
 
-.background {
-  background-color: #eeeeee;
-  height: 100vh;
-  width: 100vw;
-}
-
 .home {
   background-color: white;
   min-height: 100vh;
@@ -46,6 +40,11 @@
 .home-button {
   width: 50%;
 }
+
+.statsHighlight {
+  color: gray;
+}
+
 
 /* general structure */
 .frame {
