@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DataGrid, GridSortModel } from '@mui/x-data-grid';
+import '../App.css';
+import { DataGrid, GridEnrichedColDef, GridSortModel } from '@mui/x-data-grid';
 import { GridData, GridProps } from '../types';
 import { useNetworkGet } from '../network';
 import { PAGE_SIZE } from '../consts';
 import { useRefresh } from '../context/RefreshContext';
+import { Tooltip } from '@mui/material';
 
 export default function Grid<T>(props: GridProps) {
   const [gridData, setGridData] = useState<GridData<T>>({ rowCount: 0, rows: [] });
@@ -12,13 +14,23 @@ export default function Grid<T>(props: GridProps) {
   const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
   const [sortModel, setSortModel] = React.useState<GridSortModel>([
     {
-      field: 'cites',
+      field: 'inCitationsCount',
       sort: 'desc',
     },
   ]);
   const refresh = useRefresh();
+  const columns = props.columns.map((column: GridEnrichedColDef & { tooltip?: string }) => {
+    if (column.tooltip) {
+      column.renderCell = (params: any) => (
+        <Tooltip title={params.value} placement="top">
+          <div className="MuiDataGrid-cellContent">{params.value}</div>
+        </Tooltip>
+      );
+    }
+    return column;
+  });
 
-  const refetch = useNetworkGet(
+  const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/paged`,
     'gridData',
     (data: GridData<T>) => {
@@ -31,6 +43,7 @@ export default function Grid<T>(props: GridProps) {
       sortDirection: sortModel[0] && sortModel[0].sort ? sortModel[0].sort : '',
     }
   );
+
   useEffect(() => {
     refresh.addRefetch(refetch);
   }, []);
@@ -46,7 +59,7 @@ export default function Grid<T>(props: GridProps) {
       <DataGrid
         rows={gridData.rows}
         rowCount={gridData.rowCount}
-        columns={props.columns}
+        columns={columns}
         disableSelectionOnClick
         getRowId={(row) => row._id}
         columnVisibilityModel={{
@@ -54,6 +67,7 @@ export default function Grid<T>(props: GridProps) {
         }}
         rowHeight={40}
         density="compact"
+        loading={isFetching}
         pagination
         page={page}
         pageSize={pageSize}

@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { BarChartProps, StatsData } from '../types';
+import { BarChartProps, YearsData } from '../types';
 import { useNetworkGet } from '../network';
 import { useRefresh } from '../context/RefreshContext';
+import { CircularProgress } from '@mui/material';
+import Box from '@mui/material/Box';
 
 export default function BarChart(props: BarChartProps) {
-  const [chartData, setChartData] = useState<StatsData>({ years: [], counts: [] });
+  const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
   const refresh = useRefresh();
   const labelColors = chartData.counts.map((value) => (value > 0 ? 'rgb(55, 61, 63)' : '#b6b6b6'));
 
-  const refetch = useNetworkGet(`fe/${props.route}/stats`, 'statsData', (data: StatsData) => {
-    setChartData(data);
-  });
+  const { refetch, isFetching } = useNetworkGet(
+    `fe/${props.route}/years`,
+    'yearsData',
+    (data: YearsData) => {
+      setChartData(data);
+    }
+  );
 
   useEffect(() => {
     refresh.addRefetch(refetch);
@@ -43,6 +49,7 @@ export default function BarChart(props: BarChartProps) {
       categories: chartData.years,
       title: {
         text: 'Year of publication',
+        offsetY: -4 * Math.sqrt(chartData.years.length),
       },
       labels: {
         style: {
@@ -55,11 +62,32 @@ export default function BarChart(props: BarChartProps) {
         text: 'Number of ' + props.yDimension,
       },
     },
-
     fill: {
       opacity: 1,
     },
   };
 
-  return <ReactApexChart options={options} series={series} type="bar" height={300} width={1200} />;
+  return (
+    <div>
+      <Box sx={{ position: 'relative' }}>
+        <ReactApexChart options={options} series={series} type="bar" height={300} width={1200} />
+        {isFetching ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              top: 0,
+              right: 0,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : null}
+      </Box>
+    </div>
+  );
 }

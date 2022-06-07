@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext';
 import {
   ROUTE_ACCOUNT,
   ROUTE_AUTHORS,
+  ROUTE_HOME,
   ROUTE_LOGIN,
   ROUTE_PAPERS,
   ROUTE_PASSWORD,
@@ -34,7 +35,7 @@ export default function App() {
             <FilterProvider>
               <BrowserRouter>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path={ROUTE_HOME} element={<Home />} />
                   <Route path={ROUTE_LOGIN} element={<Login />} />
                   <Route path={ROUTE_REGISTER} element={<Register />} />
                   <Route path={ROUTE_ACCOUNT} element={<Account />} />

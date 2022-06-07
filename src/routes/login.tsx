@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { useNetworkPost } from '../network';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER } from '../consts';
+import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER, STORAGE_TOKEN } from '../consts';
 
 function Copyright(props: any) {
   return (
@@ -41,13 +41,12 @@ export default function Login() {
       email: input.get('email'),
       password: input.get('password'),
     };
-
     mutation.mutate(login, {
       onSuccess: (data: any) => {
         if (data) {
           auth.setToken(data.token);
-          if (data.remember) {
-            localStorage.setItem('token', data.token);
+          if (input.get('remember')) {
+            localStorage.setItem(STORAGE_TOKEN, data.token);
           }
           navigate(ROUTE_PAPERS);
         }

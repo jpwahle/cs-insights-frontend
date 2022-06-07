@@ -46,10 +46,16 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
   if (queryParameters) {
     route += '?';
     for (const key of Object.keys(queryParameters)) {
-      if (key === 'authors' && queryParameters.authors && queryParameters.authors.length > 0) {
-        route += `authors=${JSON.stringify(queryParameters.authors.map((author) => author._id))}&`;
-      } else if (key === 'venues' && queryParameters.venues && queryParameters.venues.length > 0) {
-        route += `venues=${JSON.stringify(queryParameters.venues.map((venue) => venue._id))}&`;
+      if (key === 'authors') {
+        if (queryParameters.authors && queryParameters.authors.length > 0) {
+          route += `authors=${JSON.stringify(
+            queryParameters.authors.map((author) => author._id)
+          )}&`;
+        }
+      } else if (key === 'venues') {
+        if (queryParameters.venues && queryParameters.venues.length > 0) {
+          route += `venues=${JSON.stringify(queryParameters.venues.map((venue) => venue._id))}&`;
+        }
       } else {
         const value = queryParameters[key as keyof QueryParameters];
         if (value || (key === 'page' && value === 0)) {
@@ -74,7 +80,7 @@ export function useNetworkGet(
 
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
 
-  const { data, dataUpdatedAt, refetch } = useQuery(
+  const { data, dataUpdatedAt, refetch, isLoading, isFetching } = useQuery(
     queryKey,
     () => {
       return sendRequest(route, auth.token, setSnack);
@@ -91,7 +97,7 @@ export function useNetworkGet(
     }
   }, [data, dataUpdatedAt]);
 
-  return refetch;
+  return { refetch, isLoading, isFetching };
 }
 
 export function useNetworkPost(

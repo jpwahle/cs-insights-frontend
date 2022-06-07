@@ -19,6 +19,8 @@ export function FilterProvider({ children }: { children: React.ReactElement }) {
     yearEnd: '',
     authors: [],
     venues: [],
+    accessType: null,
+    fieldsOfStudy: [],
   });
 
   return (
