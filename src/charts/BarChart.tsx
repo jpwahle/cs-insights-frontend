@@ -13,7 +13,7 @@ export default function BarChart(props: BarChartProps) {
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/years`,
-    'yearsData',
+    'yearsData' + props.route,
     (data: YearsData) => {
       setChartData(data);
     }
@@ -48,7 +48,7 @@ export default function BarChart(props: BarChartProps) {
     xaxis: {
       categories: chartData.years,
       title: {
-        text: 'Year of publication',
+        text: 'Year',
         offsetY: -4 * Math.sqrt(chartData.years.length),
       },
       labels: {
@@ -65,12 +65,24 @@ export default function BarChart(props: BarChartProps) {
     fill: {
       opacity: 1,
     },
+    chart: {
+      parentHeightOffset: 0,
+      //   sparkline: {
+      //     enabled: true,
+      //   },
+    },
   };
 
   return (
     <div>
       <Box sx={{ position: 'relative' }}>
-        <ReactApexChart options={options} series={series} type="bar" height={300} width={1200} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="bar"
+          height="250px"
+          width="1200px"
+        />
         {isFetching ? (
           <Box
             sx={{

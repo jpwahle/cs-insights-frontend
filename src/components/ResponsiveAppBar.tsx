@@ -9,30 +9,38 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAuth } from '../context/AuthContext';
-import SettingsIcon from '@mui/icons-material/Settings';
 import {
   ROUTE_ACCOUNT,
   ROUTE_AUTHORS,
+  ROUTE_CITATIONS,
   ROUTE_HOME,
   ROUTE_PAPERS,
   ROUTE_VENUES,
   STORAGE_TOKEN,
 } from '../consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ArticleIcon from '@mui/icons-material/Article';
-import GroupIcon from '@mui/icons-material/Group';
-import PlaceIcon from '@mui/icons-material/Place';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {
+  AccountCircle,
+  Article,
+  Bookmarks,
+  Group,
+  Logout,
+  Place,
+  Settings,
+} from '@mui/icons-material';
 
 const pages = [
-  { label: 'Papers', route: ROUTE_PAPERS, icon: ArticleIcon },
-  { label: 'Authors', route: ROUTE_AUTHORS, icon: GroupIcon },
-  { label: 'Venues', route: ROUTE_VENUES, icon: PlaceIcon },
+  { label: 'Papers', route: ROUTE_PAPERS, icon: Article },
+  { label: 'Authors', route: ROUTE_AUTHORS, icon: Group },
+  { label: 'Venues', route: ROUTE_VENUES, icon: Place },
+  // { label: 'Paper Types', route: ROUTE_PAPER_TYPE, icon: QuestionMark },
+  // { label: 'Fields of Study', route: ROUTE_FIELDS_OF_STUDY, icon: QuestionMark },
+  { label: 'Citations', route: ROUTE_CITATIONS, icon: Bookmarks },
+  // { label: 'Topics', route: ROUTE_TOPICS, icon: QuestionMark },
 ];
 const settings = [
-  { label: 'Account', id: 'account', icon: AccountCircleIcon },
-  { label: 'Logout', id: 'logout', icon: LogoutIcon },
+  { label: 'Account', id: 'account', icon: AccountCircle },
+  { label: 'Logout', id: 'logout', icon: Logout },
 ];
 
 const ResponsiveAppBar = () => {
@@ -97,7 +105,7 @@ const ResponsiveAppBar = () => {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} size="large" edge="end" color="inherit">
-              <SettingsIcon />
+              <Settings />
             </IconButton>
           </Tooltip>
           <Menu

@@ -47,14 +47,14 @@ export default function Home() {
             </Typography>
             <Typography>on commit</Typography>
             <Typography>
-              <Link
-                to={'https://github.com/gipplab/NLP-Land-frontend/commit/' + gitInfo.commit.hash}
+              <a
+                href={'https://github.com/gipplab/NLP-Land-frontend/commit/' + gitInfo.commit.hash}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="statsHighlight"
               >
                 {gitInfo.commit.hash}
-              </Link>
+              </a>
             </Typography>
             <Typography>on branch</Typography>
             <Typography className="statsHighlight">{gitInfo.branch}</Typography>
@@ -73,8 +73,8 @@ export default function Home() {
           >
             <div>
               {'Visit us on '}
-              <Link
-                to="https://github.com/gipplab/NLP-Land-frontend"
+              <a
+                href="https://github.com/gipplab/NLP-Land-frontend"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -82,7 +82,7 @@ export default function Home() {
                 }}
               >
                 GitHub
-              </Link>
+              </a>
               !
             </div>
           </footer>

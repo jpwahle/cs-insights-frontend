@@ -77,6 +77,7 @@ export default function Grid<T>(props: GridProps) {
         sortingMode="server"
         sortModel={sortModel}
         onSortModelChange={(newSortModel) => setSortModel(newSortModel)}
+        disableVirtualization
       />
     </div>
   );

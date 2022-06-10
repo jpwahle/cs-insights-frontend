@@ -6,6 +6,10 @@ export const ROUTE_PASSWORD = '/forgotpassword';
 export const ROUTE_PAPERS = '/papers';
 export const ROUTE_AUTHORS = '/authors';
 export const ROUTE_VENUES = '/venues';
+export const ROUTE_PAPER_TYPES = '/papertypes';
+export const ROUTE_FIELDS_OF_STUDY = '/fieldsofstudy';
+export const ROUTE_CITATIONS = '/citations';
+export const ROUTE_TOPICS = '/topics';
 
 export const TYPES_OF_PAPER = [
   'article',

@@ -9,10 +9,9 @@ import {
 import { Button, Stack } from '@mui/material';
 import FilterTextField from './FilterTextfield';
 import { AuthorFilter, VenueFilter } from '../types';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useFilter } from '../context/FilterContext';
 import IconLabel from './IconLabel';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { Delete, FilterAlt } from '@mui/icons-material';
 
 export default function Sidebar() {
   const filter = useFilter();
@@ -33,8 +32,8 @@ export default function Sidebar() {
   return (
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
-        <IconLabel label="Filters" icon={FilterAltIcon} />
-        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => clearFilters()}>
+        <IconLabel label="Filters" icon={FilterAlt} />
+        <Button variant="outlined" startIcon={<Delete />} onClick={() => clearFilters()}>
           Clear Filters
         </Button>
       </Stack>
@@ -97,7 +96,7 @@ export default function Sidebar() {
       <FilterSingleStringLocal
         route="papers"
         label="accessType"
-        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
+        tooltip="Select from options"
         value={filter.filter.accessType}
         setValue={(value) => filter.setFilter({ ...filter.filter, accessType: value })}
       />
