@@ -80,6 +80,7 @@
 
 .sidebar > * {
   padding: var(--size-large);
+  /*padding-bottom: 0;*/
 }
 
 .filter-header {
@@ -89,6 +90,8 @@
 
 .filter-label {
   padding-bottom: 0;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .filter-textfield {

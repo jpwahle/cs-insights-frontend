@@ -2,17 +2,18 @@ import { GridColumns } from '@mui/x-data-grid';
 import { SvgIconComponent } from '@mui/icons-material';
 
 export interface BarChartProps {
+  title: string;
   yDimension: string;
   route: string;
 }
 
-export interface Paper {
-  yearPublished: number;
-  inCitationsCount: number;
+export type Paper = {
+  yearPublished: string;
+  inCitationsCount: string;
   title: string;
   venue: string;
-  authors: string[];
-}
+  authors: string;
+};
 
 export type AuthorFilter = {
   _id: string;
@@ -35,10 +36,11 @@ export type Filter = {
   publishers: string[];
 };
 
-export type FilterCategoricalProps<T> = {
+export type FilterAutocompleteProps<T> = {
   label: string;
+  labelName: string;
   route: string;
-  tooltip: string;
+  helpTooltip: string;
   value: T;
   setValue(value: T): void;
 };

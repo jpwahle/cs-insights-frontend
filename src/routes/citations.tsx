@@ -8,8 +8,16 @@ export default function Citations() {
     <Frame>
       <Tools />
       <div className="graphs">
-        <BarChart route="citationsIn" yDimension="incoming citations" />
-        <BarChart route="citationsOut" yDimension="outgoing citations" />
+        <BarChart
+          route="citationsIn"
+          yDimension="incoming citations"
+          title={'Incoming citations per year'}
+        />
+        <BarChart
+          route="citationsOut"
+          yDimension="outgoing citations"
+          title={'Outgoing citations per year'}
+        />
       </div>
     </Frame>
   );

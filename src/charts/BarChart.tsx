@@ -45,6 +45,9 @@ export default function BarChart(props: BarChartProps) {
       width: 2,
       colors: ['transparent'],
     },
+    title: {
+      text: props.title,
+    },
     xaxis: {
       categories: chartData.years,
       title: {
@@ -67,9 +70,6 @@ export default function BarChart(props: BarChartProps) {
     },
     chart: {
       parentHeightOffset: 0,
-      //   sparkline: {
-      //     enabled: true,
-      //   },
     },
   };
 

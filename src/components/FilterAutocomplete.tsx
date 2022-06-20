@@ -1,15 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { Fragment, useCallback, useEffect } from 'react';
 import '../App.css';
-import {
-  Autocomplete,
-  Chip,
-  CircularProgress,
-  debounce,
-  TextField,
-  Tooltip as MuiTooltip,
-} from '@mui/material';
+import { Autocomplete, Chip, CircularProgress, debounce, TextField } from '@mui/material';
 import { useNetworkGet } from '../network';
-import { FilterCategoricalProps } from '../types';
+import { FilterAutocompleteProps } from '../types';
 import {
   ACCESS_TYPE_OPEN,
   ACCESS_TYPE_OTHER,
@@ -18,6 +11,7 @@ import {
   TYPES_OF_PAPER,
 } from '../consts';
 import Box from '@mui/material/Box';
+import FilterLabel from './FilterLabel';
 
 function useDebounce<T>(
   route: string,
@@ -69,61 +63,61 @@ function useDebounce<T>(
   return { handleInputChange, isFetching };
 }
 
-function Tooltip(props: { tooltip: string; children: React.ReactElement }) {
-  return (
-    <MuiTooltip placement="top-end" title={props.tooltip}>
-      {props.children}
-    </MuiTooltip>
-  );
-}
-
 function TagsAndTooltip<T extends { _id: string; [key: string]: string } | string>(props: {
-  tooltip: string;
+  helpTooltip: string;
   label: string;
+  labelName: string;
   value: T[];
   setValue: (value: T[]) => void;
   children: React.ReactElement;
 }) {
+  function chipLabel(chipValue: { _id: string; [key: string]: string } | string) {
+    const str = typeof chipValue === 'string' ? chipValue : chipValue[props.labelName];
+    return str[0].toUpperCase() + str.slice(1);
+  }
   return (
-    <div className="categoricalFilter">
-      <Tooltip tooltip={props.tooltip}>{props.children}</Tooltip>
-      <Box
-        mt={0.5}
-        sx={{
-          '& > :not(:last-child)': { mr: 0.5 },
-          '& > *': { mr: 0.5 },
-        }}
-      >
-        {props.value.map((chipValue) => (
-          <Chip
-            key={typeof chipValue === 'string' ? chipValue : chipValue._id}
-            label={typeof chipValue === 'string' ? chipValue : chipValue[props.label]}
-            onDelete={() =>
-              props.setValue(
-                props.value.filter((filterValue) =>
-                  typeof chipValue === 'string' || typeof filterValue === 'string'
-                    ? filterValue !== chipValue
-                    : filterValue._id !== chipValue._id
+    <Fragment>
+      <FilterLabel label={props.label} helpTooltip={props.helpTooltip} />
+      <div>
+        {props.children}
+        <Box
+          mt={0.5}
+          sx={{
+            '& > :not(:last-child)': { mr: 0.5 },
+            '& > *': { mr: 0.5 },
+          }}
+        >
+          {props.value.map((chipValue) => (
+            <Chip
+              key={typeof chipValue === 'string' ? chipValue : chipValue._id}
+              label={chipLabel(chipValue)}
+              onDelete={() =>
+                props.setValue(
+                  props.value.filter((filterValue) =>
+                    typeof chipValue === 'string' || typeof filterValue === 'string'
+                      ? filterValue !== chipValue
+                      : filterValue._id !== chipValue._id
+                  )
                 )
-              )
-            }
-            sx={{ marginBottom: 0.5 }}
-          />
-        ))}
-      </Box>
-    </div>
+              }
+              sx={{ marginBottom: 0.5 }}
+            />
+          ))}
+        </Box>
+      </div>
+    </Fragment>
   );
 }
 
 export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]: string }>(
-  props: FilterCategoricalProps<T[]>
+  props: FilterAutocompleteProps<T[]>
 ) {
   const [options, setOptions] = React.useState<readonly T[]>([]);
   const [inputValue, setInputValue] = React.useState<string>('');
 
   const { handleInputChange, isFetching } = useDebounce(
     props.route,
-    props.label,
+    props.labelName,
     setOptions,
     inputValue,
     setInputValue
@@ -131,8 +125,9 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
 
   return (
     <TagsAndTooltip
-      tooltip={props.tooltip}
+      helpTooltip={props.helpTooltip}
       label={props.label}
+      labelName={props.labelName}
       value={props.value}
       setValue={props.setValue}
     >
@@ -148,13 +143,13 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
           handleInputChange(newInputValue, event, reason)
         }
         isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
-        getOptionLabel={(option: T) => option[props.label]}
+        getOptionLabel={(option: T) => option[props.labelName]}
         options={options}
         loading={isFetching}
         filterOptions={(x) => x}
         renderOption={(renderProps, option) => (
           <li {...renderProps} key={option._id}>
-            {option[props.label]}
+            {option[props.labelName]}
           </li>
         )}
         renderTags={() => null}
@@ -180,13 +175,13 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
   );
 }
 
-export function FilterMultipleStringFetch(props: FilterCategoricalProps<string[]>) {
+export function FilterMultipleStringFetch(props: FilterAutocompleteProps<string[]>) {
   const [options, setOptions] = React.useState<readonly string[]>([]);
   const [inputValue, setInputValue] = React.useState<string>('');
 
   const { handleInputChange, isFetching } = useDebounce(
     props.route,
-    props.label,
+    props.labelName,
     setOptions,
     inputValue,
     setInputValue
@@ -194,14 +189,15 @@ export function FilterMultipleStringFetch(props: FilterCategoricalProps<string[]
 
   return (
     <TagsAndTooltip
-      tooltip={props.tooltip}
+      helpTooltip={props.helpTooltip}
       label={props.label}
+      labelName={props.labelName}
       value={props.value}
       setValue={props.setValue}
     >
       <Autocomplete
         multiple
-        id={'autocomplete-' + props.label}
+        id={'autocomplete-' + props.labelName}
         sx={{ width: 300 }}
         size="small"
         value={props.value}
@@ -236,10 +232,10 @@ export function FilterMultipleStringFetch(props: FilterCategoricalProps<string[]
   );
 }
 
-export function FilterMultipleStringLocal(props: FilterCategoricalProps<string[]>) {
+export function FilterMultipleStringLocal(props: FilterAutocompleteProps<string[]>) {
   let options: string[] = [];
 
-  switch (props.label) {
+  switch (props.labelName) {
     case 'typesOfPaper':
       options = TYPES_OF_PAPER;
       break;
@@ -250,18 +246,20 @@ export function FilterMultipleStringLocal(props: FilterCategoricalProps<string[]
 
   return (
     <TagsAndTooltip
-      tooltip={props.tooltip}
+      helpTooltip={props.helpTooltip}
       label={props.label}
+      labelName={props.labelName}
       value={props.value}
       setValue={props.setValue}
     >
       <Autocomplete
         multiple
-        id={'autocomplete-' + props.label}
+        id={'autocomplete-' + props.labelName}
         sx={{ width: 300 }}
         size="small"
         value={props.value}
         onChange={(event, value) => props.setValue(value)}
+        getOptionLabel={(option) => option[0].toUpperCase() + option.slice(1)}
         options={options}
         renderTags={() => null}
         renderInput={(params) => <TextField {...params} label={'Select'} />}
@@ -270,13 +268,14 @@ export function FilterMultipleStringLocal(props: FilterCategoricalProps<string[]
   );
 }
 
-export function FilterSingleStringLocal(props: FilterCategoricalProps<string | null>) {
+export function FilterSingleStringLocal(props: FilterAutocompleteProps<string | null>) {
   const options = [ACCESS_TYPE_OPEN, ACCESS_TYPE_OTHER];
 
   return (
-    <Tooltip tooltip={props.tooltip}>
+    <Fragment>
+      <FilterLabel label={props.label} helpTooltip={props.helpTooltip} />
       <Autocomplete
-        id={'autocomplete-' + props.label}
+        id={'autocomplete-' + props.labelName}
         sx={{ width: 300 }}
         size="small"
         value={props.value}
@@ -284,6 +283,6 @@ export function FilterSingleStringLocal(props: FilterCategoricalProps<string | n
         options={options}
         renderInput={(params) => <TextField {...params} label={'Select'} />}
       />
-    </Tooltip>
+    </Fragment>
   );
 }

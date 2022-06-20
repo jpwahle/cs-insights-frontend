@@ -43,9 +43,11 @@ export const FIELDS_OF_STUDY = [
   'Sociology',
 ];
 
-export const ACCESS_TYPE_OPEN = 'open';
-export const ACCESS_TYPE_OTHER = 'other';
+export const ACCESS_TYPE_OPEN = 'Open';
+export const ACCESS_TYPE_OTHER = 'Other';
 
 export const STORAGE_TOKEN = 'token';
 export const DEBOUNCE_DELAY = 1000;
 export const PAGE_SIZE = 100;
+
+export const NA = 'NA';

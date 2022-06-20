@@ -5,6 +5,7 @@ import Grid from '../charts/Grid';
 import Frame from '../components/Frame';
 import BarChart from '../charts/BarChart';
 import { GridCellParams } from '@mui/x-data-grid';
+import { Link } from '@mui/material';
 
 export default function Papers() {
   const columns = [
@@ -16,17 +17,30 @@ export default function Papers() {
       headerName: 'Authors',
       width: 300,
       tooltip: true,
-      valueGetter: (params: GridCellParams) => params.value.join(', '),
+      valueGetter: (params: GridCellParams) => {
+        return params.value.join(', ');
+      },
     },
     { field: 'venue', headerName: 'Venue', width: 200, tooltip: true },
     { field: 'inCitationsCount', headerName: 'Citations' },
+    {
+      field: 'pdfUrl',
+      headerName: 'Link',
+      width: 80,
+      renderCell: (params: GridCellParams) => (
+        <Link href={params.value} target="_blank" rel="noopener noreferrer" fontWeight="bold">
+          Link
+        </Link>
+      ),
+      // valueGetter: (params: GridCellParams) => <Link href={params.value}>Link</Link>
+    },
   ];
 
   return (
     <Frame>
       <Tools />
       <div className="graphs">
-        <BarChart route="papers" yDimension="papers" />
+        <BarChart route="papers" yDimension="papers" title={'Papers per year'} />
         <Grid<Paper> columns={columns} route={'papers'} />
       </div>
     </Frame>

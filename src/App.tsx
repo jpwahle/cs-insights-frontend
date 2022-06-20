@@ -33,8 +33,9 @@ import FieldsOfStudy from './routes/fieldsOfStudy';
 import Citations from './routes/citations';
 import Topics from './routes/topics';
 
+export const queryClient = new QueryClient();
+
 export default function App() {
-  const queryClient = new QueryClient();
   return (
     <SnackbarProvider>
       <ErrorBoundaryWrapper>

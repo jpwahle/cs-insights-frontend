@@ -59,10 +59,13 @@ export default function Home() {
             <Typography>on branch</Typography>
             <Typography className="statsHighlight">{gitInfo.branch}</Typography>
           </div>
-          <div style={{ width: '50%', color: 'red' }}>
+          <div style={{ width: '50%', color: 'red', textDecoration: 'line-through' }}>
             Disclaimer: Sending a new request (e.g. by applying filters, changing the sorting, or
             changing the page number), while the result of another request is still being awaited,
             can have the effect of the new request not being (entirely) fulfilled.
+          </div>
+          <div style={{ width: '50%', color: 'red' }}>
+            This should be fixed. Please report if you still experience a desynced state.
           </div>
           <footer
             style={{
