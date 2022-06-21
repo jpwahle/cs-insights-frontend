@@ -22,17 +22,17 @@ export default function Papers() {
       },
     },
     { field: 'venue', headerName: 'Venue', width: 200, tooltip: true },
-    { field: 'inCitationsCount', headerName: 'Citations' },
+    { field: 'inCitationsCount', headerName: 'Citations', width: 110 },
     {
       field: 'pdfUrl',
       headerName: 'Link',
       width: 80,
-      renderCell: (params: GridCellParams) => (
-        <Link href={params.value} target="_blank" rel="noopener noreferrer" fontWeight="bold">
-          Link
-        </Link>
-      ),
-      // valueGetter: (params: GridCellParams) => <Link href={params.value}>Link</Link>
+      renderCell: (params: GridCellParams) =>
+        params.value ? (
+          <Link href={params.value} target="_blank" rel="noopener noreferrer" fontWeight="bold">
+            Link
+          </Link>
+        ) : null,
     },
   ];
 

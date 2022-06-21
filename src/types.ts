@@ -15,6 +15,14 @@ export type Paper = {
   authors: string;
 };
 
+export type Venue = {
+  yearStart: string;
+  yearEnd: string;
+  inCitationsCount: string;
+  venue: string;
+  // authors: string;
+};
+
 export type AuthorFilter = {
   _id: string;
   fullname: string;
