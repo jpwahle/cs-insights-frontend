@@ -1,11 +1,7 @@
-import Frame from '../components/Frame';
 import React from 'react';
-import BarChart from '../charts/BarChart';
-import Tools from '../components/Tools';
-import { Venue } from '../types';
-import Grid from '../charts/Grid';
 import { GridCellParams } from '@mui/x-data-grid';
 import { Link } from '@mui/material';
+import FrameWithGraphs from '../components/FrameWithGraphs';
 
 export default function Venues() {
   const columns = [
@@ -29,16 +25,5 @@ export default function Venues() {
     },
   ];
 
-  return (
-    <Frame>
-      <Tools />
-      <div className="graphs">
-        <BarChart route="venues" yDimension="venues" title={'Venues per year'} />
-        {/*<BarChart route="venues2" yDimension="venues" title={'Venues per year'} />*/}
-        {/*<BarChart route="venues3" yDimension="venues" title={'Venues per year'} />*/}
-        <Grid<Venue> columns={columns} route={'venues'} />
-        {/*<Grid<Venue> columns={columns} route={'venues2'} />*/}
-      </div>
-    </Frame>
-  );
+  return <FrameWithGraphs route={'venues'} columns={columns} yDimension={'venues'} />;
 }

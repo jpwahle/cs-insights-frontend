@@ -1,11 +1,7 @@
-import Tools from '../components/Tools';
 import React from 'react';
-import { Paper } from '../types';
-import Grid from '../charts/Grid';
-import Frame from '../components/Frame';
-import BarChart from '../charts/BarChart';
 import { GridCellParams } from '@mui/x-data-grid';
 import { Link } from '@mui/material';
+import FrameWithGraphs from '../components/FrameWithGraphs';
 
 export default function Papers() {
   const columns = [
@@ -36,13 +32,5 @@ export default function Papers() {
     },
   ];
 
-  return (
-    <Frame>
-      <Tools />
-      <div className="graphs">
-        <BarChart route="papers" yDimension="papers" title={'Papers per year'} />
-        <Grid<Paper> columns={columns} route={'papers'} />
-      </div>
-    </Frame>
-  );
+  return <FrameWithGraphs route={'papers'} columns={columns} yDimension={'papers'} />;
 }

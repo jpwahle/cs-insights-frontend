@@ -76,13 +76,7 @@ export default function BarChart(props: BarChartProps) {
   return (
     <div>
       <Box sx={{ position: 'relative' }}>
-        <ReactApexChart
-          options={options}
-          series={series}
-          type="bar"
-          height="250px"
-          width="1200px"
-        />
+        <ReactApexChart options={options} series={series} type="bar" height={250} width={'100%'} />
         {isFetching ? (
           <Box
             sx={{

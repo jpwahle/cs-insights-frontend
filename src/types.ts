@@ -7,6 +7,23 @@ export interface BarChartProps {
   route: string;
 }
 
+export interface GridProps {
+  route: string;
+  columns: GridColumns & { tooltip?: string };
+}
+
+export interface BoxPlotProps {
+  title: string;
+  yDimension: string;
+  route: string;
+}
+
+export interface GraphsProps {
+  yDimension: string;
+  route: string;
+  columns: GridColumns;
+}
+
 export type Paper = {
   yearPublished: string;
   inCitationsCount: string;
@@ -59,11 +76,6 @@ export interface FilterYear {
   setValue(value: string): void;
 }
 
-export interface GridProps {
-  route: string;
-  columns: GridColumns & { tooltip?: string };
-}
-
 export interface IconLabelProps {
   label: string;
   icon: SvgIconComponent;
@@ -71,6 +83,7 @@ export interface IconLabelProps {
 
 export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
+export type QuartilesData = number[];
 
 export type NonFilterParameters = {
   page?: number;

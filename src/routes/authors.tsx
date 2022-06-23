@@ -1,10 +1,7 @@
-import Frame from '../components/Frame';
-import BarChart from '../charts/BarChart';
 import React from 'react';
-import Tools from '../components/Tools';
-import Grid from '../charts/Grid';
 import { GridCellParams } from '@mui/x-data-grid';
 import { Link } from '@mui/material';
+import FrameWithGraphs from '../components/FrameWithGraphs';
 
 export default function Authors() {
   const columns = [
@@ -28,17 +25,5 @@ export default function Authors() {
     },
   ];
 
-  return (
-    <Frame>
-      <Tools />
-      <div className="graphs">
-        <BarChart route="authors" yDimension="authors" title={'Authors per year'} />
-        {/*<BarChart route="authors2" yDimension="venues" title={'Venues per year'} />*/}
-        {/*<BarChart route="authors3" yDimension="venues" title={'Venues per year'} />*/}
-        {/*<BarChart route="authors4" yDimension="venues" title={'Venues per year'} />*/}
-        <Grid columns={columns} route={'authors'} />
-        {/*<Grid columns={columns} route={'authors2'} />*/}
-      </div>
-    </Frame>
-  );
+  return <FrameWithGraphs route={'authors'} columns={columns} yDimension={'authors'} />;
 }
