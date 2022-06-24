@@ -1,6 +1,13 @@
 import React, { Fragment, useCallback, useEffect } from 'react';
 import '../App.css';
-import { Autocomplete, Chip, CircularProgress, debounce, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  capitalize,
+  Chip,
+  CircularProgress,
+  debounce,
+  TextField,
+} from '@mui/material';
 import { useNetworkGet } from '../network';
 import { FilterAutocompleteProps } from '../types';
 import {
@@ -73,7 +80,7 @@ function TagsAndTooltip<T extends { _id: string; [key: string]: string } | strin
 }) {
   function chipLabel(chipValue: { _id: string; [key: string]: string } | string) {
     const str = typeof chipValue === 'string' ? chipValue : chipValue[props.labelName];
-    return str[0].toUpperCase() + str.slice(1);
+    return capitalize(str);
   }
   return (
     <Fragment>
@@ -259,7 +266,7 @@ export function FilterMultipleStringLocal(props: FilterAutocompleteProps<string[
         size="small"
         value={props.value}
         onChange={(event, value) => props.setValue(value)}
-        getOptionLabel={(option) => option[0].toUpperCase() + option.slice(1)}
+        getOptionLabel={(option) => capitalize(option)}
         options={options}
         renderTags={() => null}
         renderInput={(params) => <TextField {...params} label={'Select'} />}

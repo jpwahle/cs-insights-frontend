@@ -13,8 +13,11 @@ import {
   ROUTE_ACCOUNT,
   ROUTE_AUTHORS,
   ROUTE_CITATIONS,
+  ROUTE_FIELDS_OF_STUDY,
   ROUTE_HOME,
+  ROUTE_PAPER_TYPES,
   ROUTE_PAPERS,
+  ROUTE_PUBLISHERS,
   ROUTE_VENUES,
   STORAGE_TOKEN,
 } from '../consts';
@@ -22,10 +25,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   AccountCircle,
   Article,
+  Book,
   Bookmarks,
   Group,
+  LibraryBooks,
   Logout,
   Place,
+  Science,
   Settings,
 } from '@mui/icons-material';
 
@@ -33,8 +39,9 @@ const pages = [
   { label: 'Papers', route: ROUTE_PAPERS, icon: Article },
   { label: 'Authors', route: ROUTE_AUTHORS, icon: Group },
   { label: 'Venues', route: ROUTE_VENUES, icon: Place },
-  // { label: 'Paper Types', route: ROUTE_PAPER_TYPE, icon: QuestionMark },
-  // { label: 'Fields of Study', route: ROUTE_FIELDS_OF_STUDY, icon: QuestionMark },
+  { label: 'Types of Paper', route: ROUTE_PAPER_TYPES, icon: LibraryBooks },
+  { label: 'Fields of Study', route: ROUTE_FIELDS_OF_STUDY, icon: Science },
+  { label: 'Publishers', route: ROUTE_PUBLISHERS, icon: Book },
   { label: 'Citations', route: ROUTE_CITATIONS, icon: Bookmarks },
   // { label: 'Topics', route: ROUTE_TOPICS, icon: QuestionMark },
 ];
@@ -67,7 +74,8 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static">
+    // position is not 'absolute', so AppBar has full width, when there is horizontal scrolling
+    <AppBar style={{ boxShadow: 'none', position: 'fixed' }}>
       <Toolbar>
         <Typography
           variant="h4"

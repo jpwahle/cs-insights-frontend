@@ -1,6 +1,6 @@
 import Frame from './Frame';
 import Tools from './Tools';
-import { Stack } from '@mui/material';
+import { capitalize, Stack } from '@mui/material';
 import BarChart from '../charts/BarChart';
 import Grid from '../charts/Grid';
 import { GraphsProps } from '../types';
@@ -17,7 +17,7 @@ export default function FrameWithGraphs(props: GraphsProps) {
             <BarChart
               route={props.route}
               yDimension={props.yDimension}
-              title={`${props.yDimension[0].toUpperCase() + props.yDimension.slice(1)} per year`}
+              title={`${capitalize(props.yDimension)} per year`}
             />
             <Grid columns={props.columns} route={props.route} />
           </Stack>

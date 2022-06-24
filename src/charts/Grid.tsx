@@ -32,7 +32,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
   });
 
   const { refetch, isFetching } = useNetworkGet(
-    `fe/${props.route}/paged`,
+    `fe/${props.route}/info`,
     'gridData' + props.route,
     (data: GridData<T>) => {
       setGridData(data);

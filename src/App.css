@@ -57,13 +57,13 @@
   flex: 1;
 }
 
-.categories {
+.tools {
   background: darkgrey;
   padding: var(--size-large);
   align-items: center;
 }
 
-.categories > * {
+.tools > * {
   padding: var(--size-large);
 }
 

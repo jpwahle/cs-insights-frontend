@@ -20,6 +20,7 @@ export default function Frame({
     return (
       <Stack className="frame">
         <ResponsiveAppBar />
+        <div style={{ height: '70.5px' }} /> {/* To counteract the height of the AppBar*/}
         <Stack direction="row" className="stack">
           <Sidebar />
           <Stack className="stack">

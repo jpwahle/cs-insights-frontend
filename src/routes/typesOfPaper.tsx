@@ -1,10 +1,20 @@
 import React from 'react';
 import FrameWithGraphs from '../components/FrameWithGraphs';
+import { GridCellParams } from '@mui/x-data-grid';
+import { capitalize } from '@mui/material';
 
-export default function FieldsOfStudy() {
+export default function TypesOfPaper() {
   const columns = [
     { field: '_id' },
-    { field: 'fieldsOfStudy', headerName: 'Field of Study', width: 200 },
+    {
+      field: 'typeOfPaper',
+      headerName: 'Type of paper',
+      width: 400,
+      tooltip: true,
+      valueGetter: (params: GridCellParams) => {
+        return capitalize(params.value);
+      },
+    },
     { field: 'yearPublishedFirst', headerName: 'First', width: 80 },
     { field: 'yearPublishedLast', headerName: 'Last', width: 80 },
     { field: 'papersCount', headerName: 'Papers' },
@@ -12,5 +22,5 @@ export default function FieldsOfStudy() {
     { field: 'inCitationsPerPaper', headerName: 'Citations/Paper', width: 150 },
   ];
 
-  return <FrameWithGraphs route={'fields'} columns={columns} yDimension={'fields of study'} />;
+  return <FrameWithGraphs route={'types'} columns={columns} yDimension={'types of paper'} />;
 }

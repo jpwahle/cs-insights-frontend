@@ -19,6 +19,7 @@ import {
   ROUTE_PAPER_TYPES,
   ROUTE_PAPERS,
   ROUTE_PASSWORD,
+  ROUTE_PUBLISHERS,
   ROUTE_REGISTER,
   ROUTE_TOPICS,
   ROUTE_VENUES,
@@ -28,10 +29,11 @@ import Account from './routes/account';
 import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ForgotPassword from './routes/forgotPassword';
-import PaperTypes from './routes/paperTypes';
+import TypesOfPaper from './routes/typesOfPaper';
 import FieldsOfStudy from './routes/fieldsOfStudy';
 import Citations from './routes/citations';
 import Topics from './routes/topics';
+import Publishers from './routes/publishers';
 
 export const queryClient = new QueryClient();
 
@@ -52,8 +54,9 @@ export default function App() {
                   <Route path={ROUTE_PAPERS} element={<Papers />} />
                   <Route path={ROUTE_AUTHORS} element={<Authors />} />
                   <Route path={ROUTE_VENUES} element={<Venues />} />
-                  <Route path={ROUTE_PAPER_TYPES} element={<PaperTypes />} />
+                  <Route path={ROUTE_PAPER_TYPES} element={<TypesOfPaper />} />
                   <Route path={ROUTE_FIELDS_OF_STUDY} element={<FieldsOfStudy />} />
+                  <Route path={ROUTE_PUBLISHERS} element={<Publishers />} />
                   <Route path={ROUTE_CITATIONS} element={<Citations />} />
                   <Route path={ROUTE_TOPICS} element={<Topics />} />
                 </Routes>

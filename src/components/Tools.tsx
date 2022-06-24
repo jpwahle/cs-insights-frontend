@@ -8,7 +8,7 @@ import { Construction } from '@mui/icons-material';
 export default function Tools() {
   const refresh = useRefresh();
   return (
-    <Stack direction="row" className="categories">
+    <Stack direction="row" className="tools">
       <IconLabel label="Tools" icon={Construction} />
       <Button variant="contained" onClick={() => refresh.refresh()}>
         Fetch Data/Apply Filters
