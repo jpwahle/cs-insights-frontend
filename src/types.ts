@@ -2,7 +2,6 @@ import { GridColumns } from '@mui/x-data-grid';
 import { SvgIconComponent } from '@mui/icons-material';
 
 export interface BarChartProps {
-  title: string;
   yDimension: string;
   route: string;
 }
@@ -13,7 +12,11 @@ export interface GridProps {
 }
 
 export interface BoxPlotProps {
-  title: string;
+  xLabel: string;
+  route: string;
+}
+
+export interface TreeMapProps {
   yDimension: string;
   route: string;
 }
@@ -84,6 +87,7 @@ export interface IconLabelProps {
 export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 export type QuartilesData = number[];
+export type TreeMapData = { x: string; y: number }[];
 
 export type NonFilterParameters = {
   page?: number;

@@ -3,9 +3,9 @@ import ReactApexChart from 'react-apexcharts';
 import { BoxPlotProps, QuartilesData } from '../types';
 import { useNetworkGet } from '../network';
 import { useRefresh } from '../context/RefreshContext';
-import { CircularProgress } from '@mui/material';
-import Box from '@mui/material/Box';
+import { capitalize } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
+import LoadingCircle from '../components/LoadingCircle';
 
 export default function BoxPlot(props: BoxPlotProps) {
   const [chartData, setChartData] = useState<QuartilesData>([]);
@@ -29,7 +29,7 @@ export default function BoxPlot(props: BoxPlotProps) {
       type: 'boxPlot',
       data: [
         {
-          x: 'Citations',
+          x: capitalize(props.xLabel),
           y: chartData,
         },
       ],
@@ -51,26 +51,8 @@ export default function BoxPlot(props: BoxPlotProps) {
   window.dispatchEvent(new Event('resize'));
 
   return (
-    <div>
-      <Box sx={{ position: 'relative' }}>
-        <ReactApexChart options={options} series={series} type="boxPlot" height={550} width={180} />
-        {isFetching ? (
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              top: 0,
-              right: 0,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        ) : null}
-      </Box>
-    </div>
+    <LoadingCircle isFetching={isFetching}>
+      <ReactApexChart options={options} series={series} type="boxPlot" height={550} width={180} />
+    </LoadingCircle>
   );
 }

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import ResponsiveAppBar from './ResponsiveAppBar';
 import Sidebar from './Sidebar';
 import React, { useEffect } from 'react';
@@ -20,7 +21,8 @@ export default function Frame({
     return (
       <Stack className="frame">
         <ResponsiveAppBar />
-        <div style={{ height: '70.5px' }} /> {/* To counteract the height of the AppBar*/}
+        <div style={{ paddingTop: '70.5px' }} />
+        {/* To counteract the height of the AppBar*/}
         <Stack direction="row" className="stack">
           <Sidebar />
           <Stack className="stack">

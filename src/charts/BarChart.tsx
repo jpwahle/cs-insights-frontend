@@ -3,8 +3,8 @@ import ReactApexChart from 'react-apexcharts';
 import { BarChartProps, YearsData } from '../types';
 import { useNetworkGet } from '../network';
 import { useRefresh } from '../context/RefreshContext';
-import { CircularProgress } from '@mui/material';
-import Box from '@mui/material/Box';
+import LoadingCircle from '../components/LoadingCircle';
+import { capitalize } from '@mui/material';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
@@ -46,7 +46,7 @@ export default function BarChart(props: BarChartProps) {
       colors: ['transparent'],
     },
     title: {
-      text: props.title,
+      text: `${capitalize(props.yDimension)} per year`,
     },
     xaxis: {
       categories: chartData.years,
@@ -74,26 +74,8 @@ export default function BarChart(props: BarChartProps) {
   };
 
   return (
-    <div>
-      <Box sx={{ position: 'relative' }}>
-        <ReactApexChart options={options} series={series} type="bar" height={250} width={'100%'} />
-        {isFetching ? (
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              top: 0,
-              right: 0,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        ) : null}
-      </Box>
-    </div>
+    <LoadingCircle isFetching={isFetching}>
+      <ReactApexChart options={options} series={series} type="bar" height={250} width={'100%'} />
+    </LoadingCircle>
   );
 }

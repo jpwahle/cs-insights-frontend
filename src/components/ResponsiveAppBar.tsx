@@ -76,6 +76,7 @@ const ResponsiveAppBar = () => {
   return (
     // position is not 'absolute', so AppBar has full width, when there is horizontal scrolling
     <AppBar style={{ boxShadow: 'none', position: 'fixed' }}>
+      {/*<AppBar position={undefined}>*/}
       <Toolbar>
         <Typography
           variant="h4"
