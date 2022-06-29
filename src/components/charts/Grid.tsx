@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import '../App.css';
+import '../../App.css';
 import { DataGrid, GridEnrichedColDef, GridSortModel } from '@mui/x-data-grid';
-import { GridData, GridProps } from '../types';
-import { useNetworkGet } from '../network';
-import { PAGE_SIZE } from '../consts';
-import { useRefresh } from '../context/RefreshContext';
+import { GridData, GridProps } from '../../types';
+import { useNetworkGet } from '../../network';
+import { PAGE_SIZE } from '../../consts';
+import { useRefresh } from '../../context/RefreshContext';
 import { Button, Tooltip } from '@mui/material';
 import { Download } from '@mui/icons-material';
 
@@ -110,7 +110,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
         <Button
           onClick={handleClick}
           startIcon={<Download />}
-          sx={{ position: 'absolute', bottom: '5px', left: '7px' }}
+          sx={{ position: 'absolute', bottom: '0px', left: '5px' }}
         >
           Export
         </Button>

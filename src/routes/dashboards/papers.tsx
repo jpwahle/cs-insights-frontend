@@ -1,7 +1,7 @@
 import React from 'react';
 import { GridCellParams } from '@mui/x-data-grid';
 import { Link } from '@mui/material';
-import FrameWithGraphs from '../components/FrameWithGraphs';
+import FrameWithGraphs from '../../components/FrameWithGraphs';
 
 export default function Papers() {
   const columns = [
@@ -18,7 +18,12 @@ export default function Papers() {
       },
     },
     { field: 'venue', headerName: 'Venue', width: 200, tooltip: true },
-    { field: 'inCitationsCount', headerName: 'Citations', width: 110 },
+    {
+      field: 'inCitationsCount',
+      headerName: 'Citations',
+      width: 110,
+      type: 'number',
+    },
     {
       field: 'pdfUrl',
       headerName: 'Link',

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import ResponsiveAppBar from './ResponsiveAppBar';
 import Sidebar from './Sidebar';
 import React, { useEffect } from 'react';

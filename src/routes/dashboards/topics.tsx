@@ -1,4 +1,4 @@
-import Frame from '../components/Frame';
+import Frame from '../../components/Frame';
 
 export default function Topics() {
   return (

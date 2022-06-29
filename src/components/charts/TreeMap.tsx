@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { TreeMapData, TreeMapProps } from '../types';
-import { useRefresh } from '../context/RefreshContext';
-import { useNetworkGet } from '../network';
-import LoadingCircle from '../components/LoadingCircle';
+import { TreeMapData, TreeMapProps } from '../../types';
+import { useRefresh } from '../../context/RefreshContext';
+import { useNetworkGet } from '../../network';
+import LoadingCircle from '../LoadingCircle';
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
+  const [k, setK] = useState<number>(100);
   const refresh = useRefresh();
+
+  console.log('render');
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/topk`,
     'treemapData' + props.route,
     (data: TreeMapData) => {
-      console.log(data);
       setChartData(data);
     },
-    { page: 0, pageSize: 100, sortField: 'inCitationsCount' }
+    { k: k, metric: 'inCitationsCount' }
   );
+
+  //TODO remove
+  console.log(setK);
 
   useEffect(() => {
     refresh.addRefetch(refetch);
@@ -30,17 +35,31 @@ export default function (props: TreeMapProps) {
     },
   ];
   const options: ApexOptions = {
+    chart: {
+      type: 'treemap',
+    },
     legend: {
       show: false,
     },
     title: {
-      text: `Top ${100} by ${props.yDimension}`,
+      text: `Top ${'k'} by ${props.yDimension}`,
     },
     xaxis: {
+      type: 'category',
+      categories: ['citations'],
       labels: {
         style: {
-          fontSize: '20px',
+          fontSize: '20px !important',
         },
+      },
+      title: {
+        text: 'test12345',
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '100px',
       },
     },
   };
@@ -52,9 +71,8 @@ export default function (props: TreeMapProps) {
         series={series}
         type="treemap"
         height={250}
-        width={'98%'}
-        // style={{ overflow: 'hidden', fontSize: "20px !important" }}
-        // className={}
+        width={'99%'}
+        className={'treemap'}
       />
     </LoadingCircle>
   );

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { BarChartProps, YearsData } from '../types';
-import { useNetworkGet } from '../network';
-import { useRefresh } from '../context/RefreshContext';
-import LoadingCircle from '../components/LoadingCircle';
+import { BarChartProps, YearsData } from '../../types';
+import { useNetworkGet } from '../../network';
+import { useRefresh } from '../../context/RefreshContext';
+import LoadingCircle from '../LoadingCircle';
 import { capitalize } from '@mui/material';
 
 export default function BarChart(props: BarChartProps) {

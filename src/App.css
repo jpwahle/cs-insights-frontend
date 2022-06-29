@@ -1,6 +1,7 @@
 :root {
   --size-small: 4px;
   --size-large: 8px;
+  --size-very-large: 16px;
 }
 
 /* home */
@@ -45,7 +46,6 @@
   color: gray;
 }
 
-
 /* general structure */
 .frame {
   /*text-align: center;*/
@@ -76,11 +76,11 @@
   background: lightgrey;
   padding: var(--size-small);
   text-align: start;
+  width: calc(2 * var(--size-large) + 300px);
 }
 
 .sidebar > * {
   padding: var(--size-large);
-  /*padding-bottom: 0;*/
 }
 
 .filter-header {
@@ -94,14 +94,21 @@
   justify-content: space-between;
 }
 
-.filter-textfield {
-  flex: 1;
+/* Grid */
+.MuiDataGrid-footerContainer {
+  min-height: 35px !important;
+  height: 35px;
 }
 
-.filter-year {
-  align-items: center;
-}
 
-.filter-year-minus {
-  margin: var(--size-large);
-}
+/* Treemap */
+/*.treemap {*/
+/*  overflow: scroll;*/
+/*  overflow-wrap: break-word;*/
+/*}*/
+
+/*.treemap .apexcharts-datalabel {*/
+/*  overflow: scroll;*/
+/*  overflow-wrap: break-word;*/
+/*  font-size: 14px !important;*/
+/*}*/

@@ -48,7 +48,9 @@ export const ACCESS_TYPE_OPEN = 'Open';
 export const ACCESS_TYPE_OTHER = 'Other';
 
 export const STORAGE_TOKEN = 'token';
-export const DEBOUNCE_DELAY = 1000;
+export const DEBOUNCE_DELAY_AUTOCOMPLETE = 1000;
+export const DEBOUNCE_DELAY_TEXTFIELD = 500;
 export const PAGE_SIZE = 100;
+export const GRID_DECIMAL_PLACES = 2;
 
-export const NA = 'NA';
+export const NA = 'Others';

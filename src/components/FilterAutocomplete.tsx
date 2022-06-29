@@ -13,7 +13,7 @@ import { FilterAutocompleteProps } from '../types';
 import {
   ACCESS_TYPE_OPEN,
   ACCESS_TYPE_OTHER,
-  DEBOUNCE_DELAY,
+  DEBOUNCE_DELAY_AUTOCOMPLETE,
   FIELDS_OF_STUDY,
   TYPES_OF_PAPER,
 } from '../consts';
@@ -52,7 +52,7 @@ function useDebounce<T>(
       if (newInputValue.length >= 3) {
         setPattern(() => newInputValue);
       }
-    }, DEBOUNCE_DELAY),
+    }, DEBOUNCE_DELAY_AUTOCOMPLETE),
     []
   );
 

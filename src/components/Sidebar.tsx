@@ -7,12 +7,11 @@ import {
   FilterSingleStringLocal,
 } from './FilterAutocomplete';
 import { Button, Stack } from '@mui/material';
-import FilterTextField from './FilterTextfield';
 import { AuthorFilter, VenueFilter } from '../types';
 import { useFilter } from '../context/FilterContext';
 import IconLabel from './IconLabel';
 import { Delete, FilterAlt } from '@mui/icons-material';
-import FilterLabel from './FilterLabel';
+import FilterRange from './FilterRange';
 import { NA } from '../consts';
 
 export default function Sidebar() {
@@ -22,6 +21,8 @@ export default function Sidebar() {
     filter.setFilter({
       yearStart: '',
       yearEnd: '',
+      citationsMin: '',
+      citationsMax: '',
       authors: [],
       venues: [],
       accessType: null,
@@ -39,24 +40,17 @@ export default function Sidebar() {
           Clear Filters
         </Button>
       </Stack>
-      <FilterLabel
-        label="Year of publication"
-        helpTooltip={`Filter by the year of publication.
-        Paper without a year of publication are aggregated into ${NA}, if no filter is selected.`}
-      ></FilterLabel>
-      <Stack direction="row" className="filter-year">
-        <FilterTextField
-          label="From"
-          value={filter.filter.yearStart}
-          setValue={(value) => filter.setFilter({ ...filter.filter, yearStart: value })}
-        />
-        <div className="filter-year-minus">-</div>
-        <FilterTextField
-          label="To"
-          value={filter.filter.yearEnd}
-          setValue={(value) => filter.setFilter({ ...filter.filter, yearEnd: value })}
-        />
-      </Stack>
+      <FilterRange
+        label={'Year of publication'}
+        helpTooltip={`Filter by the year of publication. Inclusive the given min and max values.
+      Paper without a year of publication are aggregated into ${NA}, if no filter is selected.`}
+        labelStart={'From'}
+        labelEnd={'To'}
+        valueStart={filter.filter.yearStart}
+        valueEnd={filter.filter.yearEnd}
+        setValueStart={(value) => filter.setFilter({ ...filter.filter, yearStart: value })}
+        setValueEnd={(value) => filter.setFilter({ ...filter.filter, yearEnd: value })}
+      />
 
       <FilterMultipleObjectFetch<AuthorFilter>
         route="authors"
@@ -118,6 +112,16 @@ export default function Sidebar() {
         Select from the given options."
         value={filter.filter.accessType}
         setValue={(value) => filter.setFilter({ ...filter.filter, accessType: value })}
+      />
+      <FilterRange
+        label={'Citations'}
+        helpTooltip={`Filter by the amount of incoming citations. Inclusive the given min and max values.`}
+        labelStart={'Min'}
+        labelEnd={'Max'}
+        valueStart={filter.filter.citationsMin}
+        valueEnd={filter.filter.citationsMax}
+        setValueStart={(value) => filter.setFilter({ ...filter.filter, citationsMin: value })}
+        setValueEnd={(value) => filter.setFilter({ ...filter.filter, citationsMax: value })}
       />
     </Stack>
   );

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { BoxPlotProps, QuartilesData } from '../types';
-import { useNetworkGet } from '../network';
-import { useRefresh } from '../context/RefreshContext';
+import { BoxPlotProps, QuartilesData } from '../../types';
+import { useNetworkGet } from '../../network';
+import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
-import LoadingCircle from '../components/LoadingCircle';
+import LoadingCircle from '../LoadingCircle';
 
 export default function BoxPlot(props: BoxPlotProps) {
   const [chartData, setChartData] = useState<QuartilesData>([]);
@@ -16,7 +16,8 @@ export default function BoxPlot(props: BoxPlotProps) {
     'quartilesData' + props.route,
     (data: QuartilesData) => {
       setChartData(data);
-    }
+    },
+    { metric: 'inCitationsCount' }
   );
 
   useEffect(() => {
@@ -37,18 +38,24 @@ export default function BoxPlot(props: BoxPlotProps) {
   ];
 
   const options: ApexOptions = {
-    // title: {
-    //   text: props.title,
-    //   align: 'left',
-    // },
+    title: {
+      text: `${capitalize(props.xLabel)} distribution`,
+      align: 'left',
+    },
     tooltip: {
       shared: false,
       intersect: true,
     },
+    chart: {
+      toolbar: {
+        offsetY: 18,
+      },
+    },
   };
 
   // Without this the plot is not showing and the window has to be manually resized to show it
-  window.dispatchEvent(new Event('resize'));
+  // window.dispatchEvent(new Event('resize'));
+  // console.log('triggered');
 
   return (
     <LoadingCircle isFetching={isFetching}>

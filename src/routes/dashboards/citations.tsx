@@ -1,7 +1,7 @@
-import Tools from '../components/Tools';
+import Tools from '../../components/Tools';
 import React from 'react';
-import Frame from '../components/Frame';
-import BarChart from '../charts/BarChart';
+import Frame from '../../components/Frame';
+import BarChart from '../../components/charts/BarChart';
 
 export default function Citations() {
   return (

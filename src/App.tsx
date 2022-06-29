@@ -3,10 +3,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SnackbarProvider } from './context/SnackbarContext';
 import Login from './routes/login';
 import Register from './routes/register';
-import Papers from './routes/papers';
-import Authors from './routes/authors';
+import Papers from './routes/dashboards/papers';
+import Authors from './routes/dashboards/authors';
 import Home from './routes/home';
-import Venues from './routes/venues';
+import Venues from './routes/dashboards/venues';
 import { FilterProvider } from './context/FilterContext';
 import { AuthProvider } from './context/AuthContext';
 import {
@@ -29,11 +29,11 @@ import Account from './routes/account';
 import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ForgotPassword from './routes/forgotPassword';
-import TypesOfPaper from './routes/typesOfPaper';
-import FieldsOfStudy from './routes/fieldsOfStudy';
-import Citations from './routes/citations';
-import Topics from './routes/topics';
-import Publishers from './routes/publishers';
+import TypesOfPaper from './routes/dashboards/typesOfPaper';
+import FieldsOfStudy from './routes/dashboards/fieldsOfStudy';
+import Citations from './routes/dashboards/citations';
+import Topics from './routes/dashboards/topics';
+import Publishers from './routes/dashboards/publishers';
 
 export const queryClient = new QueryClient();
 

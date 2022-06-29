@@ -40,7 +40,6 @@ export type Venue = {
   yearEnd: string;
   inCitationsCount: string;
   venue: string;
-  // authors: string;
 };
 
 export type AuthorFilter = {
@@ -56,6 +55,8 @@ export type VenueFilter = {
 export type Filter = {
   yearStart: string;
   yearEnd: string;
+  citationsMin: string;
+  citationsMax: string;
   authors: AuthorFilter[];
   venues: VenueFilter[];
   accessType: string | null;
@@ -73,7 +74,18 @@ export type FilterAutocompleteProps<T> = {
   setValue(value: T): void;
 };
 
-export interface FilterYear {
+export type FilterRangeProps = {
+  label: string;
+  labelStart: string;
+  labelEnd: string;
+  helpTooltip: string;
+  valueStart: string;
+  valueEnd: string;
+  setValueStart(valueStart: string): void;
+  setValueEnd(valueEnd: string): void;
+};
+
+export interface FilterTextfield {
   label: string;
   value: string;
   setValue(value: string): void;
@@ -96,6 +108,8 @@ export type NonFilterParameters = {
   sortDirection?: string;
   column?: string;
   pattern?: string;
+  metric?: string;
+  k?: number;
 };
 
 export type StringArrayParameters = {
