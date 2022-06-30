@@ -22,5 +22,7 @@ export default function FieldsOfStudy() {
     },
   ];
 
-  return <FrameWithGraphs route={'fields'} columns={columns} yDimension={'fields of study'} />;
+  return (
+    <FrameWithGraphs route={'fields'} columns={columns} barChartYDimension={'fields of study'} />
+  );
 }

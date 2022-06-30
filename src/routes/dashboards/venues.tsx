@@ -34,5 +34,5 @@ export default function Venues() {
     },
   ];
 
-  return <FrameWithGraphs route={'venues'} columns={columns} yDimension={'venues'} />;
+  return <FrameWithGraphs route={'venues'} columns={columns} barChartYDimension={'venues'} />;
 }

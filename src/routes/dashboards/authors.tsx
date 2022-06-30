@@ -34,5 +34,5 @@ export default function Authors() {
     },
   ];
 
-  return <FrameWithGraphs route={'authors'} columns={columns} yDimension={'authors'} />;
+  return <FrameWithGraphs route={'authors'} columns={columns} barChartYDimension={'authors'} />;
 }

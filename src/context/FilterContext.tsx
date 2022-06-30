@@ -31,6 +31,7 @@ export function FilterProvider({ children }: { children: React.ReactElement }) {
     typesOfPaper: [],
     fieldsOfStudy: [],
     publishers: [],
+    metric: 'papersCount',
   });
 
   const [oldFilter, setOldFilter] = useState<Filter>(filter);

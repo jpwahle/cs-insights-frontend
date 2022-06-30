@@ -29,6 +29,7 @@ export default function Sidebar() {
       typesOfPaper: [],
       fieldsOfStudy: [],
       publishers: [],
+      metric: filter.filter.metric,
     });
   }
 

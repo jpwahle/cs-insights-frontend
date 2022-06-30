@@ -16,8 +16,7 @@ export default function BoxPlot(props: BoxPlotProps) {
     'quartilesData' + props.route,
     (data: QuartilesData) => {
       setChartData(data);
-    },
-    { metric: 'inCitationsCount' }
+    }
   );
 
   useEffect(() => {

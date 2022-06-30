@@ -22,5 +22,7 @@ export default function Publisher() {
     },
   ];
 
-  return <FrameWithGraphs route={'publishers'} columns={columns} yDimension={'publishers'} />;
+  return (
+    <FrameWithGraphs route={'publishers'} columns={columns} barChartYDimension={'publishers'} />
+  );
 }

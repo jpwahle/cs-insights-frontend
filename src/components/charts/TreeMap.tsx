@@ -5,13 +5,12 @@ import { TreeMapData, TreeMapProps } from '../../types';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
 import LoadingCircle from '../LoadingCircle';
+import { TextField } from '@mui/material';
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
-  const [k, setK] = useState<number>(100);
+  const [k, setK] = useState<number>(20);
   const refresh = useRefresh();
-
-  console.log('render');
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/topk`,
@@ -19,11 +18,8 @@ export default function (props: TreeMapProps) {
     (data: TreeMapData) => {
       setChartData(data);
     },
-    { k: k, metric: 'inCitationsCount' }
+    { k: k }
   );
-
-  //TODO remove
-  console.log(setK);
 
   useEffect(() => {
     refresh.addRefetch(refetch);
@@ -38,42 +34,35 @@ export default function (props: TreeMapProps) {
     chart: {
       type: 'treemap',
     },
-    legend: {
-      show: false,
-    },
     title: {
       text: `Top ${'k'} by ${props.yDimension}`,
     },
-    xaxis: {
-      type: 'category',
-      categories: ['citations'],
-      labels: {
-        style: {
-          fontSize: '20px !important',
-        },
-      },
-      title: {
-        text: 'test12345',
-      },
-    },
-    dataLabels: {
-      enabled: true,
-      style: {
-        fontSize: '100px',
-      },
-    },
   };
+
+  function handleInputChange(newValue: string) {
+    setK(parseInt(newValue));
+  }
 
   return (
     <LoadingCircle isFetching={isFetching}>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="treemap"
-        height={250}
-        width={'99%'}
-        className={'treemap'}
-      />
+      <div style={{ height: 300, width: '100%', position: 'relative' }}>
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="treemap"
+          height={250}
+          width={'99%'}
+          className={'treemap'}
+        />
+        <TextField
+          sx={{ position: 'absolute', top: '0px', left: '150px', width: '100px' }}
+          size={'small'}
+          label={'k ='}
+          value={k}
+          type={'number'}
+          onChange={(event) => handleInputChange(event.target.value)}
+        />
+      </div>
     </LoadingCircle>
   );
 }

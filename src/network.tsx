@@ -96,7 +96,7 @@ export function useNetworkGet(
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
 
   const { data, dataUpdatedAt, refetch, isFetching } = useQuery(
-    [queryKey, queryParameters],
+    [queryKey, queryParameters, filter.filter],
     () => {
       return sendRequest(route, auth.token, setSnack);
     },

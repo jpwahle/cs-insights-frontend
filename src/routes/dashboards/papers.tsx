@@ -37,5 +37,5 @@ export default function Papers() {
     },
   ];
 
-  return <FrameWithGraphs route={'papers'} columns={columns} yDimension={'papers'} />;
+  return <FrameWithGraphs route={'papers'} columns={columns} barChartYDimension={'papers'} />;
 }

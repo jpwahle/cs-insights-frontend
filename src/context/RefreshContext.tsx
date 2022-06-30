@@ -1,5 +1,4 @@
 import React, { createContext, useState } from 'react';
-import { queryClient } from '../App';
 
 const RefreshContext = createContext<
   | {
@@ -29,7 +28,7 @@ export function RefreshProvider({
   }
 
   function refresh() {
-    queryClient.cancelQueries();
+    // queryClient.cancelQueries();
     for (const refetch of refetchFunctions) {
       refetch();
     }

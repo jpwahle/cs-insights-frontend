@@ -22,7 +22,7 @@ export interface TreeMapProps {
 }
 
 export interface GraphsProps {
-  yDimension: string;
+  barChartYDimension: string;
   route: string;
   columns: GridColumns;
 }
@@ -63,7 +63,13 @@ export type Filter = {
   typesOfPaper: string[];
   fieldsOfStudy: string[];
   publishers: string[];
+  metric: string;
 };
+
+// export type NonFilter = {
+//   metric: string;
+//   k: number;
+// };
 
 export type FilterAutocompleteProps<T> = {
   label: string;
@@ -95,6 +101,10 @@ export interface IconLabelProps {
   label: string;
   icon: SvgIconComponent;
 }
+
+// export type ToolsProps {
+//   route: string
+// }
 
 export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
