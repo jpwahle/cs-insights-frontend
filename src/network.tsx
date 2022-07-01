@@ -73,7 +73,7 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
         }
       } else {
         const value = queryParameters[key as keyof QueryParameters];
-        if (value || (key === 'page' && value === 0)) {
+        if (value || (['page', 'k'].includes(key) && value === 0)) {
           route += `${key}=${value}&`;
         }
       }

@@ -6,7 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { DEBOUNCE_DELAY_TEXTFIELD } from '../consts';
 
 function FilterTextField(props: FilterTextfield) {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(props.value);
 
   // 2 functions, so debounce reference does not get lost
   const handleInputChangeDebounce = useCallback(
@@ -26,7 +26,13 @@ function FilterTextField(props: FilterTextfield) {
       label={props.label}
       size="small"
       value={inputValue}
+      type={'number'}
       onChange={(event) => handleInputChange(event.target.value)}
+      InputProps={{
+        inputProps: {
+          min: 0,
+        },
+      }}
       sx={{ width: '135px' }}
     />
   );

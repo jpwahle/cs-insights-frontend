@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { TreeMapData, TreeMapProps } from '../../types';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
 import LoadingCircle from '../LoadingCircle';
-import { TextField } from '@mui/material';
+import { debounce, TextField } from '@mui/material';
+import { DEBOUNCE_DELAY_K } from '../../consts';
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
@@ -25,6 +26,20 @@ export default function (props: TreeMapProps) {
     refresh.addRefetch(refetch);
   }, []);
 
+  // outside useEffect(), so debounce reference does not get lost
+  const handleInputChangeDebounce = useCallback(
+    debounce(async () => {
+      refetch();
+    }, DEBOUNCE_DELAY_K),
+    []
+  );
+
+  useEffect(() => {
+    if (chartData.length > 0 && k) {
+      handleInputChangeDebounce();
+    }
+  }, [k]);
+
   const series = [
     {
       data: chartData,
@@ -38,10 +53,6 @@ export default function (props: TreeMapProps) {
       text: `Top ${'k'} by ${props.yDimension}`,
     },
   };
-
-  function handleInputChange(newValue: string) {
-    setK(parseInt(newValue));
-  }
 
   return (
     <LoadingCircle isFetching={isFetching}>
@@ -58,9 +69,14 @@ export default function (props: TreeMapProps) {
           sx={{ position: 'absolute', top: '0px', left: '150px', width: '100px' }}
           size={'small'}
           label={'k ='}
-          value={k}
+          value={k.toString()}
           type={'number'}
-          onChange={(event) => handleInputChange(event.target.value)}
+          InputProps={{
+            inputProps: {
+              min: 0,
+            },
+          }}
+          onChange={(event) => (event.target.value ? setK(parseInt(event.target.value)) : setK(0))}
         />
       </div>
     </LoadingCircle>

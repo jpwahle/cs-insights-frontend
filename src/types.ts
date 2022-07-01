@@ -66,11 +66,6 @@ export type Filter = {
   metric: string;
 };
 
-// export type NonFilter = {
-//   metric: string;
-//   k: number;
-// };
-
 export type FilterAutocompleteProps<T> = {
   label: string;
   labelName: string;
@@ -102,10 +97,6 @@ export interface IconLabelProps {
   icon: SvgIconComponent;
 }
 
-// export type ToolsProps {
-//   route: string
-// }
-
 export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 export type QuartilesData = number[];
@@ -134,5 +125,7 @@ export type QueryParameters = {
   authors?: AuthorFilter[];
   venues?: VenueFilter[];
   accessType?: string | null;
+  citationsMin: string;
+  citationsMax: string;
 } & StringArrayParameters &
   NonFilterParameters;
