@@ -81,7 +81,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
   }
 
   return (
-    <div style={{ height: 300, width: '100%', position: 'relative' }}>
+    <div style={{ height: 300, position: 'relative' }} className={'grid'}>
       <DataGrid
         rows={gridData.rows}
         rowCount={gridData.rowCount}

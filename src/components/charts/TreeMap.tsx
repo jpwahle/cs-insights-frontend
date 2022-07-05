@@ -47,30 +47,25 @@ export default function (props: TreeMapProps) {
   ];
   const options: ApexOptions = {
     chart: {
-      type: 'treemap',
+      parentHeightOffset: 0,
     },
     title: {
-      text: `Top ${'k'} by ${props.yDimension}`,
+      text: `Top k by ${props.yDimension}`,
+      offsetY: 8,
     },
   };
 
   return (
-    <LoadingCircle isFetching={isFetching}>
-      <div style={{ height: 300, width: '100%', position: 'relative' }}>
-        <ReactApexChart
-          options={options}
-          series={series}
-          type="treemap"
-          height={250}
-          width={'99%'}
-          className={'treemap'}
-        />
+    <LoadingCircle isFetching={isFetching} className={'treemap'}>
+      <div style={{ height: 250, width: '100%', position: 'relative' }}>
+        <ReactApexChart options={options} series={series} type="treemap" height={250} />
         <TextField
-          sx={{ position: 'absolute', top: '0px', left: '150px', width: '100px' }}
+          sx={{ position: 'absolute', top: '10px', left: '150px', width: '100px' }}
           size={'small'}
           label={'k ='}
           value={k.toString()}
           type={'number'}
+          className={'treemapTextField'}
           InputProps={{
             inputProps: {
               min: 0,

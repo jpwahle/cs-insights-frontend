@@ -34,7 +34,6 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  /*font-size: calc(10px + 2vmin);*/
   text-align: center;
 }
 
@@ -48,27 +47,22 @@
 
 /* general structure */
 .frame {
-  /*text-align: center;*/
+  display: grid;
   height: 100vh;
-  width: 100vw;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+      "header header "
+      "side   tools  "
+      "side   content"
 }
 
 .stack {
   flex: 1;
 }
 
-.tools {
-  background: darkgrey;
-  padding: var(--size-large);
-  align-items: center;
-}
-
-.tools > * {
-  padding: var(--size-large);
-}
-
-.graphs {
-  margin: var(--size-large);
+.appbar {
+  grid-area: header;
 }
 
 /* filter */
@@ -77,6 +71,7 @@
   padding: var(--size-small);
   text-align: start;
   width: calc(2 * var(--size-large) + 300px);
+  grid-area: side;
 }
 
 .sidebar > * {
@@ -94,14 +89,60 @@
   justify-content: space-between;
 }
 
-/* Grid */
+/* content */
+.frame-with-graphs {
+  grid-area: content;
+
+  margin: var(--size-small);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+      "bar   box  "
+      "grid  box  "
+      "tree  tree "
+}
+
+.tools {
+  background: darkgrey;
+  padding: var(--size-large);
+  align-items: center;
+  grid-area: tools;
+}
+
+.tools > * {
+  padding: var(--size-large);
+}
+
+.barchart {
+  /*background: red;*/
+  grid-area: bar;
+}
+
+.grid {
+  /*background: green;*/
+  grid-area: grid;
+}
+
 .MuiDataGrid-footerContainer {
   min-height: 35px !important;
   height: 35px;
 }
 
+.boxplot {
+  grid-area: box;
+  /*background: blue;*/
+}
 
-/* Treemap */
+.treemap {
+  /*background: orange;*/
+  grid-area: tree;
+}
+
+.treemapTextField input{
+  height: 10px
+}
+
 /*.treemap {*/
 /*  overflow: scroll;*/
 /*  overflow-wrap: break-word;*/

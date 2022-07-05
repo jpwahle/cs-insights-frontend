@@ -116,7 +116,7 @@ export default function Sidebar() {
       />
       <FilterRange
         label={'Citations'}
-        helpTooltip={`Filter by the amount of incoming citations. Inclusive the given min and max values.`}
+        helpTooltip={`Filter by the amount of incoming citations per paper, before any aggregation. Inclusive the given min and max values.`}
         labelStart={'Min'}
         labelEnd={'Max'}
         valueStart={filter.filter.citationsMin}

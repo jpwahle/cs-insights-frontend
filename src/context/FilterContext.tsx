@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { Filter } from '../types';
+import { metrics } from '../components/Tools';
 
 const FilterContext = createContext<
   | {
@@ -31,7 +32,7 @@ export function FilterProvider({ children }: { children: React.ReactElement }) {
     typesOfPaper: [],
     fieldsOfStudy: [],
     publishers: [],
-    metric: 'papersCount',
+    metric: metrics[0].value,
   });
 
   const [oldFilter, setOldFilter] = useState<Filter>(filter);

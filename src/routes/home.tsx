@@ -68,7 +68,7 @@ export default function Home() {
             style={{
               color: 'gray',
               position: 'fixed',
-              bottom: 5,
+              bottom: 3,
             }}
           >
             <Typography color={'gray'}>

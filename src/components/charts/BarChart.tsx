@@ -3,8 +3,8 @@ import ReactApexChart from 'react-apexcharts';
 import { BarChartProps, YearsData } from '../../types';
 import { useNetworkGet } from '../../network';
 import { useRefresh } from '../../context/RefreshContext';
-import LoadingCircle from '../LoadingCircle';
 import { capitalize } from '@mui/material';
+import LoadingCircle from '../LoadingCircle';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
@@ -74,8 +74,8 @@ export default function BarChart(props: BarChartProps) {
   };
 
   return (
-    <LoadingCircle isFetching={isFetching}>
-      <ReactApexChart options={options} series={series} type="bar" height={250} width={'100%'} />
+    <LoadingCircle isFetching={isFetching} className={'barchart'}>
+      <ReactApexChart options={options} series={series} type="bar" height={250} />
     </LoadingCircle>
   );
 }

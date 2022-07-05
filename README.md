@@ -18,7 +18,7 @@ After cloning the repository you need to change the directory.
 cd NLP-Land-frontend
 ```
 Then we are providing two ways to set up this project.
-In both cases, make sure the backend is running after the setup, so you can properly use the app. 
+In both cases, make sure the [backend](https://github.com/gipplab/NLP-Land-backend) is running after the setup, so you can properly use the app. 
 
 <details> <summary> Production </summary>
 
@@ -62,12 +62,22 @@ The page will reload if you make edits, and you will see any lint errors in the 
 </details>
 
 
-## Packages
+## Repository
+### Structure
+In the `src` folder we have the following structure:
+- /components: All UI components
+  - /charts: UI components that visualize data
+- /context: All context used for global state
+- /routes: All routes of this app
+  - /dashboards: Routes that visualize data
+- Other files
+
+### Packages
 The following is a list of some notable packages we use:
 - [ApexCharts](https://apexcharts.com/react-chart-demos/): Charts
-- [Material UI (MUI)](https://mui.com/): UI components
+- [Material UI (MUI)](https://mui.com/): UI components (except charts)
   - [Emotion](https://emotion.sh/docs/introduction): Styling in MUI
-- [React Query](https://react-query.tanstack.com/): Data synchronization & caching
+- [React Query](https://react-query.tanstack.com/): Data synchronization for network calls
 - [React Router](https://reactrouter.com/): Routing
 
 

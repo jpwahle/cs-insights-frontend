@@ -53,12 +53,17 @@ export default function BoxPlot(props: BoxPlotProps) {
   };
 
   // Without this the plot is not showing and the window has to be manually resized to show it
-  // window.dispatchEvent(new Event('resize'));
-  // console.log('triggered');
+  window.dispatchEvent(new Event('resize'));
 
   return (
-    <LoadingCircle isFetching={isFetching}>
-      <ReactApexChart options={options} series={series} type="boxPlot" height={550} width={180} />
+    <LoadingCircle isFetching={isFetching} className={'boxplot'}>
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="boxPlot"
+        height={'530px'}
+        width={'180px'}
+      />
     </LoadingCircle>
   );
 }

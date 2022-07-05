@@ -1,13 +1,14 @@
 import React from 'react';
-import { CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
+import { CircularProgress } from '@mui/material';
 
 export default function LoadingCircle(props: {
   isFetching: boolean;
+  className?: string;
   children: React.ReactElement | React.ReactElement[];
 }) {
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: 'relative' }} className={props.className}>
       {props.children}
       {props.isFetching ? (
         <Box

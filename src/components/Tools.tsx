@@ -17,18 +17,14 @@ import { useFilter } from '../context/FilterContext';
 import _ from 'lodash';
 import { ROUTE_CITATIONS, ROUTE_PAPERS, ROUTE_TOPICS } from '../consts';
 
-export const metrics = {
-  papers: { label: '#Papers', value: 'papersCount' },
-  citations: { label: '#Citations', value: 'inCitationsCount' },
-};
+export const metrics = [
+  { label: '#Papers', value: 'papersCount' },
+  { label: '#Citations', value: 'inCitationsCount' },
+];
 
-export function mapMetric(metric: string): string {
-  if (metric === metrics.papers.value) {
-    return metrics.citations.label;
-  } else if (metric === metrics.citations.value) {
-    return metrics.citations.label;
-  }
-  return '';
+export function mapMetric(metricValue: string): string {
+  const metricsFiltered = metrics.filter((metric) => metric.value === metricValue);
+  return metricsFiltered ? metricsFiltered[0].label : '';
 }
 
 export default function Tools(props: { route: string }) {
@@ -69,8 +65,9 @@ export default function Tools(props: { route: string }) {
             onChange={handleChange}
             size={'small'}
           >
-            <MenuItem value={metrics.papers.value}>{metrics.papers.label}</MenuItem>
-            <MenuItem value={metrics.citations.value}>{metrics.citations.label}</MenuItem>
+            {metrics.map((metric) => (
+              <MenuItem value={metric.value}>{metric.label}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       )}
