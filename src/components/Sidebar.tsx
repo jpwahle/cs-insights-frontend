@@ -5,14 +5,14 @@ import {
   FilterMultipleStringFetch,
   FilterMultipleStringLocal,
   FilterSingleStringLocal,
-} from './FilterCategorical';
+} from './FilterAutocomplete';
 import { Button, Stack } from '@mui/material';
-import FilterTextField from './FilterTextfield';
 import { AuthorFilter, VenueFilter } from '../types';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useFilter } from '../context/FilterContext';
 import IconLabel from './IconLabel';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { Delete, FilterAlt } from '@mui/icons-material';
+import FilterRange from './FilterRange';
+import { NA } from '../consts';
 
 export default function Sidebar() {
   const filter = useFilter();
@@ -21,85 +21,108 @@ export default function Sidebar() {
     filter.setFilter({
       yearStart: '',
       yearEnd: '',
+      citationsMin: '',
+      citationsMax: '',
       authors: [],
       venues: [],
       accessType: null,
       typesOfPaper: [],
       fieldsOfStudy: [],
       publishers: [],
+      metric: filter.filter.metric,
     });
   }
 
   return (
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
-        <IconLabel label="Filters" icon={FilterAltIcon} />
-        <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => clearFilters()}>
+        <IconLabel label="Filters" icon={FilterAlt} />
+        <Button variant="outlined" startIcon={<Delete />} onClick={() => clearFilters()}>
           Clear Filters
         </Button>
       </Stack>
-      <div className="filter-label">Year of publication</div>
-      <Stack direction="row" className="filter-year">
-        <FilterTextField
-          label="From"
-          value={filter.filter.yearStart}
-          setValue={(value) => filter.setFilter({ ...filter.filter, yearStart: value })}
-        />
-        <div className="filter-year-minus">-</div>
-        <FilterTextField
-          label="To"
-          value={filter.filter.yearEnd}
-          setValue={(value) => filter.setFilter({ ...filter.filter, yearEnd: value })}
-        />
-      </Stack>
+      <FilterRange
+        label={'Year of publication'}
+        helpTooltip={`Filter by the year of publication. Inclusive the given min and max values.
+      Paper without a year of publication are aggregated into ${NA}, if no filter is selected.`}
+        labelStart={'From'}
+        labelEnd={'To'}
+        valueStart={filter.filter.yearStart}
+        valueEnd={filter.filter.yearEnd}
+        setValueStart={(value) => filter.setFilter({ ...filter.filter, yearStart: value })}
+        setValueEnd={(value) => filter.setFilter({ ...filter.filter, yearEnd: value })}
+      />
 
-      <div className="filter-label">Authors</div>
       <FilterMultipleObjectFetch<AuthorFilter>
         route="authors"
-        label="fullname"
-        tooltip="Only matches the beginning or after whitespaces; min. 3 characters; case-insensitive; special characters (ä, é, ì, ...) need to be removed without replacement"
+        label="Authors"
+        labelName="fullname"
+        helpTooltip="Filter by the authors.
+        The pattern will only match the beginning of the name or after a whitespace.
+        3 characters minimum are required; case-insensitive.
+        Special characters (ä, é, ì, ...) need to be removed without replacement."
         value={filter.filter.authors}
         setValue={(value) => filter.setFilter({ ...filter.filter, authors: value })}
       />
-      <div className="filter-label">Venues</div>
       <FilterMultipleObjectFetch<VenueFilter>
+        label="Venues"
         route="venues"
-        label="names"
-        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
+        labelName="names"
+        helpTooltip="Filter by the venue.
+        Matches any position in the name of the venue.
+        3 characters minimum required; case-sensitive."
         value={filter.filter.venues}
         setValue={(value) => filter.setFilter({ ...filter.filter, venues: value })}
       />
-      <div className="filter-label">Types of paper</div>
       <FilterMultipleStringLocal
+        label="Types of papers"
         route="papers"
-        label="typesOfPaper"
-        tooltip="Matches any position in the name; case-insensitive"
+        labelName="typesOfPaper"
+        helpTooltip="Filter by the type of paper (BibTeX type).
+        Matches any position in the name of the type; case-insensitive."
         value={filter.filter.typesOfPaper}
         setValue={(value) => filter.setFilter({ ...filter.filter, typesOfPaper: value })}
       />
-      <div className="filter-label">Fields of study</div>
       <FilterMultipleStringLocal
+        label="Fields of study"
         route="papers"
-        label="fieldsOfStudy"
-        tooltip="Matches any position in the name; case-insensitive"
+        labelName="fieldsOfStudy"
+        helpTooltip={
+          'Filter by the field of study. One paper can have multiple fields of study, but most papers are in the field "Computer Science". ' +
+          'Matches any position in the field; case-insensitive.'
+        }
         value={filter.filter.fieldsOfStudy}
         setValue={(value) => filter.setFilter({ ...filter.filter, fieldsOfStudy: value })}
       />
-      <div className="filter-label">Publishers</div>
       <FilterMultipleStringFetch
+        label="Publishers"
         route="papers"
-        label="publisher"
-        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
+        labelName="publisher"
+        helpTooltip="Filter by the publisher.
+        Most papers do not have a publisher.
+        Matches any position in the name.
+        3 characters minimum required; case-sensitive."
         value={filter.filter.publishers}
         setValue={(value) => filter.setFilter({ ...filter.filter, publishers: value })}
       />
-      <div className="filter-label">Access type</div>
       <FilterSingleStringLocal
+        label="Access type"
         route="papers"
-        label="accessType"
-        tooltip="Matches any position in the name; min. 3 characters; case-sensitive"
+        labelName="accessType"
+        helpTooltip="Filter by the access type.
+        Select from the given options."
         value={filter.filter.accessType}
         setValue={(value) => filter.setFilter({ ...filter.filter, accessType: value })}
+      />
+      <FilterRange
+        label={'Citations'}
+        helpTooltip={`Filter by the amount of incoming citations per paper, before any aggregation. Inclusive the given min and max values.`}
+        labelStart={'Min'}
+        labelEnd={'Max'}
+        valueStart={filter.filter.citationsMin}
+        valueEnd={filter.filter.citationsMax}
+        setValueStart={(value) => filter.setFilter({ ...filter.filter, citationsMin: value })}
+        setValueEnd={(value) => filter.setFilter({ ...filter.filter, citationsMax: value })}
       />
     </Stack>
   );

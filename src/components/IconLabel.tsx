@@ -6,9 +6,7 @@ export default function IconLabel(props: IconLabelProps) {
   return (
     <Stack direction="row" alignItems="center">
       {<props.icon />}
-      <div>
-        <b>{props.label}</b>
-      </div>
+      <div style={{ fontWeight: 'bold' }}>{props.label}</div>
     </Stack>
   );
 }

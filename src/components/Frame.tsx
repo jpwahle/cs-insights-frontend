@@ -1,16 +1,15 @@
 import ResponsiveAppBar from './ResponsiveAppBar';
 import Sidebar from './Sidebar';
 import React, { useEffect } from 'react';
-import { Stack } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import { ROUTE_LOGIN } from '../consts';
 import { RefreshProvider } from '../context/RefreshContext';
 import { useAuth } from '../context/AuthContext';
 import { useSnack } from '../context/SnackbarContext';
+import Tools from './Tools';
 
-export default function Frame({
-  children,
-}: {
+export default function Frame(props: {
+  route: string;
   children: React.ReactElement | React.ReactElement[];
 }) {
   const auth = useAuth();
@@ -18,15 +17,16 @@ export default function Frame({
 
   if (auth.token) {
     return (
-      <Stack className="frame">
-        <ResponsiveAppBar />
-        <Stack direction="row" className="stack">
+      <RefreshProvider>
+        <div className={'frame'}>
+          <ResponsiveAppBar />
+          {/* To counteract the height of the AppBar*/}
+          <div style={{ paddingTop: '70.5px' }} className={'appbar'} />
           <Sidebar />
-          <Stack className="stack">
-            <RefreshProvider>{children}</RefreshProvider>
-          </Stack>
-        </Stack>
-      </Stack>
+          <Tools route={props.route}></Tools>
+          {props.children}
+        </div>
+      </RefreshProvider>
     );
   } else {
     useEffect(() => {

@@ -9,30 +9,45 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAuth } from '../context/AuthContext';
-import SettingsIcon from '@mui/icons-material/Settings';
 import {
   ROUTE_ACCOUNT,
   ROUTE_AUTHORS,
+  ROUTE_CITATIONS,
+  ROUTE_FIELDS_OF_STUDY,
   ROUTE_HOME,
+  ROUTE_PAPER_TYPES,
   ROUTE_PAPERS,
+  ROUTE_PUBLISHERS,
   ROUTE_VENUES,
   STORAGE_TOKEN,
 } from '../consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ArticleIcon from '@mui/icons-material/Article';
-import GroupIcon from '@mui/icons-material/Group';
-import PlaceIcon from '@mui/icons-material/Place';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {
+  AccountCircle,
+  Article,
+  Book,
+  Bookmarks,
+  Group,
+  LibraryBooks,
+  Logout,
+  Place,
+  Science,
+  Settings,
+} from '@mui/icons-material';
 
 const pages = [
-  { label: 'Papers', route: ROUTE_PAPERS, icon: ArticleIcon },
-  { label: 'Authors', route: ROUTE_AUTHORS, icon: GroupIcon },
-  { label: 'Venues', route: ROUTE_VENUES, icon: PlaceIcon },
+  { label: 'Papers', route: ROUTE_PAPERS, icon: Article },
+  { label: 'Authors', route: ROUTE_AUTHORS, icon: Group },
+  { label: 'Venues', route: ROUTE_VENUES, icon: Place },
+  { label: 'Types of Paper', route: ROUTE_PAPER_TYPES, icon: LibraryBooks },
+  { label: 'Fields of Study', route: ROUTE_FIELDS_OF_STUDY, icon: Science },
+  { label: 'Publishers', route: ROUTE_PUBLISHERS, icon: Book },
+  { label: 'Citations', route: ROUTE_CITATIONS, icon: Bookmarks },
+  // { label: 'Topics', route: ROUTE_TOPICS, icon: QuestionMark },
 ];
 const settings = [
-  { label: 'Account', id: 'account', icon: AccountCircleIcon },
-  { label: 'Logout', id: 'logout', icon: LogoutIcon },
+  { label: 'Account', id: 'account', icon: AccountCircle },
+  { label: 'Logout', id: 'logout', icon: Logout },
 ];
 
 const ResponsiveAppBar = () => {
@@ -59,7 +74,8 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static">
+    // position is not 'absolute', so AppBar has full width when there is horizontal scrolling
+    <AppBar style={{ boxShadow: 'none', position: 'fixed' }} className={'appbar'}>
       <Toolbar>
         <Typography
           variant="h4"
@@ -97,7 +113,7 @@ const ResponsiveAppBar = () => {
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} size="large" edge="end" color="inherit">
-              <SettingsIcon />
+              <Settings />
             </IconButton>
           </Tooltip>
           <Menu

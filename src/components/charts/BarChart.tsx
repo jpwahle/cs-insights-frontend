@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { BarChartProps, YearsData } from '../types';
-import { useNetworkGet } from '../network';
-import { useRefresh } from '../context/RefreshContext';
-import { CircularProgress } from '@mui/material';
-import Box from '@mui/material/Box';
+import { BarChartProps, YearsData } from '../../types';
+import { useNetworkGet } from '../../network';
+import { useRefresh } from '../../context/RefreshContext';
+import { capitalize } from '@mui/material';
+import LoadingCircle from '../LoadingCircle';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
@@ -13,7 +13,7 @@ export default function BarChart(props: BarChartProps) {
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/years`,
-    'yearsData',
+    'yearsData' + props.route,
     (data: YearsData) => {
       setChartData(data);
     }
@@ -45,10 +45,13 @@ export default function BarChart(props: BarChartProps) {
       width: 2,
       colors: ['transparent'],
     },
+    title: {
+      text: `${capitalize(props.yDimension)} per year`,
+    },
     xaxis: {
       categories: chartData.years,
       title: {
-        text: 'Year of publication',
+        text: 'Year',
         offsetY: -4 * Math.sqrt(chartData.years.length),
       },
       labels: {
@@ -65,29 +68,14 @@ export default function BarChart(props: BarChartProps) {
     fill: {
       opacity: 1,
     },
+    chart: {
+      parentHeightOffset: 0,
+    },
   };
 
   return (
-    <div>
-      <Box sx={{ position: 'relative' }}>
-        <ReactApexChart options={options} series={series} type="bar" height={300} width={1200} />
-        {isFetching ? (
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              top: 0,
-              right: 0,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        ) : null}
-      </Box>
-    </div>
+    <LoadingCircle isFetching={isFetching} className={'barchart'}>
+      <ReactApexChart options={options} series={series} type="bar" height={250} />
+    </LoadingCircle>
   );
 }

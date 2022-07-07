@@ -28,6 +28,7 @@ export function RefreshProvider({
   }
 
   function refresh() {
+    // queryClient.cancelQueries();
     for (const refetch of refetchFunctions) {
       refetch();
     }

@@ -28,6 +28,7 @@ async function sendRequest(
   } else {
     // GET
     init = {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -49,13 +50,13 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
     for (const key of Object.keys(queryParameters)) {
       if (key === 'authors') {
         if (queryParameters.authors && queryParameters.authors.length > 0) {
-          route += `authors=${JSON.stringify(
+          route += `authorIds=${JSON.stringify(
             queryParameters.authors.map((author) => author._id)
           )}&`;
         }
       } else if (key === 'venues') {
         if (queryParameters.venues && queryParameters.venues.length > 0) {
-          route += `venues=${JSON.stringify(queryParameters.venues.map((venue) => venue._id))}&`;
+          route += `venueIds=${JSON.stringify(queryParameters.venues.map((venue) => venue._id))}&`;
         }
       } else if (['publishers', 'typesOfPaper', 'fieldsOfStudy'].includes(key)) {
         const value: String[] | undefined = queryParameters[key as keyof StringArrayParameters];
@@ -72,7 +73,7 @@ function buildRoute(route: string, queryParameters: QueryParameters): string {
         }
       } else {
         const value = queryParameters[key as keyof QueryParameters];
-        if (value || (key === 'page' && value === 0)) {
+        if (value || (['page', 'k'].includes(key) && value === 0)) {
           route += `${key}=${value}&`;
         }
       }
@@ -94,8 +95,8 @@ export function useNetworkGet(
 
   route = buildRoute(route, { ...filter.filter, ...queryParameters });
 
-  const { data, dataUpdatedAt, refetch, isLoading, isFetching } = useQuery(
-    queryKey,
+  const { data, dataUpdatedAt, refetch, isFetching } = useQuery(
+    [queryKey, queryParameters, filter.filter],
     () => {
       return sendRequest(route, auth.token, setSnack);
     },
@@ -111,7 +112,7 @@ export function useNetworkGet(
     }
   }, [data, dataUpdatedAt]);
 
-  return { refetch, isLoading, isFetching };
+  return { refetch, isFetching };
 }
 
 export function useNetworkPost(
