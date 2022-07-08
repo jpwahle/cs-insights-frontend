@@ -5,6 +5,7 @@ import { useNetworkGet } from '../../network';
 import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import LoadingCircle from '../LoadingCircle';
+import { useExport } from '../../tools';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
@@ -70,6 +71,7 @@ export default function BarChart(props: BarChartProps) {
     },
     chart: {
       parentHeightOffset: 0,
+      toolbar: useExport('barchart', props.route),
     },
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import '../App.css';
 import {
   FilterMultipleObjectFetch,
@@ -16,6 +16,12 @@ import { NA } from '../consts';
 
 export default function Sidebar() {
   const filter = useFilter();
+  const filterRef = useRef(filter.filter);
+
+  // debounce in FilterRange uses an old reference otherwise and deletes filters
+  useEffect(() => {
+    filterRef.current = filter.filter;
+  }, [filter.filter]);
 
   function clearFilters() {
     filter.setFilter({
@@ -44,13 +50,17 @@ export default function Sidebar() {
       <FilterRange
         label={'Year of publication'}
         helpTooltip={`Filter by the year of publication. Inclusive the given min and max values.
-      Paper without a year of publication are aggregated into ${NA}, if no filter is selected.`}
+      Papers without a year of publication are aggregated into ${NA} in the barchart, if no filter is selected.`}
         labelStart={'From'}
         labelEnd={'To'}
         valueStart={filter.filter.yearStart}
         valueEnd={filter.filter.yearEnd}
-        setValueStart={(value) => filter.setFilter({ ...filter.filter, yearStart: value })}
-        setValueEnd={(value) => filter.setFilter({ ...filter.filter, yearEnd: value })}
+        setValueStart={(value) => {
+          filter.setFilter({ ...filterRef.current, yearStart: value });
+        }}
+        setValueEnd={(value) => {
+          filter.setFilter({ ...filterRef.current, yearEnd: value });
+        }}
       />
 
       <FilterMultipleObjectFetch<AuthorFilter>
@@ -99,7 +109,7 @@ export default function Sidebar() {
         route="papers"
         labelName="publisher"
         helpTooltip="Filter by the publisher.
-        Most papers do not have a publisher.
+        Most papers (>90%) do not have a publisher set.
         Matches any position in the name.
         3 characters minimum required; case-sensitive."
         value={filter.filter.publishers}
@@ -121,8 +131,8 @@ export default function Sidebar() {
         labelEnd={'Max'}
         valueStart={filter.filter.citationsMin}
         valueEnd={filter.filter.citationsMax}
-        setValueStart={(value) => filter.setFilter({ ...filter.filter, citationsMin: value })}
-        setValueEnd={(value) => filter.setFilter({ ...filter.filter, citationsMax: value })}
+        setValueStart={(value) => filter.setFilter({ ...filterRef.current, citationsMin: value })}
+        setValueEnd={(value) => filter.setFilter({ ...filterRef.current, citationsMax: value })}
       />
     </Stack>
   );

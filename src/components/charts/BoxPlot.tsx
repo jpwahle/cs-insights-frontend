@@ -6,6 +6,7 @@ import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
 import LoadingCircle from '../LoadingCircle';
+import { useExport } from '../../tools';
 
 export default function BoxPlot(props: BoxPlotProps) {
   const [chartData, setChartData] = useState<QuartilesData>([]);
@@ -48,6 +49,7 @@ export default function BoxPlot(props: BoxPlotProps) {
     chart: {
       toolbar: {
         offsetY: 18,
+        ...useExport('boxplot', props.route),
       },
     },
   };

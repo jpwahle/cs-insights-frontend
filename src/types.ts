@@ -86,7 +86,7 @@ export type FilterRangeProps = {
   setValueEnd(valueEnd: string): void;
 };
 
-export interface FilterTextfield {
+export interface FilterTextFieldProps {
   label: string;
   value: string;
   setValue(value: string): void;
@@ -109,7 +109,6 @@ export type NonFilterParameters = {
   sortDirection?: string;
   column?: string;
   pattern?: string;
-  metric?: string;
   k?: number;
 };
 

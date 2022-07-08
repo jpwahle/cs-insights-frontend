@@ -4,9 +4,9 @@ import { GraphsProps } from '../types';
 import BoxPlot from './charts/BoxPlot';
 import React from 'react';
 import { useFilter } from '../context/FilterContext';
-import { mapMetric } from './Tools';
 import TreeMap from './charts/TreeMap';
 import Grid from './charts/Grid';
+import { mapMetric } from '../tools';
 
 export default function FrameWithGraphs(props: GraphsProps) {
   const filter = useFilter();
