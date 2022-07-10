@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import '../../App.css';
 import { DataGrid, GridEnrichedColDef, GridSortModel } from '@mui/x-data-grid';
@@ -12,9 +11,9 @@ import { useGridExport } from '../../tools';
 
 export default function Grid<T extends { [key: string]: string }>(props: GridProps) {
   const [gridData, setGridData] = useState<GridData<T>>({ rowCount: 0, rows: [] });
-  const [page, setPage] = React.useState<number>(0);
-  const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
-  const [sortModel, setSortModel] = React.useState<GridSortModel>([
+  const [page, setPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(PAGE_SIZE);
+  const [sortModel, setSortModel] = useState<GridSortModel>([
     {
       field: 'inCitationsCount',
       sort: 'desc',

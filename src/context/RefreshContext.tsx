@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import { createContext, ReactElement, useContext, useState } from 'react';
 
 const RefreshContext = createContext<
   | {
@@ -9,18 +9,14 @@ const RefreshContext = createContext<
 >(undefined);
 
 export function useRefresh() {
-  const context = React.useContext(RefreshContext);
+  const context = useContext(RefreshContext);
   if (context === undefined) {
     throw new Error('useRefresh must be used within an RefreshProvider');
   }
   return context;
 }
 
-export function RefreshProvider({
-  children,
-}: {
-  children: React.ReactElement | React.ReactElement[];
-}) {
+export function RefreshProvider(props: { children: ReactElement | ReactElement[] }) {
   const [refetchFunctions, setRefetchFunctions] = useState<Array<() => Promise<any>>>([]);
 
   function addRefetch(refetch: () => Promise<any>) {
@@ -36,7 +32,7 @@ export function RefreshProvider({
 
   return (
     <RefreshContext.Provider value={{ refresh: refresh, addRefetch: addRefetch }}>
-      {children}
+      {props.children}
     </RefreshContext.Provider>
   );
 }

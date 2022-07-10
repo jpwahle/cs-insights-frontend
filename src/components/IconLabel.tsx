@@ -1,5 +1,4 @@
 import { Stack } from '@mui/material';
-import React from 'react';
 import { IconLabelProps } from '../types';
 
 export default function IconLabel(props: IconLabelProps) {

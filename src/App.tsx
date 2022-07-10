@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SnackbarProvider } from './context/SnackbarContext';
 import Login from './routes/login';
@@ -16,12 +15,12 @@ import {
   ROUTE_FIELDS_OF_STUDY,
   ROUTE_HOME,
   ROUTE_LOGIN,
-  ROUTE_PAPER_TYPES,
   ROUTE_PAPERS,
   ROUTE_PASSWORD,
   ROUTE_PUBLISHERS,
   ROUTE_REGISTER,
   ROUTE_TOPICS,
+  ROUTE_TYPES_OF_PAPER,
   ROUTE_VENUES,
 } from './consts';
 import Account from './routes/account';
@@ -34,6 +33,7 @@ import FieldsOfStudy from './routes/dashboards/fieldsOfStudy';
 import Citations from './routes/dashboards/citations';
 import Topics from './routes/dashboards/topics';
 import Publishers from './routes/dashboards/publishers';
+import { RefreshProvider } from './context/RefreshContext';
 
 export const queryClient = new QueryClient();
 
@@ -44,23 +44,25 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
             <FilterProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route path={ROUTE_HOME} element={<Home />} />
-                  <Route path={ROUTE_LOGIN} element={<Login />} />
-                  <Route path={ROUTE_REGISTER} element={<Register />} />
-                  <Route path={ROUTE_ACCOUNT} element={<Account />} />
-                  <Route path={ROUTE_PASSWORD} element={<ForgotPassword />} />
-                  <Route path={ROUTE_PAPERS} element={<Papers />} />
-                  <Route path={ROUTE_AUTHORS} element={<Authors />} />
-                  <Route path={ROUTE_VENUES} element={<Venues />} />
-                  <Route path={ROUTE_PAPER_TYPES} element={<TypesOfPaper />} />
-                  <Route path={ROUTE_FIELDS_OF_STUDY} element={<FieldsOfStudy />} />
-                  <Route path={ROUTE_PUBLISHERS} element={<Publishers />} />
-                  <Route path={ROUTE_CITATIONS} element={<Citations />} />
-                  <Route path={ROUTE_TOPICS} element={<Topics />} />
-                </Routes>
-              </BrowserRouter>
+              <RefreshProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path={ROUTE_HOME} element={<Home />} />
+                    <Route path={ROUTE_LOGIN} element={<Login />} />
+                    <Route path={ROUTE_REGISTER} element={<Register />} />
+                    <Route path={ROUTE_ACCOUNT} element={<Account />} />
+                    <Route path={ROUTE_PASSWORD} element={<ForgotPassword />} />
+                    <Route path={ROUTE_PAPERS} element={<Papers />} />
+                    <Route path={ROUTE_AUTHORS} element={<Authors />} />
+                    <Route path={ROUTE_VENUES} element={<Venues />} />
+                    <Route path={ROUTE_TYPES_OF_PAPER} element={<TypesOfPaper />} />
+                    <Route path={ROUTE_FIELDS_OF_STUDY} element={<FieldsOfStudy />} />
+                    <Route path={ROUTE_PUBLISHERS} element={<Publishers />} />
+                    <Route path={ROUTE_CITATIONS} element={<Citations />} />
+                    <Route path={ROUTE_TOPICS} element={<Topics />} />
+                  </Routes>
+                </BrowserRouter>
+              </RefreshProvider>
             </FilterProvider>
           </AuthProvider>
         </QueryClientProvider>

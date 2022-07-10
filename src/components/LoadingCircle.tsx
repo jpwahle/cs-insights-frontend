@@ -1,11 +1,10 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
+import { ReactElement } from 'react';
 
 export default function LoadingCircle(props: {
   isFetching: boolean;
   className?: string;
-  children: React.ReactElement | React.ReactElement[];
+  children: ReactElement | ReactElement[];
 }) {
   return (
     <Box sx={{ position: 'relative' }} className={props.className}>

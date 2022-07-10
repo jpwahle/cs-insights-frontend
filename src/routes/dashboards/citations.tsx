@@ -1,4 +1,3 @@
-import React from 'react';
 import Frame from '../../components/Frame';
 import BarChart from '../../components/charts/BarChart';
 import { ROUTE_CITATIONS } from '../../consts';

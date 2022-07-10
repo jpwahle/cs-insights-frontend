@@ -1,4 +1,3 @@
-import React from 'react';
 import '../App.css';
 import {
   Button,
@@ -15,8 +14,16 @@ import { useRefresh } from '../context/RefreshContext';
 import { Construction } from '@mui/icons-material';
 import { useFilter } from '../context/FilterContext';
 import _ from 'lodash';
-import { ROUTE_CITATIONS, ROUTE_PAPERS, ROUTE_TOPICS } from '../consts';
+import {
+  ROUTE_AUTHORS,
+  ROUTE_FIELDS_OF_STUDY,
+  ROUTE_PUBLISHERS,
+  ROUTE_TOPICS,
+  ROUTE_TYPES_OF_PAPER,
+  ROUTE_VENUES,
+} from '../consts';
 import { metrics } from '../tools';
+import { TopicModelAutocomplete } from './TopicModelAutocomplete';
 
 export default function Tools(props: { route: string }) {
   const refresh = useRefresh();
@@ -26,9 +33,13 @@ export default function Tools(props: { route: string }) {
     filter.setFilter({ ...filter.filter, metric: event.target.value });
   };
 
-  const routeExceptions = [ROUTE_PAPERS, ROUTE_CITATIONS, ROUTE_TOPICS].map((route) =>
-    route.slice(1)
-  );
+  const metricSwitchRoutes = [
+    ROUTE_AUTHORS,
+    ROUTE_VENUES,
+    ROUTE_TYPES_OF_PAPER,
+    ROUTE_FIELDS_OF_STUDY,
+    ROUTE_PUBLISHERS,
+  ].map((route) => route.slice(1));
 
   return (
     <Stack direction="row" className="tools">
@@ -47,7 +58,7 @@ export default function Tools(props: { route: string }) {
       ) : (
         <Typography style={{ color: 'red' }}>There are unapplied filters/changes!</Typography>
       )}
-      {routeExceptions.includes(props.route) ? null : (
+      {metricSwitchRoutes.includes(props.route) ? (
         <FormControl>
           <InputLabel>Metric</InputLabel>
           <Select
@@ -61,7 +72,8 @@ export default function Tools(props: { route: string }) {
             ))}
           </Select>
         </FormControl>
-      )}
+      ) : null}
+      {props.route === ROUTE_TOPICS.slice(1) ? <TopicModelAutocomplete /> : null}
     </Stack>
   );
 }

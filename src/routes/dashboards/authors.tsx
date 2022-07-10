@@ -1,4 +1,3 @@
-import React from 'react';
 import { GridCellParams } from '@mui/x-data-grid';
 import { Link } from '@mui/material';
 import FrameWithGraphs from '../../components/FrameWithGraphs';

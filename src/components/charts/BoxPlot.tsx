@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { BoxPlotProps, QuartilesData } from '../../types';
 import { useNetworkGet } from '../../network';

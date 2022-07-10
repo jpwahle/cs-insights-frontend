@@ -1,4 +1,3 @@
-import React from 'react';
 import '../App.css';
 import { Button, Container, Stack, Typography, useTheme } from '@mui/material';
 import { ROUTE_LOGIN, ROUTE_PAPERS, ROUTE_REGISTER } from '../consts';

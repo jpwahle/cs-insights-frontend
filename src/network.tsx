@@ -35,9 +35,14 @@ async function sendRequest(
     };
   }
   const response = await fetch(url, init);
-
   if (!response.ok || response.status >= 400) {
-    setSnack(`${response.status} ${response.statusText}: ${(await response.json()).message}`);
+    const contentType = response.headers.get('content-type');
+    const snackMessage = `${response.status} ${response.statusText}`;
+    if (contentType && contentType.indexOf('application/json') !== -1) {
+      setSnack(`${snackMessage}: ${(await response.json()).message}`);
+    } else {
+      setSnack(snackMessage);
+    }
     return new Promise((resolve) => resolve(''));
   } else {
     return response.json();

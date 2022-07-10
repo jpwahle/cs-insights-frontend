@@ -110,6 +110,7 @@ export type NonFilterParameters = {
   column?: string;
   pattern?: string;
   k?: number;
+  modelId?: string;
 };
 
 export type StringArrayParameters = {
@@ -128,3 +129,24 @@ export type QueryParameters = {
   citationsMax: string;
 } & StringArrayParameters &
   NonFilterParameters;
+
+export type LdaVisData = {
+  mdsDat: { x: number[]; y: number[]; topics: number[]; cluster: number[]; Freq: number[] };
+  tinfo: {
+    Term: string[];
+    Freq: number[];
+    Total: number[];
+    Category: string[];
+    logprob: number[];
+    loglift: number[];
+  };
+  'token.table': {
+    Topic: number[];
+    Freq: number[];
+    Term: string[];
+  };
+  R: string;
+  'lambda.step': number;
+  'plot.opts': { xlab: string; ylab: string };
+  'topic.order': number[];
+};
