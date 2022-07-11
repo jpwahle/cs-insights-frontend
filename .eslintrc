@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb-typescript", "prettier"],
+  "extends": ["airbnb-typescript", "prettier", "plugin:import/errors", "plugin:import/warnings", "plugin:import/typescript"],
   "plugins": ["prettier", "@typescript-eslint", "import", "react"],
   "rules": {
     "prettier/prettier": ["error"],
