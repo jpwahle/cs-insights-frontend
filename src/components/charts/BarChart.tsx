@@ -1,0 +1,83 @@
+import React, { useEffect, useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import { BarChartProps, YearsData } from '../../types';
+import { useNetworkGet } from '../../network';
+import { useRefresh } from '../../context/RefreshContext';
+import { capitalize } from '@mui/material';
+import LoadingCircle from '../LoadingCircle';
+import { useExport } from '../../tools';
+
+export default function BarChart(props: BarChartProps) {
+  const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
+  const refresh = useRefresh();
+  const labelColors = chartData.counts.map((value) => (value > 0 ? 'rgb(55, 61, 63)' : '#b6b6b6'));
+
+  const { refetch, isFetching } = useNetworkGet(
+    `fe/${props.route}/years`,
+    'yearsData' + props.route,
+    (data: YearsData) => {
+      setChartData(data);
+    }
+  );
+
+  useEffect(() => {
+    refresh.addRefetch(refetch);
+  }, []);
+
+  const series = [
+    {
+      name: '#' + props.yDimension,
+      data: chartData.counts,
+    },
+  ];
+
+  const options = {
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '100%',
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent'],
+    },
+    title: {
+      text: `${capitalize(props.yDimension)} per year`,
+    },
+    xaxis: {
+      categories: chartData.years,
+      title: {
+        text: 'Year',
+        offsetY: -4 * Math.sqrt(chartData.years.length),
+      },
+      labels: {
+        style: {
+          colors: labelColors,
+        },
+      },
+    },
+    yaxis: {
+      title: {
+        text: 'Number of ' + props.yDimension,
+      },
+    },
+    fill: {
+      opacity: 1,
+    },
+    chart: {
+      parentHeightOffset: 0,
+      toolbar: useExport('barchart', props.route),
+    },
+  };
+
+  return (
+    <LoadingCircle isFetching={isFetching} className={'barchart'}>
+      <ReactApexChart options={options} series={series} type="bar" height={250} />
+    </LoadingCircle>
+  );
+}

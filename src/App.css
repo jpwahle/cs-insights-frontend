@@ -1,34 +1,26 @@
-.App {
-  text-align: center;
+:root {
+  --size-small: 4px;
+  --size-large: 8px;
+  --size-very-large: 16px;
 }
 
-.App-logo {
-  height: 40vmin;
+/* home */
+.app-logo {
+  margin-top: 48px;
+  margin-bottom: 48px;
   pointer-events: none;
+  color: #61DBFB;
+  font-size: calc(50px + 10vmin);
+  font-weight: bold;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+  .app-logo {
+    animation: app-logo-spin infinite 5s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
+@keyframes app-logo-spin {
   from {
     transform: rotate(0deg);
   }
@@ -36,3 +28,128 @@
     transform: rotate(360deg);
   }
 }
+
+.home {
+  background-color: white;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-button {
+  width: 50%;
+}
+
+.statsHighlight {
+  color: gray;
+}
+
+/* general structure */
+.frame {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas:
+      "header header "
+      "side   tools  "
+      "side   content"
+}
+
+.stack {
+  flex: 1;
+}
+
+.appbar {
+  grid-area: header;
+}
+
+/* filter */
+.sidebar {
+  background: lightgrey;
+  padding: var(--size-small);
+  text-align: start;
+  width: calc(2 * var(--size-large) + 300px);
+  grid-area: side;
+}
+
+.sidebar > * {
+  padding: var(--size-large);
+}
+
+.filter-header {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-label {
+  padding-bottom: 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* content */
+.frame-with-graphs {
+  grid-area: content;
+
+  margin: var(--size-small);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+      "bar   box  "
+      "grid  box  "
+      "tree  tree "
+}
+
+.tools {
+  background: darkgrey;
+  padding: var(--size-large);
+  align-items: center;
+  grid-area: tools;
+}
+
+.tools > * {
+  padding: var(--size-large);
+}
+
+.barchart {
+  /*background: red;*/
+  grid-area: bar;
+}
+
+.grid {
+  /*background: green;*/
+  grid-area: grid;
+}
+
+.MuiDataGrid-footerContainer {
+  min-height: 35px !important;
+  height: 35px;
+}
+
+.boxplot {
+  grid-area: box;
+  /*background: blue;*/
+}
+
+.treemap {
+  /*background: orange;*/
+  grid-area: tree;
+}
+
+.treemapTextField input{
+  height: 10px
+}
+
+/*.treemap {*/
+/*  overflow: scroll;*/
+/*  overflow-wrap: break-word;*/
+/*}*/
+
+/*.treemap .apexcharts-datalabel {*/
+/*  overflow: scroll;*/
+/*  overflow-wrap: break-word;*/
+/*  font-size: 14px !important;*/
+/*}*/
