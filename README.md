@@ -1,6 +1,6 @@
 # NLP-Land-frontend
 
-<p style="text-align:center">
+<p align="center">
 <a href="https://codecov.io/gh/gipplab/NLP-Land-frontend"><img alt="codecov" src="https://codecov.io/gh/gipplab/NLP-Land-frontend/branch/main/graph/badge.svg?token=FW8MXQX5XK"/></a>
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/branch.yaml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/branch.yaml/badge.svg"></a>
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yaml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yaml/badge.svg?branch=dev"></a>  
