@@ -1,13 +1,11 @@
 # NLP-Land-frontend
 
-<p style="text-align:center">
-<a href="https://codecov.io/gh/gipplab/NLP-Land-frontend"><img alt="codecov" src="https://codecov.io/gh/gipplab/NLP-Land-frontend/branch/main/graph/badge.svg?token=FW8MXQX5XK"/></a>
+<p align="center">
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/branch.yaml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/branch.yaml/badge.svg"></a>
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yaml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yaml/badge.svg?branch=dev"></a>  
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/main.yaml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/main.yaml/badge.svg"></a>
 <a href="https://github.com/gipplab/NLP-Land-frontend/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/gipplab/NLP-Land-frontend?sort=semver"></a>
 <a href="https://hub.docker.com/repository/docker/jpelhaw/nlp-land-frontend"><img alt="Docker Release" src="https://img.shields.io/docker/v/jpelhaw/nlp-land-frontend?label=Docker"></a>
-<a href="https://gipplab.github.io/NLP-Land-frontend/"><img alt="Docs" src="https://img.shields.io/badge/Docs-gh--pages-blue"></a>
 <a href="https://github.com/gipplab/NLP-Land-frontend/blob/master/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 <a href="https://github.com/airbnb/javascript"><img alt="Code style: Airbnb" src="https://img.shields.io/badge/codestyle-Airbnb-success"></a>
 </p>
