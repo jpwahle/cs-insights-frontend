@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { Filter } from '../types';
-import { metrics } from '../components/Tools';
+import { metrics } from '../tools';
 
 const FilterContext = createContext<
   | {

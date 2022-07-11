@@ -7,6 +7,7 @@ import { useNetworkGet } from '../../network';
 import LoadingCircle from '../LoadingCircle';
 import { debounce, TextField } from '@mui/material';
 import { DEBOUNCE_DELAY_K } from '../../consts';
+import { useExport } from '../../tools';
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
@@ -48,6 +49,7 @@ export default function (props: TreeMapProps) {
   const options: ApexOptions = {
     chart: {
       parentHeightOffset: 0,
+      toolbar: useExport('treemap', props.route, { k: k }),
     },
     title: {
       text: `Top k by ${props.yDimension}`,

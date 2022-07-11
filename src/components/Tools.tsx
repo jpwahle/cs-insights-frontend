@@ -16,16 +16,7 @@ import { Construction } from '@mui/icons-material';
 import { useFilter } from '../context/FilterContext';
 import _ from 'lodash';
 import { ROUTE_CITATIONS, ROUTE_PAPERS, ROUTE_TOPICS } from '../consts';
-
-export const metrics = [
-  { label: '#Papers', value: 'papersCount' },
-  { label: '#Citations', value: 'inCitationsCount' },
-];
-
-export function mapMetric(metricValue: string): string {
-  const metricsFiltered = metrics.filter((metric) => metric.value === metricValue);
-  return metricsFiltered ? metricsFiltered[0].label : '';
-}
+import { metrics } from '../tools';
 
 export default function Tools(props: { route: string }) {
   const refresh = useRefresh();

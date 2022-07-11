@@ -1,11 +1,11 @@
-import { FilterRangeProps, FilterTextfield } from '../types';
+import { FilterRangeProps, FilterTextFieldProps } from '../types';
 
 import FilterLabel from './FilterLabel';
 import { debounce, Stack, TextField } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { DEBOUNCE_DELAY_TEXTFIELD } from '../consts';
 
-function FilterTextField(props: FilterTextfield) {
+function FilterTextField(props: FilterTextFieldProps) {
   const [inputValue, setInputValue] = useState<string>(props.value);
 
   // 2 functions, so debounce reference does not get lost

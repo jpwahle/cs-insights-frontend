@@ -8,6 +8,7 @@ import { PAGE_SIZE } from '../../consts';
 import { useRefresh } from '../../context/RefreshContext';
 import { Button, Tooltip } from '@mui/material';
 import { Download } from '@mui/icons-material';
+import { useGridExport } from '../../tools';
 
 export default function Grid<T extends { [key: string]: string }>(props: GridProps) {
   const [gridData, setGridData] = useState<GridData<T>>({ rowCount: 0, rows: [] });
@@ -31,18 +32,20 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
     return column;
   });
 
+  const queryParameters = {
+    page: page,
+    pageSize: pageSize,
+    sortField: sortModel[0] ? sortModel[0].field : '',
+    sortDirection: sortModel[0] && sortModel[0].sort ? sortModel[0].sort : '',
+  };
+
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/info`,
     'gridData' + props.route,
     (data: GridData<T>) => {
       setGridData(data);
     },
-    {
-      page: page,
-      pageSize: pageSize,
-      sortField: sortModel[0] ? sortModel[0].field : '',
-      sortDirection: sortModel[0] && sortModel[0].sort ? sortModel[0].sort : '',
-    }
+    queryParameters
   );
 
   useEffect(() => {
@@ -54,6 +57,8 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
       refetch();
     }
   }, [page, pageSize, sortModel]);
+
+  const filename = useGridExport(props.route, queryParameters);
 
   function handleClick() {
     if (gridData.rows.length > 0) {
@@ -75,7 +80,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.setAttribute('href', url);
-      a.setAttribute('download', `d4_grid_${Date.now()}.csv`);
+      a.setAttribute('download', filename);
       a.click();
     }
   }
