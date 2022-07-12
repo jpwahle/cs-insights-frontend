@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from '@mui/material';
 import { ReactElement } from 'react';
 
-export default function LoadingCircle(props: {
+export default function ChartLoadingIcon(props: {
   isFetching: boolean;
   className?: string;
   children: ReactElement | ReactElement[];

@@ -1,14 +1,15 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Autocomplete, CircularProgress, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Autocomplete, TextField } from '@mui/material';
 import { useNetworkGet } from '../network';
 import { useModelId } from '../context/ModelIdContext';
+import { AutocompleteLoadingIcon } from './FilterAutocomplete';
 
-export function TopicModelAutocomplete() {
+export function ModelIdAutocomplete() {
   const [options, setOptions] = useState<readonly string[]>([]);
   const [open, setOpen] = useState(false);
   const modelId = useModelId();
 
-  const { refetch, isFetching } = useNetworkGet(`fe/topics/models`, 'models', (data) => {
+  const { refetch, isFetching } = useNetworkGet(`fe/topics/models`, 'ldaModelId', (data) => {
     setOptions(data.models);
   });
 
@@ -42,14 +43,7 @@ export function TopicModelAutocomplete() {
           label={'Select'}
           InputProps={{
             ...params.InputProps,
-            endAdornment: (
-              <Fragment>
-                {isFetching ? (
-                  <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </Fragment>
-            ),
+            endAdornment: <AutocompleteLoadingIcon isFetching={isFetching} params={params} />,
           }}
         />
       )}

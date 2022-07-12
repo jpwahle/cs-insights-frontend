@@ -2,18 +2,19 @@ import { useEffect, useState } from 'react';
 import { LdaVisData } from '../../types';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
-import LoadingCircle from '../LoadingCircle';
+import ChartLoadingIcon from '../ChartLoadingIcon';
 import { LDAvis } from 'react-ldavis';
 import { useModelId } from '../../context/ModelIdContext';
 
-export default function LdaTopicVis() {
+export default function LdaTopicVis(props: { route: string }) {
   const [ldaVisData, setLdaVisData] = useState<LdaVisData | undefined>(undefined);
   const refresh = useRefresh();
   const { modelId } = useModelId();
+  const queryKey = props.route + 'Lda';
 
   const { refetch, isFetching } = useNetworkGet(
-    `fe/topics/lda`,
-    'lda',
+    `fe/${props.route}/lda`,
+    queryKey,
     (data) => {
       setLdaVisData(data.outputData);
     },
@@ -21,7 +22,10 @@ export default function LdaTopicVis() {
   );
 
   useEffect(() => {
-    refresh.addRefetch(refetch);
+    refresh.addRefetch(queryKey, refetch);
+    return () => {
+      refresh.removeRefetch(queryKey);
+    };
   }, []);
 
   return (
@@ -32,7 +36,7 @@ export default function LdaTopicVis() {
         justifyContent: 'center',
       }}
     >
-      <LoadingCircle isFetching={isFetching}>
+      <ChartLoadingIcon isFetching={isFetching}>
         {ldaVisData ? (
           <LDAvis data={ldaVisData} modifyHistory={true} />
         ) : (
@@ -44,7 +48,7 @@ export default function LdaTopicVis() {
             No data
           </div>
         )}
-      </LoadingCircle>
+      </ChartLoadingIcon>
     </div>
   );
 }

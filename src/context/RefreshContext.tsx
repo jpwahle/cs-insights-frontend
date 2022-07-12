@@ -3,7 +3,8 @@ import { createContext, ReactElement, useContext, useState } from 'react';
 const RefreshContext = createContext<
   | {
       refresh: () => void;
-      addRefetch: (refetch: () => Promise<any>) => void;
+      addRefetch: (key: string, refetch: () => Promise<any>) => void;
+      removeRefetch: (key: string) => void;
     }
   | undefined
 >(undefined);
@@ -16,22 +17,32 @@ export function useRefresh() {
   return context;
 }
 
-export function RefreshProvider(props: { children: ReactElement | ReactElement[] }) {
-  const [refetchFunctions, setRefetchFunctions] = useState<Array<() => Promise<any>>>([]);
+export type State = {
+  key: string;
+  refetch: () => Promise<any>;
+};
 
-  function addRefetch(refetch: () => Promise<any>) {
-    setRefetchFunctions((oldArray) => [...oldArray, refetch]);
+export function RefreshProvider(props: { children: ReactElement | ReactElement[] }) {
+  const [refetchFunctions, setRefetchFunctions] = useState<Array<State>>([]);
+
+  function addRefetch(key: string, refetch: () => Promise<any>) {
+    setRefetchFunctions((oldArray) => [...oldArray, { key: key, refetch: refetch }]);
+  }
+
+  function removeRefetch(key: string) {
+    setRefetchFunctions((oldArray) => oldArray.filter((func) => func.key != key));
   }
 
   function refresh() {
-    // queryClient.cancelQueries();
     for (const refetch of refetchFunctions) {
-      refetch();
+      refetch.refetch();
     }
   }
 
   return (
-    <RefreshContext.Provider value={{ refresh: refresh, addRefetch: addRefetch }}>
+    <RefreshContext.Provider
+      value={{ refresh: refresh, addRefetch: addRefetch, removeRefetch: removeRefetch }}
+    >
       {props.children}
     </RefreshContext.Provider>
   );

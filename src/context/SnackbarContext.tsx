@@ -20,7 +20,7 @@ export function SnackbarProvider({ children }: { children: ReactElement | ReactE
 
   return (
     <SnackbarContext.Provider value={setSnack}>
-      <Snackbar open={!!snack} onClose={handleClose} autoHideDuration={6000}>
+      <Snackbar open={!!snack} onClose={handleClose} autoHideDuration={8000}>
         <Alert onClose={handleClose} severity="error">
           {snack}
         </Alert>

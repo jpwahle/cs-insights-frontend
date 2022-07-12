@@ -2,6 +2,7 @@ import { Fragment, ReactElement, SyntheticEvent, useCallback, useEffect, useStat
 import '../App.css';
 import {
   Autocomplete,
+  AutocompleteRenderInputParams,
   Box,
   capitalize,
   Chip,
@@ -116,6 +117,20 @@ function TagsAndTooltip<T extends { _id: string; [key: string]: string } | strin
   );
 }
 
+export function AutocompleteLoadingIcon(props: {
+  isFetching: boolean;
+  params: AutocompleteRenderInputParams;
+}) {
+  return (
+    <Fragment>
+      {props.isFetching ? (
+        <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
+      ) : null}
+      {props.params.InputProps.endAdornment}
+    </Fragment>
+  );
+}
+
 export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]: string }>(
   props: FilterAutocompleteProps<T[]>
 ) {
@@ -166,14 +181,7 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
             label={'Search'}
             InputProps={{
               ...params.InputProps,
-              endAdornment: (
-                <Fragment>
-                  {isFetching ? (
-                    <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </Fragment>
-              ),
+              endAdornment: <AutocompleteLoadingIcon isFetching={isFetching} params={params} />,
             }}
           />
         )}
@@ -223,14 +231,7 @@ export function FilterMultipleStringFetch(props: FilterAutocompleteProps<string[
             label={'Search'}
             InputProps={{
               ...params.InputProps,
-              endAdornment: (
-                <Fragment>
-                  {isFetching ? (
-                    <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </Fragment>
-              ),
+              endAdornment: <AutocompleteLoadingIcon isFetching={isFetching} params={params} />,
             }}
           />
         )}

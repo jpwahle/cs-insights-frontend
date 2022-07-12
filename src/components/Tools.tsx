@@ -23,7 +23,7 @@ import {
   ROUTE_VENUES,
 } from '../consts';
 import { metrics } from '../tools';
-import { TopicModelAutocomplete } from './TopicModelAutocomplete';
+import { ModelIdAutocomplete } from './ModelIdAutocomplete';
 
 export default function Tools(props: { route: string }) {
   const refresh = useRefresh();
@@ -73,7 +73,7 @@ export default function Tools(props: { route: string }) {
           </Select>
         </FormControl>
       ) : null}
-      {props.route === ROUTE_TOPICS.slice(1) ? <TopicModelAutocomplete /> : null}
+      {props.route === ROUTE_TOPICS.slice(1) ? <ModelIdAutocomplete /> : null}
     </Stack>
   );
 }

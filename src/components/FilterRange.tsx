@@ -1,9 +1,8 @@
-import { Fragment } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 import { FilterRangeProps, FilterTextFieldProps } from '../types';
 
 import FilterLabel from './FilterLabel';
 import { debounce, Stack, TextField } from '@mui/material';
-import { useCallback, useState } from 'react';
 import { DEBOUNCE_DELAY_TEXTFIELD } from '../consts';
 
 function FilterTextField(props: FilterTextFieldProps) {

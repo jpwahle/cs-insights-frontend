@@ -4,24 +4,28 @@ import { BarChartProps, YearsData } from '../../types';
 import { useNetworkGet } from '../../network';
 import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
-import LoadingCircle from '../LoadingCircle';
+import ChartLoadingIcon from '../ChartLoadingIcon';
 import { useExport } from '../../tools';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
   const refresh = useRefresh();
   const labelColors = chartData.counts.map((value) => (value > 0 ? 'rgb(55, 61, 63)' : '#b6b6b6'));
+  const queryKey = props.route + 'Barchart';
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/years`,
-    'yearsData' + props.route,
+    queryKey,
     (data: YearsData) => {
       setChartData(data);
     }
   );
 
   useEffect(() => {
-    refresh.addRefetch(refetch);
+    refresh.addRefetch(queryKey, refetch);
+    return () => {
+      refresh.removeRefetch(queryKey);
+    };
   }, []);
 
   const series = [
@@ -76,8 +80,8 @@ export default function BarChart(props: BarChartProps) {
   };
 
   return (
-    <LoadingCircle isFetching={isFetching} className={'barchart'}>
+    <ChartLoadingIcon isFetching={isFetching} className={'barchart'}>
       <ReactApexChart options={options} series={series} type="bar" height={250} />
-    </LoadingCircle>
+    </ChartLoadingIcon>
   );
 }

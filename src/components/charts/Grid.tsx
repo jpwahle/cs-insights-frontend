@@ -20,6 +20,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
     },
   ]);
   const refresh = useRefresh();
+  const queryKey = props.route + 'Grid';
   const columns = props.columns.map((column: GridEnrichedColDef & { tooltip?: string }) => {
     if (column.tooltip) {
       column.renderCell = (params: any) => (
@@ -40,7 +41,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/info`,
-    'gridData' + props.route,
+    queryKey,
     (data: GridData<T>) => {
       setGridData(data);
     },
@@ -48,7 +49,10 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
   );
 
   useEffect(() => {
-    refresh.addRefetch(refetch);
+    refresh.addRefetch(queryKey, refetch);
+    return () => {
+      refresh.removeRefetch(queryKey);
+    };
   }, []);
 
   useEffect(() => {

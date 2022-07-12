@@ -7,7 +7,7 @@ export default function Topics() {
   return (
     <ModelIdProvider>
       <Frame route={'topics'}>
-        <LdaTopicVis />
+        <LdaTopicVis route={'topics'} />
       </Frame>
     </ModelIdProvider>
   );

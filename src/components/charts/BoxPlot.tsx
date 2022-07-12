@@ -5,23 +5,27 @@ import { useNetworkGet } from '../../network';
 import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
-import LoadingCircle from '../LoadingCircle';
+import ChartLoadingIcon from '../ChartLoadingIcon';
 import { useExport } from '../../tools';
 
 export default function BoxPlot(props: BoxPlotProps) {
   const [chartData, setChartData] = useState<QuartilesData>([]);
   const refresh = useRefresh();
+  const queryKey = props.route + 'Boxplot';
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/quartiles`,
-    'quartilesData' + props.route,
+    queryKey,
     (data: QuartilesData) => {
       setChartData(data);
     }
   );
 
   useEffect(() => {
-    refresh.addRefetch(refetch);
+    refresh.addRefetch(queryKey, refetch);
+    return () => {
+      refresh.removeRefetch(queryKey);
+    };
   }, []);
 
   const series = [
@@ -58,7 +62,7 @@ export default function BoxPlot(props: BoxPlotProps) {
   window.dispatchEvent(new Event('resize'));
 
   return (
-    <LoadingCircle isFetching={isFetching} className={'boxplot'}>
+    <ChartLoadingIcon isFetching={isFetching} className={'boxplot'}>
       <ReactApexChart
         options={options}
         series={series}
@@ -66,6 +70,6 @@ export default function BoxPlot(props: BoxPlotProps) {
         height={'530px'}
         width={'180px'}
       />
-    </LoadingCircle>
+    </ChartLoadingIcon>
   );
 }
