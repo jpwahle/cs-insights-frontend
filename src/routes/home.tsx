@@ -45,7 +45,7 @@ export default function Home() {
           <Stack direction={'row'} alignItems={'center'}>
             Visit us on
             <a
-              href="https://github.com/gipplab/NLP-Land-frontend"
+              href="https://github.com/gipplab/NLP-Land-main"
               target="_blank"
               rel="noopener noreferrer"
               style={{
