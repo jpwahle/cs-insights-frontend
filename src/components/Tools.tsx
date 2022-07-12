@@ -68,7 +68,9 @@ export default function Tools(props: { route: string }) {
             size={'small'}
           >
             {metrics.map((metric) => (
-              <MenuItem value={metric.value}>{metric.label}</MenuItem>
+              <MenuItem key={metric.value} value={metric.value}>
+                {metric.label}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
