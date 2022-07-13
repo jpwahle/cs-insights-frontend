@@ -1,5 +1,5 @@
 {
-  "name": "nlp-land-frontend",
+  "name": "cs-insights-frontend",
   "version": "0.9.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ag-gipp/NLP-Land-frontend.git"
+    "url": "git+https://github.com/gipplab/cs-insights-frontend.git"
   },
   "author": "Lennart Küll",
   "license": "MIT",
