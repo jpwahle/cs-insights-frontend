@@ -1,4 +1,4 @@
-# NLP-Land-frontend
+# cs-insights-frontend
 
 <p align="center">
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yml/badge.svg?branch=dev"></a>  
