@@ -10,6 +10,10 @@
 <a href="https://github.com/airbnb/javascript"><img alt="Code style: Airbnb" src="https://img.shields.io/badge/codestyle-Airbnb-success"></a>
 </p>
 
+<a href="https://github.com/gipplab/cs-insights-frontend">
+    <img src="images/showcase.png" alt="Logo">
+  </a>
+
 ## Getting Started
 After cloning the repository you need to change the directory.
 ```shell
