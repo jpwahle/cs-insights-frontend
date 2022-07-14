@@ -17,7 +17,7 @@ function useExportFilename(
   filter: Filter,
   parameters?: NonFilterParameters
 ) {
-  return `d4_${chart}_${route}_${Object.values({ ...filter, ...parameters }).join('_')}`;
+  return `cs-insights_${chart}_${route}_${Object.values({ ...filter, ...parameters }).join('_')}`;
 }
 
 export function useExport(chart: string, route: string, parameters?: NonFilterParameters) {
