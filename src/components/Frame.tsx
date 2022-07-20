@@ -11,6 +11,12 @@ export default function Frame(props: { route: string; children: ReactElement | R
   const auth = useAuth();
   const setSnack = useSnack();
 
+  useEffect(() => {
+    if (!auth.token) {
+      setSnack('You need to login to access this page.');
+    }
+  }, [auth.token]);
+
   if (auth.token) {
     return (
       <div className={'frame'}>
@@ -23,9 +29,6 @@ export default function Frame(props: { route: string; children: ReactElement | R
       </div>
     );
   } else {
-    useEffect(() => {
-      setSnack('You need to login to access this page.');
-    });
     return <Navigate to={ROUTE_LOGIN} />;
   }
 }

@@ -1,4 +1,9 @@
-import { StringArrayParameters, NonFilterParameters, QueryParameters } from './types';
+import {
+  AuthContextType,
+  NonFilterParameters,
+  QueryParameters,
+  StringArrayParameters,
+} from './types';
 import { useMutation, useQuery } from 'react-query';
 import { useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
@@ -8,7 +13,7 @@ import { ACCESS_TYPE_OPEN, ACCESS_TYPE_OTHER } from './consts';
 
 async function sendRequest(
   route: string,
-  token: string,
+  auth: AuthContextType,
   setSnack: (message: string) => void,
   data: Object | null = null
 ) {
@@ -21,7 +26,7 @@ async function sendRequest(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.token}`,
       },
       body: JSON.stringify(data),
     };
@@ -30,19 +35,25 @@ async function sendRequest(
     init = {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${auth.token}`,
       },
     };
   }
   const response = await fetch(url, init);
   if (!response.ok || response.status >= 400) {
-    const contentType = response.headers.get('content-type');
-    const snackMessage = `${response.status} ${response.statusText}`;
-    if (contentType && contentType.indexOf('application/json') !== -1) {
-      setSnack(`${snackMessage}: ${(await response.json()).message}`);
+    if (response.status === 401 && auth.token) {
+      auth.logout();
+      setSnack('Your stored token was invalid. Please log in again.');
     } else {
-      setSnack(snackMessage);
+      const contentType = response.headers.get('content-type');
+      const snackMessage = `${response.status} ${response.statusText}`;
+      if (contentType && contentType.indexOf('application/json') !== -1) {
+        setSnack(`${snackMessage}: ${(await response.json()).message}`);
+      } else {
+        setSnack(snackMessage);
+      }
     }
+
     return new Promise((resolve) => resolve(''));
   } else {
     return response.json();
@@ -103,7 +114,7 @@ export function useNetworkGet(
   const { data, dataUpdatedAt, refetch, isFetching } = useQuery(
     [queryKey, queryParameters, filter.filter],
     () => {
-      return sendRequest(route, auth.token, setSnack);
+      return sendRequest(route, auth, setSnack);
     },
     {
       refetchOnWindowFocus: false,
@@ -129,7 +140,7 @@ export function useNetworkPost(
 
   return useMutation(
     (data: Object) => {
-      return sendRequest(route, auth.token, setSnack, data);
+      return sendRequest(route, auth, setSnack, data);
     },
     {
       onSuccess: (data) => {

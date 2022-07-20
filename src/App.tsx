@@ -24,7 +24,6 @@ import {
   ROUTE_VENUES,
 } from './consts';
 import Account from './routes/account';
-
 import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import ForgotPassword from './routes/forgotPassword';
@@ -35,7 +34,7 @@ import Topics from './routes/dashboards/topics';
 import Publishers from './routes/dashboards/publishers';
 import { RefreshProvider } from './context/RefreshContext';
 
-export const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 export default function App() {
   return (

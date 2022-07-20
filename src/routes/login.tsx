@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
-import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER, STORAGE_TOKEN } from '../consts';
+import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER } from '../consts';
 
 function Copyright(props: any) {
   return (
@@ -46,10 +46,7 @@ export default function Login() {
     mutation.mutate(login, {
       onSuccess: (data: any) => {
         if (data) {
-          auth.setToken(data.token);
-          if (input.get('remember')) {
-            localStorage.setItem(STORAGE_TOKEN, data.token);
-          }
+          auth.login(data.token, !!input.get('remember'));
           navigate(ROUTE_PAPERS);
         }
       },

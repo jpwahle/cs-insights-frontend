@@ -5,11 +5,17 @@ import BoxPlot from './charts/BoxPlot';
 import { useFilter } from '../context/FilterContext';
 import TreeMap from './charts/TreeMap';
 import Grid from './charts/Grid';
-import { mapMetric } from '../tools';
+import { mapMetric, metrics } from '../tools';
+import { ROUTE_PAPERS } from '../consts';
 
 export default function FrameWithGraphs(props: GraphsProps) {
   const filter = useFilter();
-  const metric = mapMetric(filter.filter.metric);
+  let metric: string;
+  if (props.route === ROUTE_PAPERS.slice(1)) {
+    metric = metrics[1].label;
+  } else {
+    metric = mapMetric(filter.filter.metric);
+  }
   return (
     <Frame route={props.route}>
       <div className="frame-with-graphs">

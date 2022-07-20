@@ -1,6 +1,6 @@
 # NLP-Land-frontend
 
-<p align="center">
+<p>
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yml/badge.svg?branch=dev"></a>  
 <a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/main.yml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/main.yml/badge.svg"></a>
 <a href="https://github.com/gipplab/NLP-Land-frontend/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/gipplab/NLP-Land-frontend?sort=semver"></a>

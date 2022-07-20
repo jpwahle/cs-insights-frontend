@@ -22,7 +22,6 @@ import {
   ROUTE_TOPICS,
   ROUTE_TYPES_OF_PAPER,
   ROUTE_VENUES,
-  STORAGE_TOKEN,
 } from '../consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -68,8 +67,7 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
     switch (id) {
       case 'logout':
-        localStorage.removeItem(STORAGE_TOKEN);
-        auth.setToken('');
+        auth.logout();
         break;
       case 'account':
         navigate(ROUTE_ACCOUNT);

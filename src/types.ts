@@ -49,7 +49,7 @@ export type AuthorFilter = {
 
 export type VenueFilter = {
   _id: string;
-  name: string;
+  names: string;
 };
 
 export type Filter = {
@@ -149,4 +149,10 @@ export type LdaVisData = {
   'lambda.step': number;
   'plot.opts': { xlab: string; ylab: string };
   'topic.order': number[];
+};
+
+export type AuthContextType = {
+  token: string;
+  login: (token: string, remember: boolean) => void;
+  logout: () => void;
 };
