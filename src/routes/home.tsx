@@ -11,11 +11,11 @@ export default function Home() {
 
   return (
     <div style={{ backgroundColor: '#eeeeee' }}>
-      <Container className="home">
-        <Stack spacing={2} alignItems="center">
-          <div className="app-logo">D4</div>
+      <Container className="home" style={{ display: 'flex', justifyContent: 'center' }}>
+        <Stack spacing={2} alignItems="center" style={{ marginTop: '-100px' }}>
+          <img src="/logo.jpg" width="35%"></img>
           <Typography variant="h4" fontWeight={'bold'}>
-            Welcome to the DBLP Discovery Dataset Demo (D4)
+            Welcome to the CS-Insights Demo
           </Typography>
           <Typography className="statsHighlight" style={{ margin: '0px' }}>
             v{process.env.REACT_APP_VERSION}
@@ -59,10 +59,6 @@ export default function Home() {
             </a>
             !
           </Stack>
-          <div style={{ width: '50%', color: 'red' }}>
-            The issues with an out-of-sync state should be fixed. Please report if you still
-            experience a desynced state.
-          </div>
           <footer
             style={{
               color: 'gray',

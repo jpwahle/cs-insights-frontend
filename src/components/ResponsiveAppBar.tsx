@@ -91,7 +91,7 @@ const ResponsiveAppBar = () => {
             color: 'white',
           }}
         >
-          <b>D4</b>
+          <img src="/logo.jpg" width="150px" style={{ marginLeft: '-10px' }}></img>
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (
