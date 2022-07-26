@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { FilterRangeProps, FilterTextFieldProps } from '../types';
 
 import FilterLabel from './FilterLabel';
@@ -7,6 +7,14 @@ import { DEBOUNCE_DELAY_TEXTFIELD } from '../consts';
 
 function FilterTextField(props: FilterTextFieldProps) {
   const [inputValue, setInputValue] = useState<string>(props.value);
+
+  // Clicking "Clear filters" will only set the filter value (props.value), not the inputValue
+  // We have to check for this case manually
+  useEffect(() => {
+    if (props.value === '' && inputValue !== '') {
+      setInputValue('');
+    }
+  }, [props.value]);
 
   // 2 functions, so debounce reference does not get lost
   const handleInputChangeDebounce = useCallback(

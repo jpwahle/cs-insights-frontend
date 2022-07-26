@@ -6,10 +6,10 @@ import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import { ApexOptions } from 'apexcharts';
 import ChartLoadingIcon from '../ChartLoadingIcon';
-import { useExport } from '../../tools';
+import { useApexChartExport } from '../../tools';
 
 export default function BoxPlot(props: BoxPlotProps) {
-  const [chartData, setChartData] = useState<QuartilesData>([]);
+  const [chartData, setChartData] = useState<QuartilesData>([1, 2, 3, 14, 57000]);
   const refresh = useRefresh();
   const queryKey = props.route + 'Boxplot';
 
@@ -30,7 +30,6 @@ export default function BoxPlot(props: BoxPlotProps) {
 
   const series = [
     {
-      name: 'box',
       type: 'boxPlot',
       data: [
         {
@@ -43,17 +42,34 @@ export default function BoxPlot(props: BoxPlotProps) {
 
   const options: ApexOptions = {
     title: {
-      text: `${capitalize(props.xLabel)} distribution`,
-      align: 'left',
+      text: `C3: ${capitalize(props.xLabel)} dist.`,
+      offsetX: 5,
     },
     tooltip: {
-      shared: false,
-      intersect: true,
+      shared: true,
+      intersect: false,
+      fixed: {
+        enabled: true,
+        position: 'bottomLeft',
+        offsetY: -100,
+        offsetX: 5,
+      },
     },
     chart: {
       toolbar: {
-        offsetY: 18,
-        ...useExport('boxplot', props.route),
+        tools: {
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          reset: false,
+        },
+        ...useApexChartExport('boxplot', props.route),
+      },
+    },
+    xaxis: {
+      tooltip: {
+        enabled: false,
       },
     },
   };

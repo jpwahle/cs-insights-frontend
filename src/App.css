@@ -153,3 +153,10 @@
 /*  overflow-wrap: break-word;*/
 /*  font-size: 14px !important;*/
 /*}*/
+
+.title {
+  color: #263238;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Helvetica, Arial, sans-serif
+}

@@ -74,7 +74,12 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
           keys
             .map((key) => {
               if (key != '_id') {
-                return JSON.stringify(line[key as string]);
+                const curr = line[key as string];
+                if (Array.isArray(curr)) {
+                  return '"[' + curr.map((value) => `""${value}""`).join(',') + ']"';
+                } else {
+                  return JSON.stringify(curr);
+                }
               }
             })
             .join(',') + '\n';
@@ -123,6 +128,16 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
           Export
         </Button>
       ) : null}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-18px',
+          left: '10px',
+        }}
+        className={'title'}
+      >
+        C2: Grid
+      </div>
     </div>
   );
 }

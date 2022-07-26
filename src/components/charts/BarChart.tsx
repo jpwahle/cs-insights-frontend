@@ -5,7 +5,7 @@ import { useNetworkGet } from '../../network';
 import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import ChartLoadingIcon from '../ChartLoadingIcon';
-import { useExport } from '../../tools';
+import { useApexChartExport } from '../../tools';
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
@@ -51,13 +51,13 @@ export default function BarChart(props: BarChartProps) {
       colors: ['transparent'],
     },
     title: {
-      text: `${capitalize(props.yDimension)} per year`,
+      text: `C1: #${capitalize(props.yDimension)} per year`,
     },
     xaxis: {
       categories: chartData.years,
       title: {
         text: 'Year',
-        offsetY: -4 * Math.sqrt(chartData.years.length),
+        offsetY: -4 * Math.sqrt(chartData.years.length), // The label can be very far away from the actual chart
       },
       labels: {
         style: {
@@ -75,7 +75,7 @@ export default function BarChart(props: BarChartProps) {
     },
     chart: {
       parentHeightOffset: 0,
-      toolbar: useExport('barchart', props.route),
+      toolbar: useApexChartExport('barchart', props.route),
     },
   };
 

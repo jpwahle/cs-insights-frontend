@@ -25,7 +25,7 @@ function useExportFilename(
   }).join('_')}`;
 }
 
-export function useExport(chart: string, route: string, parameters?: NonFilterParameters) {
+export function useApexChartExport(chart: string, route: string, parameters?: NonFilterParameters) {
   const { oldFilter } = useFilter();
   return {
     export: {
@@ -45,4 +45,9 @@ export function useExport(chart: string, route: string, parameters?: NonFilterPa
 export function useGridExport(route: string, parameters?: NonFilterParameters) {
   const { oldFilter } = useFilter();
   return `${useExportFilename('grid', route, oldFilter, parameters)}.csv`;
+}
+
+export function useLdaExport(parameters?: NonFilterParameters) {
+  const { oldFilter } = useFilter();
+  return `${useExportFilename('ldavis', 'topics', oldFilter, parameters)}.html`;
 }

@@ -11,6 +11,9 @@ import { ROUTE_PAPERS } from '../consts';
 export default function FrameWithGraphs(props: GraphsProps) {
   const filter = useFilter();
   let metric: string;
+
+  // This distinction is necessary, so it won't show #Citations on the papers dashboard.
+  // The endpoints for papers in the backend ignore the metric for queries, so it does not matter what is set.
   if (props.route === ROUTE_PAPERS.slice(1)) {
     metric = metrics[1].label;
   } else {

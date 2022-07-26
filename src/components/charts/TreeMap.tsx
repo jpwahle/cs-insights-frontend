@@ -7,7 +7,7 @@ import { useNetworkGet } from '../../network';
 import ChartLoadingIcon from '../ChartLoadingIcon';
 import { debounce, TextField } from '@mui/material';
 import { DEBOUNCE_DELAY_K } from '../../consts';
-import { useExport } from '../../tools';
+import { useApexChartExport } from '../../tools';
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
@@ -53,10 +53,10 @@ export default function (props: TreeMapProps) {
   const options: ApexOptions = {
     chart: {
       parentHeightOffset: 0,
-      toolbar: useExport('treemap', props.route, { k: k }),
+      toolbar: useApexChartExport('treemap', props.route, { k: k }),
     },
     title: {
-      text: `Top k by ${props.yDimension}`,
+      text: `C4: Top k by ${props.yDimension}`,
       offsetY: 8,
     },
   };
@@ -66,7 +66,7 @@ export default function (props: TreeMapProps) {
       <div style={{ height: 250, width: '100%', position: 'relative' }}>
         <ReactApexChart options={options} series={series} type="treemap" height={250} />
         <TextField
-          sx={{ position: 'absolute', top: '10px', left: '150px', width: '100px' }}
+          sx={{ position: 'absolute', top: '10px', left: '175px', width: '100px' }}
           size={'small'}
           label={'k ='}
           value={k.toString()}

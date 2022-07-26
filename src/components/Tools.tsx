@@ -43,7 +43,7 @@ export default function Tools(props: { route: string }) {
 
   return (
     <Stack direction="row" className="tools">
-      <IconLabel label="Tools" icon={Construction} />
+      <IconLabel label="B2: Tools" icon={Construction} />
       <Button
         variant="contained"
         onClick={() => {

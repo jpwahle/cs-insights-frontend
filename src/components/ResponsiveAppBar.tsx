@@ -79,19 +79,24 @@ const ResponsiveAppBar = () => {
     // position is not 'absolute', so AppBar has full width when there is horizontal scrolling
     <AppBar style={{ boxShadow: 'none', position: 'fixed' }} className={'appbar'}>
       <Toolbar>
-        <Typography
-          variant="h4"
-          noWrap
+        <Box
           component={Link}
           to={ROUTE_HOME}
           sx={{
-            mr: 2,
             display: { xs: 'none', md: 'flex' },
-            textDecoration: 'none',
-            color: 'white',
           }}
         >
-          <img src="/logo.jpg" width="150px" style={{ marginLeft: '-10px' }}></img>
+          <Box component={'img'} src={'/logo.jpg'} width={'150px'} marginLeft={'-20px'} />
+        </Box>
+        <Typography
+          variant={'h6'}
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+          }}
+          fontWeight={'bold'}
+          marginRight={'10px'}
+        >
+          A: Dashboards
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (

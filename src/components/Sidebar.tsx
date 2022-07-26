@@ -42,7 +42,7 @@ export default function Sidebar() {
   return (
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
-        <IconLabel label="Filters" icon={FilterAlt} />
+        <IconLabel label="B1: Filters" icon={FilterAlt} />
         <Button variant="outlined" startIcon={<Delete />} onClick={() => clearFilters()}>
           Clear Filters
         </Button>
