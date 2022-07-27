@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { MouseEvent as ReactMouseEvent, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -59,7 +59,7 @@ const ResponsiveAppBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  function handleOpenUserMenu(event: MouseEvent<HTMLElement>) {
+  function handleOpenUserMenu(event: ReactMouseEvent<HTMLElement>) {
     setAnchorElUser(event.currentTarget);
   }
 

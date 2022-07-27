@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
 import '../App.css';
 import {
   Autocomplete,
@@ -28,7 +28,7 @@ function useDebounce<T>(
   inputValue: string,
   setInputValue: (value: string) => void
 ): {
-  handleInputChange: (newInputValue: string, event: SyntheticEvent, reason: string) => void;
+  handleInputChange: (newInputValue: string) => void;
   isFetching: boolean;
 } {
   const [pattern, setPattern] = useState<string>('');
@@ -57,15 +57,9 @@ function useDebounce<T>(
     []
   );
 
-  function handleInputChange(newInputValue: string, event: SyntheticEvent, reason: string) {
-    if (event && event.type !== 'blur' && reason === 'reset') {
-      setInputValue('');
-      setOptions([]);
-      setPattern('');
-    } else if (reason !== 'reset') {
-      setInputValue(newInputValue);
-      handleInputChangeDebounce(newInputValue);
-    }
+  function handleInputChange(newInputValue: string) {
+    setInputValue(newInputValue);
+    handleInputChangeDebounce(newInputValue);
   }
 
   return { handleInputChange, isFetching };
@@ -161,9 +155,7 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
         value={props.value}
         onChange={(event, value) => props.setValue(value)}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue, reason) =>
-          handleInputChange(newInputValue, event, reason)
-        }
+        onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
         isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
         getOptionLabel={(option: T) => option[props.labelName]}
         options={options}
@@ -218,9 +210,7 @@ export function FilterMultipleStringFetch(props: FilterAutocompleteProps<string[
         value={props.value}
         onChange={(event, value) => props.setValue(value)}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue, reason) =>
-          handleInputChange(newInputValue, event, reason)
-        }
+        onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
         options={options}
         loading={isFetching}
         filterOptions={(x) => x}

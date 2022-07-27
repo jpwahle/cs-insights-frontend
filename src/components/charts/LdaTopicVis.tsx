@@ -3,11 +3,11 @@ import { LdaVisData } from '../../types';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
 import ChartLoadingIcon from '../ChartLoadingIcon';
-import { LDAvis } from 'react-ldavis';
 import { useModelId } from '../../context/ModelIdContext';
 import { Button } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import { useLdaExport } from '../../tools';
+import { LDAvis } from '../ldavis';
 
 export default function LdaTopicVis(props: { route: string }) {
   const [ldaVisData, setLdaVisData] = useState<LdaVisData | undefined>(undefined);
@@ -91,9 +91,9 @@ export default function LdaTopicVis(props: { route: string }) {
   }
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <div style={{ margin: '5px' }} className={'title'}>
-        D5: Topic modelling
+        C5: Topic modelling
       </div>
       <div
         style={{
@@ -101,6 +101,7 @@ export default function LdaTopicVis(props: { route: string }) {
           position: 'relative',
           alignItems: 'center',
           justifyContent: 'center',
+          height: '80%',
         }}
       >
         <ChartLoadingIcon isFetching={isFetching}>
