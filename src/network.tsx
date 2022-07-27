@@ -53,7 +53,6 @@ async function sendRequest(
         setSnack(snackMessage);
       }
     }
-
     return new Promise((resolve) => resolve(''));
   } else {
     return response.json();

@@ -63,7 +63,7 @@ export default function (props: TreeMapProps) {
 
   return (
     <ChartLoadingIcon isFetching={isFetching} className={'treemap'}>
-      <div style={{ height: 250, width: '100%', position: 'relative' }}>
+      <div style={{ height: 250, position: 'relative' }}>
         <ReactApexChart options={options} series={series} type="treemap" height={250} />
         <TextField
           sx={{ position: 'absolute', top: '10px', left: '175px', width: '100px' }}

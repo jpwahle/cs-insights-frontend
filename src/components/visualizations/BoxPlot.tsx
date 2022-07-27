@@ -9,7 +9,8 @@ import ChartLoadingIcon from '../ChartLoadingIcon';
 import { useApexChartExport } from '../../tools';
 
 export default function BoxPlot(props: BoxPlotProps) {
-  const [chartData, setChartData] = useState<QuartilesData>([1, 2, 3, 14, 57000]);
+  const [chartData, setChartData] = useState<QuartilesData>([]);
+  const [chartDataLog, setChartDataLog] = useState<QuartilesData>([]);
   const refresh = useRefresh();
   const queryKey = props.route + 'Boxplot';
 
@@ -17,6 +18,7 @@ export default function BoxPlot(props: BoxPlotProps) {
     `fe/${props.route}/quartiles`,
     queryKey,
     (data: QuartilesData) => {
+      setChartDataLog(data.map((value) => (value === 0 ? 0 : Math.log10(value))));
       setChartData(data);
     }
   );
@@ -34,7 +36,7 @@ export default function BoxPlot(props: BoxPlotProps) {
       data: [
         {
           x: capitalize(props.xLabel),
-          y: chartData,
+          y: chartDataLog,
         },
       ],
     },
@@ -46,13 +48,25 @@ export default function BoxPlot(props: BoxPlotProps) {
       offsetX: 5,
     },
     tooltip: {
+      custom: () =>
+        '<div style="padding-left: 7px; padding-right: 7px; padding-top: 3px; padding-bottom: 3px; line-height: 1.6">Maximum: <b>' +
+        chartData[4] +
+        '</b><br>Q3: <b>' +
+        chartData[3] +
+        '</b></><br>Median: <b>' +
+        chartData[2] +
+        '</b><br>Q1: <b>' +
+        chartData[1] +
+        '</b><br>Minimum: <b>' +
+        chartData[0] +
+        '</b></div>',
       shared: true,
       intersect: false,
       fixed: {
         enabled: true,
-        position: 'bottomLeft',
-        offsetY: -100,
-        offsetX: 5,
+        position: 'topLeft',
+        offsetX: 10,
+        offsetY: 60,
       },
     },
     chart: {
@@ -70,6 +84,11 @@ export default function BoxPlot(props: BoxPlotProps) {
     xaxis: {
       tooltip: {
         enabled: false,
+      },
+    },
+    yaxis: {
+      labels: {
+        formatter: (value) => '' + Math.pow(10, value),
       },
     },
   };

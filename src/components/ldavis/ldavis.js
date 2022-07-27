@@ -135,7 +135,7 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
       mdsData3.push(obj);
     }
 
-    // large data for the widths of bars in bar-charts. 6 columns: Term, logprob, loglift, Freq, Total, Category
+    // large data for the widths of bars in bar-visualizations. 6 columns: Term, logprob, loglift, Freq, Total, Category
     // Contains all possible terms for topics in (1, 2, ..., k) and lambda in the user-supplied grid of lambda values
     // which defaults to (0, 0.01, 0.02, ..., 0.99, 1).
     lamData = [];

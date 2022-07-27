@@ -1,10 +1,10 @@
 import Frame from './Frame';
-import BarChart from './charts/BarChart';
+import BarChart from './visualizations/BarChart';
 import { GraphsProps } from '../types';
-import BoxPlot from './charts/BoxPlot';
+import BoxPlot from './visualizations/BoxPlot';
 import { useFilter } from '../context/FilterContext';
-import TreeMap from './charts/TreeMap';
-import Grid from './charts/Grid';
+import TreeMap from './visualizations/TreeMap';
+import Grid from './visualizations/Grid';
 import { mapMetric, metrics } from '../tools';
 import { ROUTE_PAPERS } from '../consts';
 

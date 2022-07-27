@@ -134,6 +134,10 @@
   /*background: blue;*/
 }
 
+.boxplot .apexcharts-menu-item.exportCSV {
+  display: none;
+}
+
 .treemap {
   /*background: orange;*/
   grid-area: tree;

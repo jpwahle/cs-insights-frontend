@@ -1,5 +1,5 @@
 import Frame from '../../components/Frame';
-import BarChart from '../../components/charts/BarChart';
+import BarChart from '../../components/visualizations/BarChart';
 import { ROUTE_CITATIONS } from '../../consts';
 
 export default function Citations() {
