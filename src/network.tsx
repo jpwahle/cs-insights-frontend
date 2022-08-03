@@ -18,6 +18,7 @@ async function sendRequest(
   data: Object | null = null
 ) {
   const url = process.env.REACT_APP_BACKEND + route;
+  // This is needed for debugging
   console.debug(url);
   let init: RequestInit;
   if (data) {

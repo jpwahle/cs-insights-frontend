@@ -134,6 +134,7 @@
   /*background: blue;*/
 }
 
+/* TODO remove when boxplot log scale is fixed */
 .boxplot .apexcharts-menu-item.exportCSV {
   display: none;
 }
@@ -146,17 +147,6 @@
 .treemapTextField input{
   height: 10px
 }
-
-/*.treemap {*/
-/*  overflow: scroll;*/
-/*  overflow-wrap: break-word;*/
-/*}*/
-
-/*.treemap .apexcharts-datalabel {*/
-/*  overflow: scroll;*/
-/*  overflow-wrap: break-word;*/
-/*  font-size: 14px !important;*/
-/*}*/
 
 .title {
   color: #263238;

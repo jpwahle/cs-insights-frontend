@@ -1,11 +1,11 @@
-# NLP-Land-frontend
+# cs-insights-frontend
 
 <p>
-<a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/release.yml/badge.svg?branch=dev"></a>  
-<a href="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/main.yml"><img alt="Actions Status" src="https://github.com/gipplab/NLP-Land-frontend/actions/workflows/main.yml/badge.svg"></a>
-<a href="https://github.com/gipplab/NLP-Land-frontend/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/gipplab/NLP-Land-frontend?sort=semver"></a>
+<a href="https://github.com/gipplab/cs-insights-frontend/actions/workflows/release.yml"><img alt="Actions Status" src="https://github.com/gipplab/cs-insights-frontend/actions/workflows/release.yml/badge.svg?branch=dev"></a>  
+<a href="https://github.com/gipplab/cs-insights-frontend/actions/workflows/main.yml"><img alt="Actions Status" src="https://github.com/gipplab/cs-insights-frontend/actions/workflows/main.yml/badge.svg"></a>
+<a href="https://github.com/gipplab/cs-insights-frontend/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/gipplab/cs-insights-frontend?sort=semver"></a>
 <a href="https://hub.docker.com/repository/docker/jpelhaw/nlp-land-frontend"><img alt="Docker Release" src="https://img.shields.io/docker/v/jpelhaw/nlp-land-frontend?label=Docker"></a>
-<a href="https://github.com/gipplab/NLP-Land-frontend/blob/master/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
+<a href="https://github.com/gipplab/cs-insights-frontend/blob/master/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 <a href="https://github.com/airbnb/javascript"><img alt="Code style: Airbnb" src="https://img.shields.io/badge/codestyle-Airbnb-success"></a>
 </p>
 
@@ -16,10 +16,10 @@
 ## Getting Started
 After cloning the repository you need to change the directory.
 ```shell
-cd NLP-Land-frontend
+cd cs-insights-frontend
 ```
 Then we are providing two ways to set up this project.
-In both cases, make sure the [backend](https://github.com/gipplab/NLP-Land-backend) is running after the setup, so you can properly use the app. 
+In both cases, make sure the [backend](https://github.com/gipplab/cs-insights-backend) is running after the setup, so you can properly use the app. 
 
 <details> <summary> Production </summary>
 

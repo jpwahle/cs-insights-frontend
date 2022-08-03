@@ -10,7 +10,7 @@ import { useApexChartExport } from '../../tools';
 
 export default function BoxPlot(props: BoxPlotProps) {
   const [chartData, setChartData] = useState<QuartilesData>([]);
-  const [chartDataLog, setChartDataLog] = useState<QuartilesData>([]);
+  const [chartDataLog, setChartDataLog] = useState<QuartilesData>([]); // TODO remove when boxplot log scale is fixed
   const refresh = useRefresh();
   const queryKey = props.route + 'Boxplot';
 
@@ -48,6 +48,7 @@ export default function BoxPlot(props: BoxPlotProps) {
       offsetX: 5,
     },
     tooltip: {
+      // TODO remove "custom" when boxplot log scale is fixed
       custom: () =>
         '<div style="padding-left: 7px; padding-right: 7px; padding-top: 3px; padding-bottom: 3px; line-height: 1.6">Maximum: <b>' +
         chartData[4] +
