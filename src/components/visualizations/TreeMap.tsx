@@ -22,8 +22,8 @@ const processLineBreak = (text: string, maxNumChars = 15) => {
     }
   }
   words.push(currentLine);
-  return words
-}
+  return words;
+};
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
@@ -35,7 +35,11 @@ export default function (props: TreeMapProps) {
     `fe/${props.route}/topk`,
     queryKey,
     (data: TreeMapDataBackend) => {
-      setChartData(data.map(el => {return { y: el.y, x: processLineBreak(el.x) }}));
+      setChartData(
+        data.map((el) => {
+          return { y: el.y, x: processLineBreak(el.x) };
+        })
+      );
     },
     { k: k }
   );

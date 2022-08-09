@@ -134,7 +134,7 @@ export type QueryParameters = {
 export type Status = {
   status: string;
   version: string;
-}
+};
 export type LdaVisData = {
   mdsDat: { x: number[]; y: number[]; topics: number[]; cluster: number[]; Freq: number[] };
   tinfo: {

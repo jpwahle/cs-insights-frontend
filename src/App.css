@@ -9,7 +9,7 @@
   margin-top: 48px;
   margin-bottom: 48px;
   pointer-events: none;
-  color: #61DBFB;
+  color: #61dbfb;
   font-size: calc(50px + 10vmin);
   font-weight: bold;
 }
@@ -52,9 +52,9 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: auto auto 1fr;
   grid-template-areas:
-      "header header "
-      "side   tools  "
-      "side   content"
+    'header header '
+    'side   tools  '
+    'side   content';
 }
 
 .stack {
@@ -98,9 +98,9 @@
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto auto;
   grid-template-areas:
-      "bar   box  "
-      "grid  box  "
-      "tree  tree "
+    'bar   box  '
+    'grid  box  '
+    'tree  tree ';
 }
 
 .tools {
@@ -144,13 +144,13 @@
   grid-area: tree;
 }
 
-.treemapTextField input{
-  height: 10px
+.treemapTextField input {
+  height: 10px;
 }
 
 .title {
   color: #263238;
   font-size: 14px;
   font-weight: bold;
-  font-family: Helvetica, Arial, sans-serif
+  font-family: Helvetica, Arial, sans-serif;
 }
