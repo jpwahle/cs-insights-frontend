@@ -128,3 +128,8 @@ export type QueryParameters = {
   citationsMax: string;
 } & StringArrayParameters &
   NonFilterParameters;
+
+export type Status = {
+  status: string;
+  version: string;
+}
