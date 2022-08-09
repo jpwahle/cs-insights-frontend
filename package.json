@@ -1,6 +1,6 @@
 {
-  "name": "nlp-land-frontend",
-  "version": "0.9.0",
+  "name": "cs-insights-frontend",
+  "version": "0.12.0",
   "private": true,
   "scripts": {
     "lint": "eslint . --ext .ts --ext .tsx",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ag-gipp/NLP-Land-frontend.git"
+    "url": "git+https://github.com/gipplab/cs-insights-frontend.git"
   },
   "author": "Lennart Küll",
   "license": "MIT",
@@ -28,14 +28,13 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/ag-gipp/NLP-Land-frontend/issues"
+    "url": "https://github.com/ag-gipp/cs-insights-frontend/issues"
   },
   "homepage": ".",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "@types/d3": "^7.4.0",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.182",
     "@types/node": "^12.20.18",
@@ -64,7 +63,6 @@
     "@mui/material": "^5.5.1",
     "@mui/x-data-grid": "^5.10.0",
     "apexcharts": "^3.35.4",
-    "d3": "^3.5.17",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-apexcharts": "^1.4.0",

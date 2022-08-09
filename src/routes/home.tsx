@@ -1,13 +1,23 @@
+import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { Button, Container, Stack, Typography, useTheme } from '@mui/material';
 import { ROUTE_LOGIN, ROUTE_PAPERS, ROUTE_REGISTER } from '../consts';
 import { Link } from 'react-router-dom';
-import GitInfo from 'react-git-info/macro';
 import { GitHub } from '@mui/icons-material';
+import { useNetworkGet } from '../network';
+import { Status } from '../types';
 
 export default function Home() {
   const theme = useTheme();
-  const gitInfo = GitInfo();
+  const [backendVersion, setBackendVersion] = useState('0.0.1');
+
+  const { refetch } = useNetworkGet('status', '', (status: Status) =>
+    setBackendVersion(status.version)
+  );
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <div style={{ backgroundColor: '#eeeeee' }}>
@@ -18,7 +28,7 @@ export default function Home() {
             Welcome to the CS-Insights Demo
           </Typography>
           <Typography className="statsHighlight" style={{ margin: '0px' }}>
-            v{process.env.REACT_APP_VERSION}
+            frontend: v{process.env.REACT_APP_VERSION} - backend: v{backendVersion}
           </Typography>
           <Button
             variant="contained"
@@ -59,27 +69,6 @@ export default function Home() {
             </a>
             !
           </Stack>
-          <footer
-            style={{
-              color: 'gray',
-              position: 'fixed',
-              bottom: 3,
-            }}
-          >
-            <Typography color={'gray'}>
-              {'Running commit '}
-              <a
-                href={'https://github.com/gipplab/NLP-Land-frontend/commit/' + gitInfo.commit.hash}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="statsHighlight"
-              >
-                {gitInfo.commit.shortHash}
-              </a>
-              {` from `}
-              {new Date(gitInfo.commit.date).toUTCString()}
-            </Typography>
-          </footer>
         </Stack>
       </Container>
     </div>

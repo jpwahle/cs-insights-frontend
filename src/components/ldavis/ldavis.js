@@ -3,7 +3,7 @@
 /* Copyright 2013, AT&T Intellectual Property */
 /* MIT Licence */
 
-import * as d3 from 'd3';
+import * as d3 from 'https://cdn.skypack.dev/d3-selection@3';
 
 export default function LDAvisLegacy(to_select, json_file, mod_history = false) {
   // This section sets up the logic for event handling
