@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import '../App.css';
 import {
   FilterMultipleObjectFetch,
@@ -42,7 +42,7 @@ export default function Sidebar() {
   return (
     <Stack className="sidebar">
       <Stack direction="row" className="filter-header">
-        <IconLabel label="Filters" icon={FilterAlt} />
+        <IconLabel label="B1: Filters" icon={FilterAlt} />
         <Button variant="outlined" startIcon={<Delete />} onClick={() => clearFilters()}>
           Clear Filters
         </Button>

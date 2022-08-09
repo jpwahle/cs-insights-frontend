@@ -134,6 +134,11 @@
   /*background: blue;*/
 }
 
+/* TODO remove when boxplot log scale is fixed */
+.boxplot .apexcharts-menu-item.exportCSV {
+  display: none;
+}
+
 .treemap {
   /*background: orange;*/
   grid-area: tree;
@@ -143,13 +148,9 @@
   height: 10px
 }
 
-/*.treemap {*/
-/*  overflow: scroll;*/
-/*  overflow-wrap: break-word;*/
-/*}*/
-
-/*.treemap .apexcharts-datalabel {*/
-/*  overflow: scroll;*/
-/*  overflow-wrap: break-word;*/
-/*  font-size: 14px !important;*/
-/*}*/
+.title {
+  color: #263238;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Helvetica, Arial, sans-serif
+}

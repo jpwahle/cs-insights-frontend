@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useEffect, useState } from 'react';
 import '../../App.css';
 import { DataGrid, GridEnrichedColDef, GridSortModel } from '@mui/x-data-grid';
@@ -12,15 +11,16 @@ import { useGridExport } from '../../tools';
 
 export default function Grid<T extends { [key: string]: string }>(props: GridProps) {
   const [gridData, setGridData] = useState<GridData<T>>({ rowCount: 0, rows: [] });
-  const [page, setPage] = React.useState<number>(0);
-  const [pageSize, setPageSize] = React.useState<number>(PAGE_SIZE);
-  const [sortModel, setSortModel] = React.useState<GridSortModel>([
+  const [page, setPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(PAGE_SIZE);
+  const [sortModel, setSortModel] = useState<GridSortModel>([
     {
       field: 'inCitationsCount',
       sort: 'desc',
     },
   ]);
   const refresh = useRefresh();
+  const queryKey = props.route + 'Grid';
   const columns = props.columns.map((column: GridEnrichedColDef & { tooltip?: string }) => {
     if (column.tooltip) {
       column.renderCell = (params: any) => (
@@ -41,7 +41,7 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/info`,
-    'gridData' + props.route,
+    queryKey,
     (data: GridData<T>) => {
       setGridData(data);
     },
@@ -49,7 +49,10 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
   );
 
   useEffect(() => {
-    refresh.addRefetch(refetch);
+    refresh.addRefetch(queryKey, refetch);
+    return () => {
+      refresh.removeRefetch(queryKey);
+    };
   }, []);
 
   useEffect(() => {
@@ -71,7 +74,12 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
           keys
             .map((key) => {
               if (key != '_id') {
-                return JSON.stringify(line[key as string]);
+                const curr = line[key as string];
+                if (Array.isArray(curr)) {
+                  return '"[' + curr.map((value) => `""${value}""`).join(',') + ']"';
+                } else {
+                  return JSON.stringify(curr);
+                }
               }
             })
             .join(',') + '\n';
@@ -120,6 +128,16 @@ export default function Grid<T extends { [key: string]: string }>(props: GridPro
           Export
         </Button>
       ) : null}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-18px',
+          left: '10px',
+        }}
+        className={'title'}
+      >
+        C2: Grid
+      </div>
     </div>
   );
 }

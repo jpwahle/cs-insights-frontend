@@ -1,20 +1,22 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { default as MuiLink } from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { useNetworkPost } from '../network';
-import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER, STORAGE_TOKEN } from '../consts';
+import { FormEvent } from 'react';
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  Link as MuiLink,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { LockOutlined } from '@mui/icons-material';
+import { useAuth } from '../context/AuthContext';
+import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER } from '../consts';
 
 function Copyright(props: any) {
   return (
@@ -34,7 +36,7 @@ export default function Login() {
   const navigate = useNavigate();
   const mutation = useNetworkPost('login');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const input = new FormData(event.currentTarget);
     const login = {
@@ -44,10 +46,7 @@ export default function Login() {
     mutation.mutate(login, {
       onSuccess: (data: any) => {
         if (data) {
-          auth.setToken(data.token);
-          if (input.get('remember')) {
-            localStorage.setItem(STORAGE_TOKEN, data.token);
-          }
+          auth.login(data.token, !!input.get('remember'));
           navigate(ROUTE_PAPERS);
         }
       },
@@ -66,7 +65,7 @@ export default function Login() {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+          <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in

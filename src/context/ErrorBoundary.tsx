@@ -1,4 +1,4 @@
-import React, { ErrorInfo, ReactElement, useEffect, useState } from 'react';
+import { Component, ErrorInfo, ReactElement, useEffect, useState } from 'react';
 import { useSnack } from './SnackbarContext';
 
 type State = {
@@ -9,7 +9,7 @@ type ErrorBoundaryProps = {
   setError(error: State): void;
 };
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
+class ErrorBoundary extends Component<ErrorBoundaryProps, State> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { error: null };
@@ -56,7 +56,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
   }
 }
 
-export function ErrorBoundaryWrapper({ children }: { children: ReactElement | ReactElement[] }) {
+export function ErrorBoundaryWrapper(props: { children: ReactElement | ReactElement[] }) {
   const setSnack = useSnack();
   const [error, setError] = useState<State>({ error: null });
 
@@ -65,5 +65,5 @@ export function ErrorBoundaryWrapper({ children }: { children: ReactElement | Re
       setSnack('' + error.error);
     }
   }, [error]);
-  return <ErrorBoundary setError={setError}>{children}</ErrorBoundary>;
+  return <ErrorBoundary setError={setError}>{props.children}</ErrorBoundary>;
 }

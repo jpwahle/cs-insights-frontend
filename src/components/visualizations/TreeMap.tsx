@@ -1,22 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import { TreeMapData, TreeMapProps } from '../../types';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
-import LoadingCircle from '../LoadingCircle';
+import ChartLoadingIcon from '../ChartLoadingIcon';
 import { debounce, TextField } from '@mui/material';
 import { DEBOUNCE_DELAY_K } from '../../consts';
-import { useExport } from '../../tools';
+import { useApexChartExport } from '../../tools';
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
   const [k, setK] = useState<number>(20);
   const refresh = useRefresh();
+  const queryKey = props.route + 'Treemap';
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/topk`,
-    'treemapData' + props.route,
+    queryKey,
     (data: TreeMapData) => {
       setChartData(data);
     },
@@ -24,7 +25,10 @@ export default function (props: TreeMapProps) {
   );
 
   useEffect(() => {
-    refresh.addRefetch(refetch);
+    refresh.addRefetch(queryKey, refetch);
+    return () => {
+      refresh.removeRefetch(queryKey);
+    };
   }, []);
 
   // outside useEffect(), so debounce reference does not get lost
@@ -49,20 +53,20 @@ export default function (props: TreeMapProps) {
   const options: ApexOptions = {
     chart: {
       parentHeightOffset: 0,
-      toolbar: useExport('treemap', props.route, { k: k }),
+      toolbar: useApexChartExport('treemap', props.route, { k: k }),
     },
     title: {
-      text: `Top k by ${props.yDimension}`,
+      text: `C4: Top k by ${props.yDimension}`,
       offsetY: 8,
     },
   };
 
   return (
-    <LoadingCircle isFetching={isFetching} className={'treemap'}>
-      <div style={{ height: 250, width: '100%', position: 'relative' }}>
+    <ChartLoadingIcon isFetching={isFetching} className={'treemap'}>
+      <div style={{ height: 250, position: 'relative' }}>
         <ReactApexChart options={options} series={series} type="treemap" height={250} />
         <TextField
-          sx={{ position: 'absolute', top: '10px', left: '150px', width: '100px' }}
+          sx={{ position: 'absolute', top: '10px', left: '175px', width: '100px' }}
           size={'small'}
           label={'k ='}
           value={k.toString()}
@@ -76,6 +80,6 @@ export default function (props: TreeMapProps) {
           onChange={(event) => (event.target.value ? setK(parseInt(event.target.value)) : setK(0))}
         />
       </div>
-    </LoadingCircle>
+    </ChartLoadingIcon>
   );
 }

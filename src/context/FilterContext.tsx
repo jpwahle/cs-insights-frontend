@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import { createContext, ReactElement, useContext, useState } from 'react';
 import { Filter } from '../types';
 import { metrics } from '../tools';
 
@@ -13,14 +13,14 @@ const FilterContext = createContext<
 >(undefined);
 
 export function useFilter() {
-  const context = React.useContext(FilterContext);
+  const context = useContext(FilterContext);
   if (context === undefined) {
     throw new Error('useFilter must be used within a FilterProvider');
   }
   return context;
 }
 
-export function FilterProvider({ children }: { children: React.ReactElement }) {
+export function FilterProvider(props: { children: ReactElement | ReactElement[] }) {
   const [filter, setFilter] = useState<Filter>({
     yearStart: '1960',
     yearEnd: '',
@@ -46,7 +46,7 @@ export function FilterProvider({ children }: { children: React.ReactElement }) {
         setOldFilter: setOldFilter,
       }}
     >
-      {children}
+      {props.children}
     </FilterContext.Provider>
   );
 }

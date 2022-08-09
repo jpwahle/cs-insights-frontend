@@ -1,20 +1,22 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { default as MuiLink } from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { useNetworkPost } from '../network';
 import { useSnack } from '../context/SnackbarContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTE_LOGIN } from '../consts';
+import { FormEvent } from 'react';
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  TextField,
+  Typography,
+  Container,
+  Box,
+  Link as MuiLink,
+} from '@mui/material';
+import { LockOutlined } from '@mui/icons-material';
 
 function Copyright(props: any) {
   return (
@@ -37,7 +39,7 @@ export default function Register() {
     navigate(ROUTE_LOGIN);
   });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const input = new FormData(event.currentTarget);
     const login = {
@@ -63,7 +65,7 @@ export default function Register() {
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
+          <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up

@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb-typescript", "prettier", "plugin:import/errors", "plugin:import/warnings", "plugin:import/typescript"],
   "plugins": ["prettier", "@typescript-eslint", "import", "react"],
+  "ignorePatterns": ["**/ldavis/*.js"],
   "rules": {
     "prettier/prettier": ["error"],
     "no-unused-expressions": "off",
