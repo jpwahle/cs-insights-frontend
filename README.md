@@ -14,53 +14,8 @@
   </a>
 
 ## Getting Started
-After cloning the repository you need to change the directory.
-```shell
-cd cs-insights-frontend
-```
-Then we are providing two ways to set up this project.
-In both cases, make sure the [backend](https://github.com/gipplab/cs-insights-backend) is running after the setup, so you can properly use the app. 
 
-<details> <summary> Production </summary>
-
-First you need to create an `.env.production` file.
-You can copy the `.env.development` file, if you do not intent to change the default values:
-```shell
-cp .env.development .env.production
-```
-
-Then you need to install all dependencies with
-```shell
-npm install --production
-```
-and build the project using
-```shell
-npm run build
-```
-It correctly bundles React in production mode and optimizes the build for the best performance.
-The build is minified and the filenames include the hashes.
-
-Lastly, deploy the project (see [here](https://create-react-app.dev/docs/deployment/) for alternatives) with
-```shell
-npm install -g serve
-serve -s build -l 3001
-```
-and visit it in your browser on [http://localhost:3001](http://localhost:3001).
-</details>
-<details> <summary> Development </summary>
-
-First, you need to install all dependencies using
-```shell
-npm install
-```
-
-Then you can run the app in development mode with
-```shell
-npm start
-```
-and visit it in your browser on [http://localhost:3001](http://localhost:3001).
-The page will reload if you make edits, and you will see any lint errors in the console.
-</details>
+This project is part of the `cs-insights`-ecosystem. Please refer to the readme [here](https://github.com/gipplab/cs-insights-main) to spin up the development and production system.
 
 
 ## Repository
