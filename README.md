@@ -15,6 +15,11 @@
 <br/>
 <br/>
 <a href="http://cs-insights.uni-goettingen.de/">View Demo</a>
+<br/>
+<br/>
+Demo Credentials <br/>
+user: demo@cs-insights.com <br/>
+password: demo
 </p>
 
 ## Getting Started
