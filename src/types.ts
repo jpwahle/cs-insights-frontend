@@ -100,7 +100,8 @@ export interface IconLabelProps {
 export type YearsData = { years: string[]; counts: number[] };
 export type GridData<T> = { rowCount: number; rows: T[] };
 export type QuartilesData = number[];
-export type TreeMapData = { x: string; y: number }[];
+export type TreeMapData = { x: string[]; y: number }[];
+export type TreeMapDataBackend = { x: string; y: number }[];
 
 export type NonFilterParameters = {
   page?: number;
@@ -133,7 +134,7 @@ export type QueryParameters = {
 export type Status = {
   status: string;
   version: string;
-}
+};
 export type LdaVisData = {
   mdsDat: { x: number[]; y: number[]; topics: number[]; cluster: number[]; Freq: number[] };
   tinfo: {
