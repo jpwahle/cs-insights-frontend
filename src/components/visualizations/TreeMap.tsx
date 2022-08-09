@@ -1,13 +1,29 @@
 import { useCallback, useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { TreeMapData, TreeMapProps } from '../../types';
+import { TreeMapData, TreeMapDataBackend, TreeMapProps } from '../../types';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
 import ChartLoadingIcon from '../ChartLoadingIcon';
 import { debounce, TextField } from '@mui/material';
 import { DEBOUNCE_DELAY_K } from '../../consts';
 import { useApexChartExport } from '../../tools';
+
+const processLineBreak = (text: string, maxNumChars = 15) => {
+  const splitWords = text.split(/\s+/);
+  const words = [];
+  let currentLine = '';
+  for (const word of splitWords) {
+    if (currentLine.length + word.length > maxNumChars) {
+      words.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine += ` ${word}`;
+    }
+  }
+  words.push(currentLine);
+  return words;
+};
 
 export default function (props: TreeMapProps) {
   const [chartData, setChartData] = useState<TreeMapData>([]);
@@ -18,8 +34,12 @@ export default function (props: TreeMapProps) {
   const { refetch, isFetching } = useNetworkGet(
     `fe/${props.route}/topk`,
     queryKey,
-    (data: TreeMapData) => {
-      setChartData(data);
+    (data: TreeMapDataBackend) => {
+      setChartData(
+        data.map((el) => {
+          return { y: el.y, x: processLineBreak(el.x) };
+        })
+      );
     },
     { k: k }
   );
