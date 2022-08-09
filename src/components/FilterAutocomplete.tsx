@@ -1,7 +1,9 @@
-import React, { Fragment, useCallback, useEffect } from 'react';
+import { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
 import '../App.css';
 import {
   Autocomplete,
+  AutocompleteRenderInputParams,
+  Box,
   capitalize,
   Chip,
   CircularProgress,
@@ -17,7 +19,6 @@ import {
   FIELDS_OF_STUDY,
   TYPES_OF_PAPER,
 } from '../consts';
-import Box from '@mui/material/Box';
 import FilterLabel from './FilterLabel';
 
 function useDebounce<T>(
@@ -27,10 +28,10 @@ function useDebounce<T>(
   inputValue: string,
   setInputValue: (value: string) => void
 ): {
-  handleInputChange: (newInputValue: string, event: React.SyntheticEvent, reason: string) => void;
+  handleInputChange: (newInputValue: string) => void;
   isFetching: boolean;
 } {
-  const [pattern, setPattern] = React.useState<string>('');
+  const [pattern, setPattern] = useState<string>('');
 
   const { refetch, isFetching } = useNetworkGet(
     `fe/${route}/list`,
@@ -56,15 +57,9 @@ function useDebounce<T>(
     []
   );
 
-  function handleInputChange(newInputValue: string, event: React.SyntheticEvent, reason: string) {
-    if (event && event.type !== 'blur' && reason === 'reset') {
-      setInputValue('');
-      setOptions([]);
-      setPattern('');
-    } else if (reason !== 'reset') {
-      setInputValue(newInputValue);
-      handleInputChangeDebounce(newInputValue);
-    }
+  function handleInputChange(newInputValue: string) {
+    setInputValue(newInputValue);
+    handleInputChangeDebounce(newInputValue);
   }
 
   return { handleInputChange, isFetching };
@@ -76,7 +71,7 @@ function TagsAndTooltip<T extends { _id: string; [key: string]: string } | strin
   labelName: string;
   value: T[];
   setValue: (value: T[]) => void;
-  children: React.ReactElement;
+  children: ReactElement;
 }) {
   function chipLabel(chipValue: { _id: string; [key: string]: string } | string) {
     const str = typeof chipValue === 'string' ? chipValue : chipValue[props.labelName];
@@ -116,11 +111,25 @@ function TagsAndTooltip<T extends { _id: string; [key: string]: string } | strin
   );
 }
 
+export function AutocompleteLoadingIcon(props: {
+  isFetching: boolean;
+  params: AutocompleteRenderInputParams;
+}) {
+  return (
+    <Fragment>
+      {props.isFetching ? (
+        <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
+      ) : null}
+      {props.params.InputProps.endAdornment}
+    </Fragment>
+  );
+}
+
 export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]: string }>(
   props: FilterAutocompleteProps<T[]>
 ) {
-  const [options, setOptions] = React.useState<readonly T[]>([]);
-  const [inputValue, setInputValue] = React.useState<string>('');
+  const [options, setOptions] = useState<readonly T[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
   const { handleInputChange, isFetching } = useDebounce(
     props.route,
@@ -146,9 +155,7 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
         value={props.value}
         onChange={(event, value) => props.setValue(value)}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue, reason) =>
-          handleInputChange(newInputValue, event, reason)
-        }
+        onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
         isOptionEqualToValue={(option: T, value: T) => option._id === value._id}
         getOptionLabel={(option: T) => option[props.labelName]}
         options={options}
@@ -166,14 +173,7 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
             label={'Search'}
             InputProps={{
               ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {isFetching ? (
-                    <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
+              endAdornment: <AutocompleteLoadingIcon isFetching={isFetching} params={params} />,
             }}
           />
         )}
@@ -183,8 +183,8 @@ export function FilterMultipleObjectFetch<T extends { _id: string; [key: string]
 }
 
 export function FilterMultipleStringFetch(props: FilterAutocompleteProps<string[]>) {
-  const [options, setOptions] = React.useState<readonly string[]>([]);
-  const [inputValue, setInputValue] = React.useState<string>('');
+  const [options, setOptions] = useState<readonly string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
   const { handleInputChange, isFetching } = useDebounce(
     props.route,
@@ -210,9 +210,7 @@ export function FilterMultipleStringFetch(props: FilterAutocompleteProps<string[
         value={props.value}
         onChange={(event, value) => props.setValue(value)}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue, reason) =>
-          handleInputChange(newInputValue, event, reason)
-        }
+        onInputChange={(event, newInputValue) => handleInputChange(newInputValue)}
         options={options}
         loading={isFetching}
         filterOptions={(x) => x}
@@ -223,14 +221,7 @@ export function FilterMultipleStringFetch(props: FilterAutocompleteProps<string[
             label={'Search'}
             InputProps={{
               ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {isFetching ? (
-                    <CircularProgress color="inherit" size={20} sx={{ marginRight: '30px' }} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
+              endAdornment: <AutocompleteLoadingIcon isFetching={isFetching} params={params} />,
             }}
           />
         )}

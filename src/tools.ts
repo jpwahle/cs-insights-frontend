@@ -17,27 +17,37 @@ function useExportFilename(
   filter: Filter,
   parameters?: NonFilterParameters
 ) {
-  return `cs-insights_${chart}_${route}_${Object.values({ ...filter, ...parameters }).join('_')}`;
+  return `csi_${chart}_${route}_${Object.values({
+    ...filter,
+    authors: filter.authors.map((author) => author.fullname),
+    venues: filter.venues.map((venue) => venue.names),
+    ...parameters,
+  }).join('_')}`;
 }
 
-export function useExport(chart: string, route: string, parameters?: NonFilterParameters) {
-  const { filter } = useFilter();
+export function useApexChartExport(chart: string, route: string, parameters?: NonFilterParameters) {
+  const { oldFilter } = useFilter();
   return {
     export: {
       csv: {
-        filename: useExportFilename(chart, route, filter, parameters),
+        filename: useExportFilename(chart, route, oldFilter, parameters),
       },
       png: {
-        filename: useExportFilename(chart, route, filter, parameters),
+        filename: useExportFilename(chart, route, oldFilter, parameters),
       },
       svg: {
-        filename: useExportFilename(chart, route, filter, parameters),
+        filename: useExportFilename(chart, route, oldFilter, parameters),
       },
     },
   };
 }
 
 export function useGridExport(route: string, parameters?: NonFilterParameters) {
-  const { filter } = useFilter();
-  return `${useExportFilename('grid', route, filter, parameters)}.csv`;
+  const { oldFilter } = useFilter();
+  return `${useExportFilename('grid', route, oldFilter, parameters)}.csv`;
+}
+
+export function useLdaExport(parameters?: NonFilterParameters) {
+  const { oldFilter } = useFilter();
+  return `${useExportFilename('ldavis', 'topics', oldFilter, parameters)}.html`;
 }

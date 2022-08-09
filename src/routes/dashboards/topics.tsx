@@ -1,9 +1,13 @@
 import Frame from '../../components/Frame';
+import { ModelIdProvider } from '../../context/ModelIdContext';
+import LdaTopicVis from '../../components/visualizations/LdaTopicVis';
 
 export default function Topics() {
   return (
-    <Frame route={'topics'}>
-      <h2>Topics (WIP)</h2>
-    </Frame>
+    <ModelIdProvider>
+      <Frame route={'topics'}>
+        <LdaTopicVis route={'topics'} />
+      </Frame>
+    </ModelIdProvider>
   );
 }

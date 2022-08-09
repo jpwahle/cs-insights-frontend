@@ -1,4 +1,3 @@
-import React from 'react';
 import FrameWithGraphs from '../../components/FrameWithGraphs';
 import { GridCellParams } from '@mui/x-data-grid';
 import { capitalize } from '@mui/material';

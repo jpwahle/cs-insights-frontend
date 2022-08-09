@@ -1,6 +1,5 @@
 import { Stack, Tooltip } from '@mui/material';
 import { HelpOutline } from '@mui/icons-material';
-import React from 'react';
 
 export default function FilterLabel(props: { label: string; helpTooltip: string }) {
   return (

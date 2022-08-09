@@ -1,13 +1,15 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import { MouseEvent as ReactMouseEvent, useState } from 'react';
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import {
   ROUTE_ACCOUNT,
@@ -15,11 +17,11 @@ import {
   ROUTE_CITATIONS,
   ROUTE_FIELDS_OF_STUDY,
   ROUTE_HOME,
-  ROUTE_PAPER_TYPES,
   ROUTE_PAPERS,
   ROUTE_PUBLISHERS,
+  ROUTE_TOPICS,
+  ROUTE_TYPES_OF_PAPER,
   ROUTE_VENUES,
-  STORAGE_TOKEN,
 } from '../consts';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -27,6 +29,7 @@ import {
   Article,
   Book,
   Bookmarks,
+  BubbleChart,
   Group,
   LibraryBooks,
   Logout,
@@ -39,11 +42,11 @@ const pages = [
   { label: 'Papers', route: ROUTE_PAPERS, icon: Article },
   { label: 'Authors', route: ROUTE_AUTHORS, icon: Group },
   { label: 'Venues', route: ROUTE_VENUES, icon: Place },
-  { label: 'Types of Paper', route: ROUTE_PAPER_TYPES, icon: LibraryBooks },
+  { label: 'Types of Paper', route: ROUTE_TYPES_OF_PAPER, icon: LibraryBooks },
   { label: 'Fields of Study', route: ROUTE_FIELDS_OF_STUDY, icon: Science },
   { label: 'Publishers', route: ROUTE_PUBLISHERS, icon: Book },
   { label: 'Citations', route: ROUTE_CITATIONS, icon: Bookmarks },
-  // { label: 'Topics', route: ROUTE_TOPICS, icon: QuestionMark },
+  { label: 'LDA Topics', route: ROUTE_TOPICS, icon: BubbleChart },
 ];
 const settings = [
   { label: 'Account', id: 'account', icon: AccountCircle },
@@ -51,12 +54,12 @@ const settings = [
 ];
 
 const ResponsiveAppBar = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  function handleOpenUserMenu(event: React.MouseEvent<HTMLElement>) {
+  function handleOpenUserMenu(event: ReactMouseEvent<HTMLElement>) {
     setAnchorElUser(event.currentTarget);
   }
 
@@ -64,8 +67,7 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
     switch (id) {
       case 'logout':
-        localStorage.removeItem(STORAGE_TOKEN);
-        auth.setToken('');
+        auth.logout();
         break;
       case 'account':
         navigate(ROUTE_ACCOUNT);
@@ -77,19 +79,24 @@ const ResponsiveAppBar = () => {
     // position is not 'absolute', so AppBar has full width when there is horizontal scrolling
     <AppBar style={{ boxShadow: 'none', position: 'fixed' }} className={'appbar'}>
       <Toolbar>
-        <Typography
-          variant="h4"
-          noWrap
+        <Box
           component={Link}
           to={ROUTE_HOME}
           sx={{
-            mr: 2,
             display: { xs: 'none', md: 'flex' },
-            textDecoration: 'none',
-            color: 'white',
           }}
         >
-          <img src="/logo.jpg" width="150px" style={{ marginLeft: '-10px' }}></img>
+          <Box component={'img'} src={'/logo.jpg'} width={'150px'} marginLeft={'-20px'} />
+        </Box>
+        <Typography
+          variant={'h6'}
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+          }}
+          fontWeight={'bold'}
+          marginRight={'10px'}
+        >
+          A: Dashboards
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           {pages.map((page) => (

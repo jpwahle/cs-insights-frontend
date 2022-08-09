@@ -1,4 +1,3 @@
-import React from 'react';
 import FrameWithGraphs from '../../components/FrameWithGraphs';
 import { GridCellParams } from '@mui/x-data-grid';
 import { GRID_DECIMAL_PLACES } from '../../consts';

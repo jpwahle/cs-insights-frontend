@@ -1,12 +1,20 @@
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { FilterRangeProps, FilterTextFieldProps } from '../types';
 
 import FilterLabel from './FilterLabel';
 import { debounce, Stack, TextField } from '@mui/material';
-import React, { useCallback, useState } from 'react';
 import { DEBOUNCE_DELAY_TEXTFIELD } from '../consts';
 
 function FilterTextField(props: FilterTextFieldProps) {
   const [inputValue, setInputValue] = useState<string>(props.value);
+
+  // Clicking "Clear filters" will only set the filter value (props.value), not the inputValue
+  // We have to check for this case manually
+  useEffect(() => {
+    if (props.value === '' && inputValue !== '') {
+      setInputValue('');
+    }
+  }, [props.value]);
 
   // 2 functions, so debounce reference does not get lost
   const handleInputChangeDebounce = useCallback(
@@ -40,7 +48,7 @@ function FilterTextField(props: FilterTextFieldProps) {
 
 export default function FilterRange(props: FilterRangeProps) {
   return (
-    <React.Fragment>
+    <Fragment>
       <FilterLabel label={props.label} helpTooltip={props.helpTooltip}></FilterLabel>
       <Stack direction="row" style={{ alignItems: 'center' }} justifyContent={'space-between'}>
         <FilterTextField
@@ -55,6 +63,6 @@ export default function FilterRange(props: FilterRangeProps) {
           setValue={props.setValueEnd}
         />
       </Stack>
-    </React.Fragment>
+    </Fragment>
   );
 }
