@@ -1,6 +1,6 @@
 {
-  "name": "nlp-land-frontend",
-  "version": "0.9.0",
+  "name": "cs-insights-frontend",
+  "version": "0.12.0",
   "private": true,
   "scripts": {
     "lint": "eslint . --ext .ts --ext .tsx",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ag-gipp/NLP-Land-frontend.git"
+    "url": "git+https://github.com/gipplab/cs-insights-frontend.git"
   },
   "author": "Lennart Küll",
   "license": "MIT",
@@ -28,7 +28,7 @@
     ]
   },
   "bugs": {
-    "url": "https://github.com/ag-gipp/NLP-Land-frontend/issues"
+    "url": "https://github.com/ag-gipp/cs-insights-frontend/issues"
   },
   "homepage": ".",
   "devDependencies": {
