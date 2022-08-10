@@ -30,7 +30,7 @@ export default function BarChart(props: BarChartProps) {
 
   const series = [
     {
-      name: '#' + props.yDimension,
+      name: '#' + props.xDimension,
       data: chartData.counts,
     },
   ];
@@ -51,7 +51,7 @@ export default function BarChart(props: BarChartProps) {
       colors: ['transparent'],
     },
     title: {
-      text: `C1: #${capitalize(props.yDimension)} per year`,
+      text: `C1: #${capitalize(props.xDimension)} per year`,
     },
     xaxis: {
       categories: chartData.years,
@@ -67,7 +67,7 @@ export default function BarChart(props: BarChartProps) {
     },
     yaxis: {
       title: {
-        text: 'Number of ' + props.yDimension,
+        text: 'Number of ' + props.xDimension,
       },
     },
     fill: {
@@ -80,7 +80,10 @@ export default function BarChart(props: BarChartProps) {
   };
 
   return (
-    <ChartLoadingIcon isFetching={isFetching} className={'barchart'}>
+    <ChartLoadingIcon
+      isFetching={isFetching}
+      className={props.className ? props.className : 'barchart'}
+    >
       <ReactApexChart options={options} series={series} type="bar" height={250} />
     </ChartLoadingIcon>
   );

@@ -22,8 +22,8 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <MuiLink color="inherit" href="https://mui.com/">
-        Your Website
+      <MuiLink color="inherit" href="http://cs-insights.uni-goettingen.de/">
+        cs-insights.uni-goettingen.de
       </MuiLink>{' '}
       {new Date().getFullYear()}
       {'.'}
