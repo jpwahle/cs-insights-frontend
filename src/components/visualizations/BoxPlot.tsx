@@ -23,6 +23,8 @@ export default function BoxPlot(props: BoxPlotProps) {
     }
   );
 
+  useEffect(() => {}, [chartData, chartDataLog]);
+
   useEffect(() => {
     refresh.addRefetch(queryKey, refetch);
     return () => {
@@ -35,7 +37,7 @@ export default function BoxPlot(props: BoxPlotProps) {
       type: 'boxPlot',
       data: [
         {
-          x: capitalize(props.xLabel),
+          x: capitalize(props.yDimension),
           y: chartDataLog,
         },
       ],
@@ -44,7 +46,8 @@ export default function BoxPlot(props: BoxPlotProps) {
 
   const options: ApexOptions = {
     title: {
-      text: `C3: ${capitalize(props.xLabel)} dist.`,
+      //@ts-ignore The library suggests this for line breaks, but the types of the library are incorrect. \n and <br/> do not work
+      text: [`C3: ${capitalize(props.yDimension)} dist.`, `by ${props.xDimension}`],
       offsetX: 5,
     },
     tooltip: {
@@ -94,18 +97,16 @@ export default function BoxPlot(props: BoxPlotProps) {
     },
   };
 
-  // Without this the plot is not showing and the window has to be manually resized to show it
+  // Without this the plot is not rendered and the window has to be manually resized to show it
   window.dispatchEvent(new Event('resize'));
 
   return (
-    <ChartLoadingIcon isFetching={isFetching} className={'boxplot'}>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="boxPlot"
-        height={'530px'}
-        width={'180px'}
-      />
+    <ChartLoadingIcon
+      isFetching={isFetching}
+      className={props.className ? props.className : 'boxplot'}
+    >
+      <ReactApexChart options={options} series={series} type="boxPlot" height={'530px'} />
+      {/*No width declaration here, as we need to define it higher up, via the className, or the boxplot will be moved outside the frame on the citations dashboard*/}
     </ChartLoadingIcon>
   );
 }

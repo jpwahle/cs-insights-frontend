@@ -2,27 +2,33 @@ import { GridColumns } from '@mui/x-data-grid';
 import { SvgIconComponent } from '@mui/icons-material';
 
 export interface BarChartProps {
-  yDimension: string;
+  xDimension: string;
   route: string;
+  className?: string;
 }
 
 export interface GridProps {
   route: string;
   columns: GridColumns & { tooltip?: string };
+  className?: string;
 }
 
 export interface BoxPlotProps {
-  xLabel: string;
+  xDimension: string;
+  yDimension: string;
   route: string;
+  className?: string;
 }
 
 export interface TreeMapProps {
+  xDimension: string;
   yDimension: string;
   route: string;
+  className?: string;
 }
 
 export interface GraphsProps {
-  barChartYDimension: string;
+  xDimension: string;
   route: string;
   columns: GridColumns;
 }
