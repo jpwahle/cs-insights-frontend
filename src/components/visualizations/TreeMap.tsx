@@ -76,7 +76,7 @@ export default function (props: TreeMapProps) {
       toolbar: useApexChartExport('treemap', props.route, { k: k }),
     },
     title: {
-      text: `C4: Top k by ${props.yDimension}`,
+      text: `C4: Top k ${props.xDimension} by ${props.yDimension}`,
       offsetY: 8,
     },
   };
@@ -86,7 +86,7 @@ export default function (props: TreeMapProps) {
       <div style={{ height: 250, position: 'relative' }}>
         <ReactApexChart options={options} series={series} type="treemap" height={250} />
         <TextField
-          sx={{ position: 'absolute', top: '10px', left: '175px', width: '100px' }}
+          sx={{ position: 'absolute', top: '10px', left: '275px', width: '100px' }}
           size={'small'}
           label={'k ='}
           value={k.toString()}

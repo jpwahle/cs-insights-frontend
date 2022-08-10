@@ -29,7 +29,5 @@ export default function TypesOfPaper() {
     },
   ];
 
-  return (
-    <FrameWithGraphs route={'types'} columns={columns} barChartYDimension={'types of paper'} />
-  );
+  return <FrameWithGraphs route={'types'} columns={columns} xDimension={'types of paper'} />;
 }

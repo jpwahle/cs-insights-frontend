@@ -2,8 +2,8 @@ import { useFilter } from './context/FilterContext';
 import { Filter, NonFilterParameters } from './types';
 
 export const metrics = [
-  { label: '#Papers', value: 'papersCount' },
   { label: '#Citations', value: 'inCitationsCount' },
+  { label: '#Papers', value: 'papersCount' },
 ];
 
 export function mapMetric(metricValue: string): string {
