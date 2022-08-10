@@ -7,11 +7,20 @@
 <a href="https://hub.docker.com/repository/docker/jpelhaw/nlp-land-frontend"><img alt="Docker Release" src="https://img.shields.io/docker/v/jpelhaw/nlp-land-frontend?label=Docker"></a>
 <a href="https://github.com/gipplab/cs-insights-frontend/blob/master/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 <a href="https://github.com/airbnb/javascript"><img alt="Code style: Airbnb" src="https://img.shields.io/badge/codestyle-Airbnb-success"></a>
-</p>
-
-<a href="https://github.com/gipplab/cs-insights-frontend">
+<br/>
+<br/>
+<a href="http://cs-insights.uni-goettingen.de/">
     <img src="images/showcase.png" alt="Logo">
-  </a>
+</a>
+<br/>
+<br/>
+<a href="http://cs-insights.uni-goettingen.de/">View Demo</a>
+<br/>
+<br/>
+Demo Credentials <br/>
+user: demo@cs-insights.com <br/>
+password: demo
+</p>
 
 ## Getting Started
 
