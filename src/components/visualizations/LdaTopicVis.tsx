@@ -91,7 +91,7 @@ export default function LdaTopicVis(props: { route: string }) {
   }
 
   return (
-    <div style={{ height: '100%' }}>
+    <div>
       <div style={{ margin: '5px' }} className={'title'}>
         C5: Topic modelling
       </div>
@@ -101,7 +101,7 @@ export default function LdaTopicVis(props: { route: string }) {
           position: 'relative',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '80%',
+          minHeight: '80%',
         }}
       >
         <ChartLoadingIcon isFetching={isFetching}>
