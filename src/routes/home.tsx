@@ -23,7 +23,7 @@ export default function Home() {
     <div style={{ backgroundColor: '#eeeeee' }}>
       <Container className="home" style={{ display: 'flex', justifyContent: 'center' }}>
         <Stack spacing={2} alignItems="center" style={{ marginTop: '-100px' }}>
-          <img src="/logo.jpg" width="35%"></img>
+          <img src="/logo.jpg" width={'35%'} alt={'logo'}></img>
           <Typography variant="h4" fontWeight={'bold'}>
             Welcome to the CS-Insights Demo
           </Typography>
@@ -54,7 +54,7 @@ export default function Home() {
           <Stack direction={'row'} alignItems={'center'}>
             Visit us on
             <a
-              href="https://github.com/gipplab/NLP-Land-main"
+              href="https://github.com/gipplab/cs-insights-main"
               target="_blank"
               rel="noopener noreferrer"
               style={{
