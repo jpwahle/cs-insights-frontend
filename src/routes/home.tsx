@@ -10,13 +10,20 @@ import { Status } from '../types';
 export default function Home() {
   const theme = useTheme();
   const [backendVersion, setBackendVersion] = useState('0.0.1');
+  const [predictionEndpointVersion, setpredictionEndpointVersion] = useState('0.0.1');
 
-  const { refetch } = useNetworkGet('status', '', (status: Status) =>
+  const { refetch: refetchBackend } = useNetworkGet('status', '', (status: Status) =>
     setBackendVersion(status.version)
+  );
+  const { refetch: refetchPredictionEndpoint } = useNetworkGet(
+    'statusPredictionBackend',
+    '',
+    (status: Status) => setpredictionEndpointVersion(status.version)
   );
 
   useEffect(() => {
-    refetch();
+    refetchBackend();
+    refetchPredictionEndpoint();
   }, []);
 
   return (
@@ -28,7 +35,8 @@ export default function Home() {
             Welcome to the CS-Insights Demo
           </Typography>
           <Typography className="statsHighlight" style={{ margin: '0px' }}>
-            frontend: v{process.env.REACT_APP_VERSION} - backend: v{backendVersion}
+            frontend: v{process.env.REACT_APP_VERSION} - backend: v{backendVersion} -
+            prediction-endpoint : v{predictionEndpointVersion}
           </Typography>
           <Button
             variant="contained"
