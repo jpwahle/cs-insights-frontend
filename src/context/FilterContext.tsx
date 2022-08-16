@@ -1,6 +1,7 @@
 import { createContext, ReactElement, useContext, useState } from 'react';
 import { Filter } from '../types';
 import { metrics } from '../tools';
+import { ACCESS_TYPE_OPEN } from '../consts';
 
 const FilterContext = createContext<
   | {
@@ -28,7 +29,7 @@ export function FilterProvider(props: { children: ReactElement | ReactElement[] 
     citationsMax: '',
     authors: [],
     venues: [],
-    accessType: null,
+    accessType: ACCESS_TYPE_OPEN,
     typesOfPaper: [],
     fieldsOfStudy: [],
     publishers: [],
