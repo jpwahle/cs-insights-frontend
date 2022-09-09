@@ -24,7 +24,7 @@ user: demo@cs-insights.com <br/>
 password: demo
 </p>
 
-> Starting from version 1.0.0, this project is using [semantic versioning](https://semver.org/). For more infos about the features supported, see the [releases](https://github.com/gipplab/cs-insights-frontend/releases) and [CHANGELOG.md](CHANGELOG.md).
+> Starting from version 1.0.0, this project is using [semantic versioning](https://semver.org/). For more infos about the features supported, see the [releases](https://github.com/gipplab/cs-insights-frontend/releases).
 
 ## Getting Started
 
