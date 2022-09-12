@@ -47,20 +47,6 @@ The following is a list of some notable packages we use:
 - [React Query](https://react-query.tanstack.com/): Data synchronization for network calls
 - [React Router](https://reactrouter.com/): Routing
 
-
-## Branches, tags, and deploys.
-Whenever a new issue is opened, it should be labeled whether it is a Patch, Minor, or Major upgrade. Please see the label descriptions for more info.
-To work on that issue, a branch should be created with the leading issue number like "1-user-view".
-We recommend using [GitHub's built-in system](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-a-branch-for-an-issue) for this.
-
-When finalizing a branch, use:
-```sh
-npm version <label: {patch, minor, or major}>
-```
-and push your code. Then create a pull request, include "Fixes #{issue_number}" in the title and resolve any merge conflicts. When all tests are done, another contributor can review and merge the request.
-After the merge is complete, please delete the branch on the bottom of the pull request.
-
-
 ## License
 This project is licensed under the terms of MIT license. For more information, please see the [LICENSE](LICENSE) file.
 
