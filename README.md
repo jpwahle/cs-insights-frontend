@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://cs-insights.uni-goettingen.de">
-    <img src="logo.png" alt="Logo" width="500">
+    <img src="images/logo.png" alt="Logo" width="500">
   </a>
 </div>
 <br/>
