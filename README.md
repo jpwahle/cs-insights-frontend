@@ -4,7 +4,6 @@
 <a href="https://github.com/gipplab/cs-insights-frontend/actions/workflows/release.yml"><img alt="Actions Status" src="https://github.com/gipplab/cs-insights-frontend/actions/workflows/release.yml/badge.svg?branch=dev"></a>  
 <a href="https://github.com/gipplab/cs-insights-frontend/actions/workflows/main.yml"><img alt="Actions Status" src="https://github.com/gipplab/cs-insights-frontend/actions/workflows/main.yml/badge.svg"></a>
 <a href="https://github.com/gipplab/cs-insights-frontend/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/gipplab/cs-insights-frontend?sort=semver"></a>
-<a href="https://hub.docker.com/repository/docker/jpelhaw/nlp-land-frontend"><img alt="Docker Release" src="https://img.shields.io/docker/v/jpelhaw/nlp-land-frontend?label=Docker"></a>
 <a href="https://github.com/gipplab/cs-insights-frontend/blob/master/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 <a href="https://github.com/airbnb/javascript"><img alt="Code style: Airbnb" src="https://img.shields.io/badge/codestyle-Airbnb-success"></a>
 <a href="https://gipplab.github.io/cs-insights-uptime/"><img alt="All-time uptime 100.00%" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fgipplab%2Fcs-insights-uptime%2FHEAD%2Fapi%2Ffrontend%2Fuptime.json"></a>
