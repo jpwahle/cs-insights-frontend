@@ -40,6 +40,7 @@ async function sendRequest(
       },
     };
   }
+  console.log(url, init)
   const response = await fetch(url, init);
   if (!response.ok || response.status >= 400) {
     if (response.status === 401 && auth.token) {

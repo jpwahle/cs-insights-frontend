@@ -80,7 +80,7 @@ export default function Sidebar() {
         labelName="names"
         helpTooltip="Filter by the venue.
         Matches any position in the name of the venue.
-        3 characters minimum required; case-sensitive."
+        3 characters minimum required; case-insensitive."
         value={filter.filter.venues}
         setValue={(value) => filter.setFilter({ ...filter.filter, venues: value })}
       />

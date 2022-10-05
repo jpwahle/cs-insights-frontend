@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { BarChartProps, YearsData } from '../../types';
 import { useNetworkGet } from '../../network';
@@ -6,6 +6,7 @@ import { useRefresh } from '../../context/RefreshContext';
 import { capitalize } from '@mui/material';
 import ChartLoadingIcon from '../ChartLoadingIcon';
 import { useApexChartExport } from '../../tools';
+import {ApexOptions} from "apexcharts";
 
 export default function BarChart(props: BarChartProps) {
   const [chartData, setChartData] = useState<YearsData>({ years: [], counts: [] });
@@ -35,15 +36,25 @@ export default function BarChart(props: BarChartProps) {
     },
   ];
 
-  const options = {
+  const options: ApexOptions = {
     plotOptions: {
       bar: {
         horizontal: false,
         columnWidth: '100%',
+        dataLabels: {
+          orientation: 'vertical',
+          position: 'center' // bottom/center/top
+        }
       },
     },
+    // dataLabels: {
+    //   enabled: false,
+    // },
     dataLabels: {
-      enabled: false,
+      style: {
+        colors: ['#263238']
+      },
+      offsetY: 15, // play with this value
     },
     stroke: {
       show: true,
@@ -79,12 +90,14 @@ export default function BarChart(props: BarChartProps) {
     },
   };
 
+
   return (
-    <ChartLoadingIcon
-      isFetching={isFetching}
-      className={props.className ? props.className : 'barchart'}
-    >
-      <ReactApexChart options={options} series={series} type="bar" height={250} />
-    </ChartLoadingIcon>
+      <ChartLoadingIcon
+        isFetching={isFetching}
+        className={props.className ? props.className : 'barchart'}
+      >
+        <ReactApexChart options={options} series={series} type="bar" height={250} />
+        {["citationsIn", "citationsOut"].includes(props.route) ? <div className={"title"}>Total {props.xDimension}: {chartData.counts.reduce((total, current) => total + current, 0)}</div> : <div/>}
+      </ChartLoadingIcon>
   );
 }
