@@ -1,12 +1,12 @@
+import { Download } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { LdaVisData } from '../../types';
+import { useModelId } from '../../context/ModelIdContext';
 import { useRefresh } from '../../context/RefreshContext';
 import { useNetworkGet } from '../../network';
-import ChartLoadingIcon from '../ChartLoadingIcon';
-import { useModelId } from '../../context/ModelIdContext';
-import { Button } from '@mui/material';
-import { Download } from '@mui/icons-material';
 import { useLdaExport } from '../../tools';
+import { LdaVisData } from '../../types';
+import ChartLoadingIcon from '../ChartLoadingIcon';
 import { LDAvis } from '../ldavis';
 
 export default function LdaTopicVis(props: { route: string }) {
@@ -21,7 +21,7 @@ export default function LdaTopicVis(props: { route: string }) {
     `fe/${props.route}/lda`,
     queryKey,
     (data) => {
-      setLdaVisData(data.outputData);
+      setLdaVisData(data.output_data);
     },
     queryParameters
   );
@@ -117,7 +117,7 @@ export default function LdaTopicVis(props: { route: string }) {
             </div>
           )}
         </ChartLoadingIcon>
-        {ldaVisData ? (
+        {ldaVisData && (
           <Button
             onClick={handleClick}
             startIcon={<Download />}
@@ -125,7 +125,7 @@ export default function LdaTopicVis(props: { route: string }) {
           >
             Export
           </Button>
-        ) : null}
+        )}
       </div>
     </div>
   );
