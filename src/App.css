@@ -15,6 +15,17 @@
   font-weight: bold;
 }
 
+#background {
+  background-color: blue;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to top, #5a5ae6, #3f81ee, #3acec2);
+  z-index: -1;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .app-logo {
     animation: app-logo-spin infinite 5s linear;
@@ -134,12 +145,12 @@
   color: #263238;
   font-size: 14px;
   font-weight: bold;
-  font-family: Helvetica, Arial, sans-serif
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .boxplot {
   grid-area: box;
-  width: var(--boxplot-width)
+  width: var(--boxplot-width);
   /*background: blue;*/
 }
 
@@ -165,8 +176,8 @@
   grid-template-columns: 1fr auto auto;
   grid-template-rows: auto auto 1fr;
   grid-template-areas:
-      "bar   box  box2"
-      "bar2  box  box2"
+    'bar   box  box2'
+    'bar2  box  box2';
 }
 
 .barchart2 {
@@ -175,7 +186,5 @@
 
 .boxplot2 {
   grid-area: box2;
-  width: var(--boxplot-width)
+  width: var(--boxplot-width);
 }
-
-

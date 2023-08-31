@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: '#eeeeee' }}>
+    <div style={{ background: 'linear-gradient(to bottom, #5a5ae6, #3f81ee, #3acec2)' }}>
       <Container className="home" style={{ display: 'flex', justifyContent: 'center' }}>
         <Stack spacing={2} alignItems="center" style={{ marginTop: '-100px' }}>
           <img src="/logo.jpg" width={'35%'} alt={'logo'}></img>

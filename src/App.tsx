@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SnackbarProvider } from './context/SnackbarContext';
-import Login from './routes/login';
+import NewLogin from './routes/newLogin';
 import Register from './routes/register';
 import Papers from './routes/dashboards/papers';
 import Authors from './routes/dashboards/authors';
@@ -47,7 +47,7 @@ export default function App() {
                 <BrowserRouter>
                   <Routes>
                     <Route path={ROUTE_HOME} element={<Home />} />
-                    <Route path={ROUTE_LOGIN} element={<Login />} />
+                    <Route path={ROUTE_LOGIN} element={<NewLogin />} />
                     <Route path={ROUTE_REGISTER} element={<Register />} />
                     <Route path={ROUTE_ACCOUNT} element={<Account />} />
                     <Route path={ROUTE_PASSWORD} element={<ForgotPassword />} />
