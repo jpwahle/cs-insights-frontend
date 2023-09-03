@@ -15,15 +15,21 @@
   font-weight: bold;
 }
 
-#background {
+.background-gradient {
   background-color: blue;
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: linear-gradient(to top, #5a5ae6, #3f81ee, #3acec2);
+  background: linear-gradient(90deg, #5a5ae6, #2979fa);
   z-index: -1;
+}
+
+.form-container {
+  background: #dddddd;
+  margin-top: calc(var(--size-large) * 10);
+  border-radius: var(--size-large);
 }
 
 @media (prefers-reduced-motion: no-preference) {

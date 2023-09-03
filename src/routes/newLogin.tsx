@@ -1,11 +1,23 @@
 import { LockOutlined } from '@mui/icons-material';
-import { Avatar, Box, Button, Checkbox, Container, TextField, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  TextField,
+  Link as MuiLink,
+  Grid,
+} from '@mui/material';
 import { FormikValues, Formik, Field, Form, ErrorMessage } from 'formik';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER } from '../consts';
+import Copyright from '../Copyright';
 
 export default function NewLogin() {
-  // const [user, setUser] = useState<User | null>(null);
   const [loginError, setLoginError] = useState(false);
+  const navigate = useNavigate();
 
   interface User {
     email: string;
@@ -42,18 +54,13 @@ export default function NewLogin() {
     } else {
       setLoginError(false);
       alert(JSON.stringify(values, null, 2));
+      navigate(ROUTE_PAPERS);
     }
   };
 
   return (
-    <div id="background">
-      <Container
-        maxWidth="xs"
-        sx={{
-          background: '#dddddd',
-          mt: 10,
-        }}
-      >
+    <div className="background-gradient">
+      <Container maxWidth="xs" className="form-container">
         <Formik
           initialValues={{ email: '', password: '', remember: true }}
           validate={validate}
@@ -72,9 +79,6 @@ export default function NewLogin() {
                   <Avatar sx={{ m: 2, bgcolor: '#5a5ae6' }}>
                     <LockOutlined />
                   </Avatar>
-                  <Typography component="h1" variant="h4">
-                    Sign in
-                  </Typography>
                   <Box>
                     <Field
                       as={TextField}
@@ -117,7 +121,20 @@ export default function NewLogin() {
             );
           }}
         </Formik>
+        <Grid container sx={{ py: 1 }}>
+          <Grid item xs>
+            <MuiLink component={Link} to={ROUTE_PASSWORD} variant="body2">
+              Forgot password?
+            </MuiLink>
+          </Grid>
+          <Grid item>
+            <MuiLink component={Link} to={ROUTE_REGISTER} variant="body2">
+              {"Don't have an account? Sign Up"}
+            </MuiLink>
+          </Grid>
+        </Grid>
       </Container>
+      <Copyright />
     </div>
   );
 }
