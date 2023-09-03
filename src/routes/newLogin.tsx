@@ -1,4 +1,4 @@
-import { LockOutlined } from '@mui/icons-material';
+import { LockOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Avatar,
   Box,
@@ -7,17 +7,21 @@ import {
   Container,
   TextField,
   Link as MuiLink,
-  Grid,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { FormikValues, Formik, Field, Form, ErrorMessage } from 'formik';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ROUTE_PAPERS, ROUTE_PASSWORD, ROUTE_REGISTER } from '../consts';
+import { ROUTE_PAPERS, ROUTE_REGISTER } from '../consts';
 import Copyright from '../Copyright';
 
 export default function NewLogin() {
   const [loginError, setLoginError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   interface User {
     email: string;
@@ -76,7 +80,7 @@ export default function NewLogin() {
                     alignItems: 'center',
                   }}
                 >
-                  <Avatar sx={{ m: 2, bgcolor: '#5a5ae6' }}>
+                  <Avatar sx={{ m: 2, bgcolor: '#5a5ae6', height: '50px', width: '50px' }}>
                     <LockOutlined />
                   </Avatar>
                   <Box>
@@ -94,12 +98,21 @@ export default function NewLogin() {
                     <Field
                       as={TextField}
                       label="Password"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       name="password"
                       margin="dense"
                       fullWidth
                       helperText={<ErrorMessage name="password" />}
                       error={props.errors.password && props.touched.password}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleClickShowPassword}>
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                     />
                     {loginError && <p>User not found!</p>}
                     <label>
@@ -121,18 +134,11 @@ export default function NewLogin() {
             );
           }}
         </Formik>
-        <Grid container sx={{ py: 1 }}>
-          <Grid item xs>
-            <MuiLink component={Link} to={ROUTE_PASSWORD} variant="body2">
-              Forgot password?
-            </MuiLink>
-          </Grid>
-          <Grid item>
-            <MuiLink component={Link} to={ROUTE_REGISTER} variant="body2">
-              {"Don't have an account? Sign Up"}
-            </MuiLink>
-          </Grid>
-        </Grid>
+        <Box sx={{ py: 1 }}>
+          <MuiLink component={Link} to={ROUTE_REGISTER} variant="body2">
+            Don't have an account? Sign Up
+          </MuiLink>
+        </Box>
       </Container>
       <Copyright />
     </div>
