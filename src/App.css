@@ -5,6 +5,14 @@
   --boxplot-width: 180px; /* Has to be defined via CSS, see boxplot */
 }
 
+/* forms content */
+
+.form-container {
+  background: #dddddd;
+  margin-top: calc(var(--size-large) * 10);
+  border-radius: var(--size-large);
+}
+
 /* home */
 .app-logo {
   margin-top: 48px;
@@ -24,12 +32,6 @@
   left: 0;
   background: linear-gradient(90deg, #5a5ae6, #2979fa);
   z-index: -1;
-}
-
-.form-container {
-  background: #dddddd;
-  margin-top: calc(var(--size-large) * 10);
-  border-radius: var(--size-large);
 }
 
 @media (prefers-reduced-motion: no-preference) {
