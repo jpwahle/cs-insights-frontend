@@ -22,6 +22,7 @@ import {
   ROUTE_TOPICS,
   ROUTE_TYPES_OF_PAPER,
   ROUTE_VENUES,
+  ROUTE_LINE,
 } from './consts';
 import Account from './routes/account';
 import { ErrorBoundaryWrapper } from './context/ErrorBoundary';
@@ -33,6 +34,7 @@ import Citations from './routes/dashboards/citations';
 import Topics from './routes/dashboards/topics';
 import Publishers from './routes/dashboards/publishers';
 import { RefreshProvider } from './context/RefreshContext';
+import LineChart from './routes/LineChart';
 
 const queryClient = new QueryClient();
 
@@ -59,6 +61,7 @@ export default function App() {
                     <Route path={ROUTE_PUBLISHERS} element={<Publishers />} />
                     <Route path={ROUTE_CITATIONS} element={<Citations />} />
                     <Route path={ROUTE_TOPICS} element={<Topics />} />
+                    <Route path={ROUTE_LINE} element={<LineChart />} />
                   </Routes>
                 </BrowserRouter>
               </RefreshProvider>

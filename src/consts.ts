@@ -11,6 +11,7 @@ export const ROUTE_FIELDS_OF_STUDY = '/fields';
 export const ROUTE_PUBLISHERS = '/publishers';
 export const ROUTE_CITATIONS = '/citations';
 export const ROUTE_TOPICS = '/topics';
+export const ROUTE_LINE = '/line';
 
 export const TYPES_OF_PAPER = [
   'article',

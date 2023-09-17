@@ -238,33 +238,33 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
     var ydiff = yrange[1] - yrange[0],
       ypad = 0.05;
 
-    if (xdiff > ydiff) {
-      var xScale = d3.scale
-        .linear()
-        .range([0, mdswidth])
-        .domain([xrange[0] - xpad * xdiff, xrange[1] + xpad * xdiff]);
+    // if (xdiff > ydiff) {
+    //   var xScale = d3.scale
+    //     .linear()
+    //     .range([0, mdswidth])
+    //     .domain([xrange[0] - xpad * xdiff, xrange[1] + xpad * xdiff]);
 
-      var yScale = d3.scale
-        .linear()
-        .range([mdsheight, 0])
-        .domain([
-          yrange[0] - 0.5 * (xdiff - ydiff) - ypad * xdiff,
-          yrange[1] + 0.5 * (xdiff - ydiff) + ypad * xdiff,
-        ]);
-    } else {
-      var xScale = d3.scale
-        .linear()
-        .range([0, mdswidth])
-        .domain([
-          xrange[0] - 0.5 * (ydiff - xdiff) - xpad * ydiff,
-          xrange[1] + 0.5 * (ydiff - xdiff) + xpad * ydiff,
-        ]);
+    //   var yScale = d3.scale
+    //     .linear()
+    //     .range([mdsheight, 0])
+    //     .domain([
+    //       yrange[0] - 0.5 * (xdiff - ydiff) - ypad * xdiff,
+    //       yrange[1] + 0.5 * (xdiff - ydiff) + ypad * xdiff,
+    //     ]);
+    // } else {
+    //   var xScale = d3.scale
+    //     .linear()
+    //     .range([0, mdswidth])
+    //     .domain([
+    //       xrange[0] - 0.5 * (ydiff - xdiff) - xpad * ydiff,
+    //       xrange[1] + 0.5 * (ydiff - xdiff) + xpad * ydiff,
+    //     ]);
 
-      var yScale = d3.scale
-        .linear()
-        .range([mdsheight, 0])
-        .domain([yrange[0] - ypad * ydiff, yrange[1] + ypad * ydiff]);
-    }
+    //   var yScale = d3.scale
+    //     .linear()
+    //     .range([mdsheight, 0])
+    //     .domain([yrange[0] - ypad * ydiff, yrange[1] + ypad * ydiff]);
+    // }
 
     // Create new svg element (that will contain everything):
     var svg = d3
@@ -444,7 +444,7 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
       .on('click', function (d) {
         // prevent click event defined on the div container from firing
         // http://bl.ocks.org/jasondavies/3186840
-        d3.event.stopPropagation();
+        // d3.event.stopPropagation();
         var old_topic = topicID + vis_state.topic;
         if (vis_state.topic > 0 && old_topic != this.id) {
           topic_off(document.getElementById(old_topic));
@@ -473,25 +473,25 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
       return d.Category == 'Default';
     });
 
-    var y = d3.scale
-      .ordinal()
-      .domain(
-        barDefault2.map(function (d) {
-          return d.Term;
-        })
-      )
-      .rangeRoundBands([0, barheight], 0.15);
-    var x = d3.scale
-      .linear()
-      .domain([
-        0,
-        d3.max(barDefault2, function (d) {
-          return d.Total;
-        }),
-      ])
-      .range([0, barwidth])
-      .nice();
-    var yAxis = d3.svg.axis().scale(y);
+    // var y = d3.scale
+    //   .ordinal()
+    //   .domain(
+    //     barDefault2.map(function (d) {
+    //       return d.Term;
+    //     })
+    //   )
+    //   .rangeRoundBands([0, barheight], 0.15);
+    // var x = d3.scale
+    //   .linear()
+    //   .domain([
+    //     0,
+    //     d3.max(barDefault2, function (d) {
+    //       return d.Total;
+    //     }),
+    //   ])
+    //   .range([0, barwidth])
+    //   .nice();
+    // var yAxis = d3.svg.axis().scale(y);
 
     // Add a group for the bar chart
     var chart = svg
@@ -626,13 +626,13 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
     title.append('tspan').attr('baseline-shift', 'super').attr('font-size', '12px').text('(1)');
 
     // barchart axis adapted from http://bl.ocks.org/mbostock/1166403
-    var xAxis = d3.svg
-      .axis()
-      .scale(x)
-      .orient('top')
-      .tickSize(-barheight)
-      .tickSubdivide(true)
-      .ticks(6);
+    // var xAxis = d3.svg
+    //   .axis()
+    //   .scale(x)
+    //   .orient('top')
+    //   .tickSize(-barheight)
+    //   .tickSubdivide(true)
+    //   .ticks(6);
 
     chart.attr('class', 'xaxis').call(xAxis);
 
@@ -762,20 +762,20 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
         .attr('width', 250)
         .attr('height', 25);
 
-      var sliderScale = d3.scale
-        .linear()
-        .domain([0, 1])
-        .range([7.5, 242.5]) // trimmed by 7.5px on each side to match the input type=range slider:
-        .nice();
+      // var sliderScale = d3.scale
+      //   .linear()
+      //   .domain([0, 1])
+      //   .range([7.5, 242.5]) // trimmed by 7.5px on each side to match the input type=range slider:
+      //   .nice();
 
       // adapted from http://bl.ocks.org/mbostock/1166403
-      var sliderAxis = d3.svg
-        .axis()
-        .scale(sliderScale)
-        .orient('bottom')
-        .tickSize(10)
-        .tickSubdivide(true)
-        .ticks(6);
+      // var sliderAxis = d3.svg
+      //   .axis()
+      //   .scale(sliderScale)
+      //   .orient('bottom')
+      //   .tickSize(10)
+      //   .tickSubdivide(true)
+      //   .ticks(6);
 
       // group to contain the elements of the slider axis:
       var sliderAxisGroup = scaleContainer
@@ -816,24 +816,24 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
       // truncate to the top R tokens:
       var dat3 = dat2.slice(0, R);
 
-      var y = d3.scale
-        .ordinal()
-        .domain(
-          dat3.map(function (d) {
-            return d.Term;
-          })
-        )
-        .rangeRoundBands([0, barheight], 0.15);
-      var x = d3.scale
-        .linear()
-        .domain([
-          0,
-          d3.max(dat3, function (d) {
-            return d.Total;
-          }),
-        ])
-        .range([0, barwidth])
-        .nice();
+      // var y = d3.scale
+      //   .ordinal()
+      //   .domain(
+      //     dat3.map(function (d) {
+      //       return d.Term;
+      //     })
+      //   )
+      //   .rangeRoundBands([0, barheight], 0.15);
+      // var x = d3.scale
+      //   .linear()
+      //   .domain([
+      //     0,
+      //     d3.max(dat3, function (d) {
+      //       return d.Total;
+      //     }),
+      //   ])
+      //   .range([0, barwidth])
+      //   .nice();
 
       // Change Total Frequency bars
       var graybars = d3
@@ -860,13 +860,13 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
         });
 
       // adapted from http://bl.ocks.org/mbostock/1166403
-      var xAxis = d3.svg
-        .axis()
-        .scale(x)
-        .orient('top')
-        .tickSize(-barheight)
-        .tickSubdivide(true)
-        .ticks(6);
+      // var xAxis = d3.svg
+      //   .axis()
+      //   .scale(x)
+      //   .orient('top')
+      //   .tickSize(-barheight)
+      //   .tickSubdivide(true)
+      //   .ticks(6);
 
       // New axis definition:
       var newaxis = d3.selectAll('.xaxis');
@@ -1180,24 +1180,24 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
       var dat3 = dat2.slice(0, R);
 
       // scale the bars to the top R terms:
-      var y = d3.scale
-        .ordinal()
-        .domain(
-          dat3.map(function (d) {
-            return d.Term;
-          })
-        )
-        .rangeRoundBands([0, barheight], 0.15);
-      var x = d3.scale
-        .linear()
-        .domain([
-          0,
-          d3.max(dat3, function (d) {
-            return d.Total;
-          }),
-        ])
-        .range([0, barwidth])
-        .nice();
+      // var y = d3.scale
+      //   .ordinal()
+      //   .domain(
+      //     dat3.map(function (d) {
+      //       return d.Term;
+      //     })
+      //   )
+      //   .rangeRoundBands([0, barheight], 0.15);
+      // var x = d3.scale
+      //   .linear()
+      //   .domain([
+      //     0,
+      //     d3.max(dat3, function (d) {
+      //       return d.Total;
+      //     }),
+      //   ])
+      //   .range([0, barwidth])
+      //   .nice();
 
       // remove the red bars if there are any:
       d3.selectAll('.overlay').remove();
@@ -1250,13 +1250,13 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
         .attr('opacity', 0.8);
 
       // adapted from http://bl.ocks.org/mbostock/1166403
-      var xAxis = d3.svg
-        .axis()
-        .scale(x)
-        .orient('top')
-        .tickSize(-barheight)
-        .tickSubdivide(true)
-        .ticks(6);
+      // var xAxis = d3.svg
+      //   .axis()
+      //   .scale(x)
+      //   .orient('top')
+      //   .tickSize(-barheight)
+      //   .tickSubdivide(true)
+      //   .ticks(6);
 
       // redraw x-axis
       d3.selectAll('.xaxis')
@@ -1281,24 +1281,24 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
         return d.Category == 'Default';
       });
 
-      var y = d3.scale
-        .ordinal()
-        .domain(
-          dat2.map(function (d) {
-            return d.Term;
-          })
-        )
-        .rangeRoundBands([0, barheight], 0.15);
-      var x = d3.scale
-        .linear()
-        .domain([
-          0,
-          d3.max(dat2, function (d) {
-            return d.Total;
-          }),
-        ])
-        .range([0, barwidth])
-        .nice();
+      // var y = d3.scale
+      //   .ordinal()
+      //   .domain(
+      //     dat2.map(function (d) {
+      //       return d.Term;
+      //     })
+      //   )
+      //   .rangeRoundBands([0, barheight], 0.15);
+      // var x = d3.scale
+      //   .linear()
+      //   .domain([
+      //     0,
+      //     d3.max(dat2, function (d) {
+      //       return d.Total;
+      //     }),
+      //   ])
+      //   .range([0, barwidth])
+      //   .nice();
 
       // Change Total Frequency bars
       d3.selectAll('.bar-totals')
@@ -1327,13 +1327,13 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
         });
 
       // adapted from http://bl.ocks.org/mbostock/1166403
-      var xAxis = d3.svg
-        .axis()
-        .scale(x)
-        .orient('top')
-        .tickSize(-barheight)
-        .tickSubdivide(true)
-        .ticks(6);
+      // var xAxis = d3.svg
+      //   .axis()
+      //   .scale(x)
+      //   .orient('top')
+      //   .tickSize(-barheight)
+      //   .tickSubdivide(true)
+      //   .ticks(6);
 
       // redraw x-axis
       d3.selectAll('.xaxis').attr('class', 'xaxis').call(xAxis);
@@ -1379,7 +1379,7 @@ export default function LDAvisLegacy(to_select, json_file, mod_history = false) 
         size[dat2[i].Topic - 1] = 11;
       }
 
-      var rScaleCond = d3.scale.sqrt().domain([0, 1]).range([0, rMax]);
+      // var rScaleCond = d3.scale.sqrt().domain([0, 1]).range([0, rMax]);
 
       // Change size of bubbles according to the word's distribution over topics
       d3.selectAll('.dot')
