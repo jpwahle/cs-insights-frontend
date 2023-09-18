@@ -62,8 +62,11 @@ function LineChart() {
   useEffect(() => {
     console.log(dimensionss);
 
+    chartDimensions.width = dimensionss?.width ?? 1000;
+    // chartDimensions.height = dimensionss?.height ?? 500;
     chartDimensions.ctrWidth = chartDimensions.width - chartDimensions.margins * 2;
     chartDimensions.ctrHeight = chartDimensions.height - chartDimensions.margins * 2;
+
     // ----- CONTAINER AND SVG SETUP
     const svg = d3
       .select(svgRef.current)
@@ -71,8 +74,11 @@ function LineChart() {
       .attr('width', chartDimensions.width)
       .attr('height', chartDimensions.height);
 
+    svg.selectAll('.container').remove(); //used to remove the previous chart, if any
+
     const container = svg
       .append('g') // <g>
+      .classed('container', true)
       .attr('transform', `translate(${chartDimensions.margins}, ${chartDimensions.margins})`);
 
     // For making the chart work, we need to change the data to an array of objects, instead of an array with objects
@@ -166,7 +172,7 @@ function LineChart() {
         tooltipDot.style('opacity', 0);
         tooltip.style('display', 'none');
       });
-  }, [chartData]);
+  }, [chartData, dimensionss]);
 
   // FOR TESTING ONLY
   const addRandomDataPoint = () => {
