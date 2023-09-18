@@ -6,11 +6,8 @@ import { Link } from 'react-router-dom';
 import { GitHub } from '@mui/icons-material';
 import { useNetworkGet } from '../network';
 import { Status } from '../types';
-import { version } from 'd3';
-
 export default function Home() {
   const theme = useTheme();
-  console.log(version);
   const [backendVersion, setBackendVersion] = useState('0.0.1');
   const [predictionEndpointVersion, setpredictionEndpointVersion] = useState('0.0.1');
 
