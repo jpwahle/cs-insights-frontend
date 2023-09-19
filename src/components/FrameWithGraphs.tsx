@@ -1,5 +1,5 @@
 import Frame from './Frame';
-import BarChart from './visualizations/BarChart';
+// import BarChart from './visualizations/BarChart';
 import { GraphsProps } from '../types';
 import BoxPlot from './visualizations/BoxPlot';
 import { useFilter } from '../context/FilterContext';
@@ -7,6 +7,7 @@ import TreeMap from './visualizations/TreeMap';
 import Grid from './visualizations/Grid';
 import { mapMetric, metrics } from '../tools';
 import { ROUTE_PAPERS } from '../consts';
+import LineChart from '../routes/LineChart';
 
 export default function FrameWithGraphs(props: GraphsProps) {
   const filter = useFilter();
@@ -22,7 +23,10 @@ export default function FrameWithGraphs(props: GraphsProps) {
   return (
     <Frame route={props.route}>
       <div className="frame-with-graphs">
-        <BarChart xDimension={props.xDimension} route={props.route} />
+        {/* <BarChart xDimension={props.xDimension} route={props.route} /> */}
+        <div style={{ height: '300px' }}>
+          <LineChart />
+        </div>
         <Grid columns={props.columns} route={props.route} />
         <BoxPlot xDimension={props.xDimension} yDimension={metric} route={props.route} />
         <TreeMap xDimension={props.xDimension} yDimension={metric} route={props.route} />

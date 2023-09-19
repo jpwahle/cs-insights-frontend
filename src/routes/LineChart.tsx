@@ -46,10 +46,12 @@ function LineChart() {
     ],
     counts: [100, 10, 30, 70, 55, 60, 73, 95, 45, 80, 20, 65, 40, 75, 50, 90, 25],
   });
+  console.log(setChartData);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const wrapperRef = useRef(null);
   const dimensionss = useResizeObserver(wrapperRef);
 
+  // Default chart dimensions, will be change as soon as the chart is rendered
   let chartDimensions = {
     width: 1000,
     height: 500,
@@ -60,10 +62,8 @@ function LineChart() {
 
   // will be called initially and on every data change
   useEffect(() => {
-    console.log(dimensionss);
-
     chartDimensions.width = dimensionss?.width ?? 1000;
-    // chartDimensions.height = dimensionss?.height ?? 500;
+    chartDimensions.height = dimensionss?.height ?? 500;
     chartDimensions.ctrWidth = chartDimensions.width - chartDimensions.margins * 2;
     chartDimensions.ctrHeight = chartDimensions.height - chartDimensions.margins * 2;
 
@@ -163,8 +163,8 @@ function LineChart() {
           .duration(40)
           .ease(d3.easeLinear)
           .style('display', 'block')
-          .style('left', `${(xScale(year) ?? 0) + bandWidth / 2}px`)
-          .style('top', `${yScale(chartData.counts[index]) - 30}px`);
+          .style('left', `${(xScale(year) ?? 0) + bandWidth / 2 + 250}px`)
+          .style('top', `${yScale(chartData.counts[index]) + 100}px`); // TO-DO: Not smart to have absolute values, fix to be relative
         tooltip.select('.count').text('Count: ' + chartData.counts[index]);
         tooltip.select('.year').text('Year: ' + year);
       })
@@ -174,27 +174,9 @@ function LineChart() {
       });
   }, [chartData, dimensionss]);
 
-  // FOR TESTING ONLY
-  const addRandomDataPoint = () => {
-    const currentYear = new Date().getFullYear().toString(); // Get the current year as a string
-    const randomValue = Math.floor(Math.random() * (100 - 10 + 1)) + 10; // Generate a random value between 10 and 100
-
-    // Create a new data point with the current year and random value
-    const newDataPoint = {
-      year: currentYear,
-      count: randomValue,
-    };
-
-    // Update chartData by adding the new data point
-    setChartData((prevChartData) => ({
-      years: [...prevChartData.years, newDataPoint.year],
-      counts: [...prevChartData.counts, newDataPoint.count],
-    }));
-  };
-
   return (
     <React.Fragment>
-      <div ref={wrapperRef} id="wrapper">
+      <div ref={wrapperRef} id="wrapper" style={{ height: '100%' }}>
         <svg ref={svgRef}></svg>
         <div id="tooltip">
           <div className="count"></div>
@@ -202,13 +184,6 @@ function LineChart() {
         </div>
       </div>
       <br /> <br /> <br />
-      <button
-        onClick={() => {
-          addRandomDataPoint();
-        }}
-      >
-        Update data
-      </button>
     </React.Fragment>
   );
 }

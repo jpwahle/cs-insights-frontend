@@ -15,15 +15,6 @@
   font-weight: bold;
 }
 
-#tooltip {
-  border: 1px solid #ccc;
-  position: absolute;
-  padding: 10px;
-  background-color: #fff;
-  display: none;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .app-logo {
     animation: app-logo-spin infinite 5s linear;
@@ -118,6 +109,16 @@
   padding: var(--size-large);
   align-items: center;
   grid-area: tools;
+}
+
+/* Tooltip for line chart */
+#tooltip {
+  border: 1px solid #ccc;
+  position: absolute;
+  padding: 10px;
+  background-color: #fff;
+  display: none;
+  pointer-events: none;
 }
 
 .tools > * {
